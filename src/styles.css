@@ -1,1 +1,61 @@
 /* You can add global styles to this file, and also import other style files */
+
+html {
+  font-size: 62.5%; /* 1rem = 10px */
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-size: 1.6rem;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  font-size: 3.6rem;
+}
+h2 {
+  font-size: 2.4rem;
+}
+h3 {
+  font-size: 1.9rem;
+}
+
+h4 {
+  font-size: 1.6rem;
+}
+
+input,
+textarea {
+  font-family: inherit;
+}
+::-webkit-input-placeholder {
+  font-family: inherit;
+}
+:-moz-placeholder {
+  font-family: inherit;
+}
+::-moz-placeholder {
+  font-family: inherit;
+}
+:-ms-input-placeholder {
+  font-family: inherit;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button:hover {
+  cursor: pointer;
+}
