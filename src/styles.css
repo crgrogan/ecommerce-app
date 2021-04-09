@@ -1,5 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 
+:root {
+  --primary-bg-color: #203040;
+  --secondary-bg-color: #ff8000;
+  --primary-font-color: #000000;
+  --secondary-font-color: #ffffff;
+
+  --mobile-breakpoint: 576px;
+  --tablet-breakpoint: 768px;
+  --laptop-breakpoint: 992px;
+}
+
 html {
   font-size: 62.5%; /* 1rem = 10px */
   box-sizing: border-box;
