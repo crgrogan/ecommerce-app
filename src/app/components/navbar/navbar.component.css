@@ -1,14 +1,17 @@
-:host {
-  grid-area: header;
+header {
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: var(--primary-bg-color);
-  padding: 1.5em 2.5em;
+  padding: 1em 2.5em;
   font-weight: 700;
+  width: 100%;
 }
 
-:host fa-icon {
+header fa-icon {
   font-size: 2.5rem;
   color: var(--secondary-font-color);
 }
@@ -27,6 +30,10 @@
 
 .brand a:hover {
   color: var(--secondary-bg-color);
+}
+
+.open-hamburger-menu:hover {
+  cursor: pointer;
 }
 
 .search-container {
@@ -82,13 +89,13 @@
 
 .hamburger-menu {
   z-index: 5;
-  transform: translateX(-80vw);
+  transform: translateX(-60vw);
   transition: all 0.5s;
   position: absolute;
   left: 0;
   top: 0;
   background-color: lightgray;
-  width: 80vw;
+  width: 60vw;
   padding-bottom: 1em;
 }
 
@@ -103,6 +110,10 @@
   text-align: right;
 }
 
+.close-hamburger-menu:hover {
+  cursor: pointer;
+}
+
 .blackout {
   display: none;
   position: absolute;
@@ -115,6 +126,14 @@
   width: 100%;
 }
 
+.menu-open {
+  transform: translateX(0);
+}
+
+.blackout-active {
+  display: block;
+}
+
 .close-searchbar {
   display: none;
   position: absolute;
@@ -123,8 +142,8 @@
 }
 
 @media screen and (max-width: 576px) {
-  :host {
-    padding: 1.5em;
+  header {
+    padding: 1em 1.5em;
   }
 
   .search-container {
@@ -144,14 +163,6 @@
   }
 
   .toggle-searchbar {
-    display: block;
-  }
-
-  .menu-open {
-    transform: translateX(0);
-  }
-
-  .blackout-active {
     display: block;
   }
 

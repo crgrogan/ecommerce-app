@@ -1,48 +1,54 @@
-<div class="brand">
-  <fa-icon [icon]="faBars" (click)="toggleMenu()"></fa-icon>
-  <a href="/">ecom</a>
-</div>
-<div
-  [ngClass]="
-    searchbarOpen ? 'search-container searchbar-open' : 'search-container'
-  "
->
-  <form>
-    <div class="search-bar">
-      <input type="text" placeholder="Search..." name="search" />
-      <button type="submit" class="submit-search">
-        <fa-icon [icon]="faSearch"></fa-icon>
-      </button>
-    </div>
-  </form>
-</div>
-<div class="header-links">
-  <span class="toggle-searchbar">
-    <fa-icon [icon]="faSearch" (click)="toggleSearchbar()"></fa-icon>
-  </span>
-  <a href="/profile">
-    <fa-icon [icon]="faUserCircle"></fa-icon>
-  </a>
-  <a href="/cart">
-    <fa-icon [icon]="faShoppingBasket"></fa-icon>
-  </a>
-</div>
-<div [ngClass]="menuOpen ? 'hamburger-menu menu-open' : 'hamburger-menu'">
-  <div class="close-hamburger-menu">
-    <fa-icon [icon]="faTimes" (click)="toggleMenu()"></fa-icon>
+<header>
+  <div class="brand">
+    <fa-icon
+      [icon]="faBars"
+      (click)="toggleMenu()"
+      class="open-hamburger-menu"
+    ></fa-icon>
+    <a href="/">ecom</a>
   </div>
-  <ul>
-    <li>Pants</li>
-    <li>Shirts</li>
-    <li>Shoes</li>
-    <li>Jumpers</li>
-  </ul>
-</div>
-<div [ngClass]="menuOpen ? 'blackout blackout-active' : 'blackout'"></div>
-<div
-  [ngClass]="
-    searchbarOpen ? 'close-searchbar searchbar-open' : 'close-searchbar'
-  "
->
-  <fa-icon [icon]="faTimes" (click)="toggleSearchbar()"></fa-icon>
-</div>
+  <div
+    [ngClass]="
+      searchbarOpen ? 'search-container searchbar-open' : 'search-container'
+    "
+  >
+    <form>
+      <div class="search-bar">
+        <input type="text" placeholder="Search..." name="search" />
+        <button type="submit" class="submit-search">
+          <fa-icon [icon]="faSearch"></fa-icon>
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="header-links">
+    <span class="toggle-searchbar">
+      <fa-icon [icon]="faSearch" (click)="toggleSearchbar()"></fa-icon>
+    </span>
+    <a href="/profile">
+      <fa-icon [icon]="faUserCircle"></fa-icon>
+    </a>
+    <a href="/cart">
+      <fa-icon [icon]="faShoppingBasket"></fa-icon>
+    </a>
+  </div>
+  <div [ngClass]="menuOpen ? 'hamburger-menu menu-open' : 'hamburger-menu'">
+    <div class="close-hamburger-menu">
+      <fa-icon [icon]="faTimes" (click)="toggleMenu()"></fa-icon>
+    </div>
+    <ul>
+      <li>Pants</li>
+      <li>Shirts</li>
+      <li>Shoes</li>
+      <li>Jumpers</li>
+    </ul>
+  </div>
+  <div [ngClass]="menuOpen ? 'blackout blackout-active' : 'blackout'"></div>
+  <div
+    [ngClass]="
+      searchbarOpen ? 'close-searchbar searchbar-open' : 'close-searchbar'
+    "
+  >
+    <fa-icon [icon]="faTimes" (click)="toggleSearchbar()"></fa-icon>
+  </div>
+</header>

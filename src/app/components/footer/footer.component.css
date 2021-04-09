@@ -1,0 +1,116 @@
+footer {
+  width: 100%;
+  background: var(--primary-bg-color);
+  color: var(--secondary-font-color);
+  padding: 3em;
+  box-sizing: border-box;
+}
+
+.footer-main-content {
+  display: flex;
+}
+
+.footer-left,
+.footer-right,
+.footer-center {
+  flex-basis: 50%;
+}
+
+.footer-main-content a {
+  text-decoration: none;
+  color: var(--primary-font-color);
+}
+
+.footer-main-content h1 {
+  margin-bottom: 0.5em;
+}
+
+/* Footer-left */
+
+.footer-left {
+  text-align: left;
+}
+
+.footer-left fa-icon {
+  color: var(--secondary-font-color);
+  font-size: 2.5rem;
+  margin: 1em;
+}
+
+.footer-left fa-icon:hover {
+  color: var(--secondary-bg-color);
+}
+
+.footer-left fa-icon:first-child {
+  margin-left: 0;
+}
+
+.website-link {
+  color: var(--secondary-bg-color);
+}
+
+.website-link:hover {
+  text-decoration: underline;
+}
+
+/* Footer-center */
+
+.footer-center h1 {
+  color: var(--secondary-bg-color);
+}
+
+.footer-center {
+  text-align: center;
+}
+.footer-links {
+  font-weight: bold;
+  margin: 1.5em 0 1em 0;
+}
+
+.footer-links a {
+  color: var(--secondary-font-color);
+}
+
+.footer-links a:hover {
+  color: var(--secondary-bg-color);
+}
+
+.copyright {
+  font-size: 1.4rem;
+  font-weight: normal;
+}
+
+/* Footer-right */
+
+.footer-right .movieDBLogo {
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 992px) {
+  .footer-main-content {
+    flex-wrap: wrap;
+    flex-direction: column;
+  }
+
+  .footer-left {
+    border-bottom: 1px solid var(--secondary-bg-color);
+    padding: 0 0 1.5em 0;
+    margin: 0 3em;
+  }
+
+  .footer-left {
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .footer-main-content {
+    flex-wrap: wrap;
+    flex-direction: column;
+  }
+
+  .footer-left {
+    border-bottom: 1px solid var(--secondary-bg-color);
+    margin: 0;
+  }
+}

@@ -11,9 +11,10 @@ import { ProductsComponent } from './components/products/products.component';
 import { CartComponent } from './components/cart/cart.component';
 import { RegisterComponent } from './components/register/register.component';
 import { ManagementComponent } from './components/management/management.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
-  declarations: [AppComponent, NavbarComponent, HomeComponent, LoginComponent, ProductsComponent, CartComponent, RegisterComponent, ManagementComponent],
+  declarations: [AppComponent, NavbarComponent, HomeComponent, LoginComponent, ProductsComponent, CartComponent, RegisterComponent, ManagementComponent, FooterComponent],
   imports: [BrowserModule, FontAwesomeModule, AppRoutingModule],
   providers: [],
   bootstrap: [AppComponent],
