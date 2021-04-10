@@ -4,3 +4,10 @@
   grid-template-columns: 1fr;
   grid-template-rows: 6.5rem 1fr auto;
 }
+
+.content-wrap {
+  min-height: 100vh;
+  /*  width: 90%; 
+  margin: auto; */
+  padding-bottom: 2em;
+}

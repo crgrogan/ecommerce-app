@@ -1,0 +1,14 @@
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 25rem);
+  grid-gap: 1em;
+  justify-content: center;
+  padding: initial;
+  list-style-type: none;
+}
+
+@media screen and (max-width: 576px) {
+  .products {
+    grid-gap: 2em;
+  }
+}

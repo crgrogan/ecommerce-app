@@ -1,0 +1,12 @@
+.categories {
+  background-color: darkred;
+  padding: 5em 0;
+}
+
+.category-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 15rem);
+  gap: 1em;
+  justify-content: center;
+  padding: initial;
+}

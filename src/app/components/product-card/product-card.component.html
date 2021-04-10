@@ -1,0 +1,19 @@
+<div class="product">
+  <div class="product-image-container">
+    <a href="">
+      <img class="product-image" src="{{ data.image }}" alt="product" />
+    </a>
+  </div>
+  <div class="product-details">
+    <a href="">
+      <div class="product-name">
+        {{ data.description }}
+      </div>
+    </a>
+    <div class="product-brand">by {{ data.brand }}</div>
+    <div class="product-rating">
+      {{ data.rating }} stars ({{ data.reviews }} reviews)
+    </div>
+    <span class="product-price">€{{ data.price }}</span>
+  </div>
+</div>
