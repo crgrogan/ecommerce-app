@@ -25,6 +25,7 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  // toggle hamburger menu
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
   }

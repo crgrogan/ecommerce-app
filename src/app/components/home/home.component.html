@@ -1,7 +1,13 @@
 <section class="categories">
-  <ul class="category-list">
-    <li *ngFor="let category of categories">
+  <carousel width="{{ width }}" [height]="299">
+    <div class="carousel-cell" *ngFor="let category of categories">
       <app-category-card [category]="category"></app-category-card>
-    </li>
-  </ul>
+    </div>
+  </carousel>
+</section>
+<section class="featured-category" id="shoes">
+  <button>Shop Now</button>
+</section>
+<section class="featured-category" id="tshirts">
+  <button>Shop Now</button>
 </section>

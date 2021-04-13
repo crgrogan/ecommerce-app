@@ -24,8 +24,8 @@
     "@fortawesome/free-brands-svg-icons": "^5.15.3",
     "@fortawesome/free-regular-svg-icons": "^5.15.3",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
+    "angular-responsive-carousel": "^2.0.2",
     "rxjs": "~6.6.0",
-    "tslib": "^2.0.0",
     "zone.js": "~0.11.3"
   },
   "devDependencies": {

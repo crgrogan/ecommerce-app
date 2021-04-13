@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { IvyCarouselModule } from 'angular-responsive-carousel';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -31,7 +32,12 @@ import { ProductDetailsComponent } from './components/product-details/product-de
     CategoryCardComponent,
     ProductDetailsComponent,
   ],
-  imports: [BrowserModule, FontAwesomeModule, AppRoutingModule],
+  imports: [
+    BrowserModule,
+    FontAwesomeModule,
+    AppRoutingModule,
+    IvyCarouselModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

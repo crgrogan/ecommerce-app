@@ -1,6 +1,7 @@
 header {
   box-sizing: border-box;
   position: fixed;
+  z-index: 100;
   top: 0;
   display: flex;
   justify-content: space-between;
@@ -23,7 +24,7 @@ header fa-icon {
 }
 
 .brand a {
-  color: #ffffff;
+  color: var(--secondary-font-color);
   font-size: 3rem;
   margin-left: 1em;
 }
@@ -48,24 +49,32 @@ header fa-icon {
 }
 
 .search-bar input {
-  width: 100%;
-  padding: 0.5em;
+  width: 90%;
+  padding: 0.5em 1em;
   border: none;
+  border-radius: 20px 0 0 20px;
+}
+
+.search-bar input:focus,
+input:active {
+  outline: none;
 }
 
 .submit-search {
-  width: 20%;
+  width: 10%;
   padding: 0.5em;
   background-color: var(--secondary-bg-color);
   border: 1px solid var(--secondary-bg-color);
+  border-radius: 0 20px 20px 0;
 }
 
-.submit-search:hover {
-  background-color: #ffa500;
+.submit-search:focus,
+.submit-search:active {
+  outline: none;
 }
 
 .submit-search fa-icon {
-  color: black;
+  color: var(--primary-font-color);
   font-size: 1.5rem;
 }
 
@@ -89,21 +98,21 @@ header fa-icon {
 }
 
 .hamburger-menu {
-  z-index: 5;
-  transform: translateX(-60vw);
+  z-index: 99;
+  transform: translateX(-50vw);
   transition: all 0.5s;
   position: absolute;
   left: 0;
   top: 0;
-  background-color: lightgray;
-  width: 60vw;
+  background-color: #d3d3d3;
+  width: 50vw;
   padding-bottom: 1em;
 }
 
 .hamburger-menu li {
   padding: 1em;
   margin: 1em;
-  background-color: #ffffff;
+  background-color: var(--secondary-bg-color);
 }
 
 .close-hamburger-menu {
@@ -120,10 +129,10 @@ header fa-icon {
   position: absolute;
   top: 0;
   left: 0;
-  background-color: black;
+  background-color: #000000;
   opacity: 0.6;
-  z-index: 2;
-  height: 100%;
+  z-index: 98;
+  height: 100vh;
   width: 100%;
 }
 
@@ -149,7 +158,11 @@ header fa-icon {
 
   .hamburger-menu {
     transform: translateX(-80vw);
-    width: 80%;
+    width: 80vw;
+  }
+
+  .menu-open {
+    transform: translateX(0);
   }
 
   .search-container {
@@ -161,7 +174,7 @@ header fa-icon {
     padding-top: 7rem;
     width: 100%;
     height: 100vh;
-    background-color: lightgray;
+    background-color: #d3d3d3;
   }
 
   .header-links a {
