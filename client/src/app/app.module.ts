@@ -2,8 +2,17 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { IvyCarouselModule } from 'angular-responsive-carousel';
+import { StoreModule } from '@ngrx/store';
+import { HttpClientModule } from '@angular/common/http';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
 
 import { AppRoutingModule } from './app-routing.module';
+import { categoriesReducer } from './reducers/categories.reducer';
+import { CategoriesEffects } from './effects/categories.effects';
+
+// components
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
@@ -34,6 +43,15 @@ import { ProductDetailsComponent } from './components/product-details/product-de
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
+    EffectsModule.forRoot([CategoriesEffects]),
+    StoreModule.forRoot({
+      categories: categoriesReducer,
+    }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25, // Retains last 25 states
+      logOnly: environment.production, // Restrict extension to log-only mode
+    }),
     FontAwesomeModule,
     AppRoutingModule,
     IvyCarouselModule,

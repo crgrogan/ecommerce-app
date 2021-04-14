@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../app.state';
 import { Category } from 'src/models/category.model';
+import { getCategories } from 'src/app/actions/categories.actions';
+import { CategoriesService } from './categories.service';
 
 @Component({
   selector: 'app-home',
@@ -8,8 +13,11 @@ import { Category } from 'src/models/category.model';
 })
 export class HomeComponent implements OnInit {
   width: number;
+  categories: Category[];
+  test: String = 'Test';
+  loadingState: Boolean;
 
-  categories: Category[] = [
+  /*   categories: Category[] = [
     {
       name: 'T-Shirts & Shirts',
       image:
@@ -40,11 +48,22 @@ export class HomeComponent implements OnInit {
       image:
         'https://images.asos-media.com/products/asos-design-oversized-t-shirt-with-bloom-of-youth-multicoloured-text-print-in-acid-wash/20831307-3?$XXL$&wid=513&fit=constrain&hei=236&wid=185&bgc=000000',
     },
-  ];
+  ]; */
 
-  constructor() {}
+  constructor(
+    private store: Store<{
+      categories: { categoriesList: Category[]; isLoading: Boolean };
+    }>
+  ) {}
 
   ngOnInit(): void {
+    // get all categories
+    this.store.dispatch(getCategories());
+    this.store.select('categories').subscribe((data) => {
+      this.categories = data.categoriesList;
+      this.loadingState = data.isLoading;
+    });
+
     // set width of carousel based on width of window
     if (window.innerWidth >= 768 && window.innerWidth < 992) {
       this.width = 625;

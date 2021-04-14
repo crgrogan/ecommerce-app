@@ -1,5 +1,5 @@
 <section class="categories">
-  <carousel width="{{ width }}" [height]="299">
+  <carousel width="{{ width }}" [height]="299" *ngIf="categories.length > 0">
     <div class="carousel-cell" *ngFor="let category of categories">
       <app-category-card [category]="category"></app-category-card>
     </div>
