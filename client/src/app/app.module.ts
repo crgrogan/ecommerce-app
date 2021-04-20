@@ -9,8 +9,10 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 
 import { AppRoutingModule } from './app-routing.module';
-import { categoriesReducer } from './reducers/categories.reducer';
-import { CategoriesEffects } from './effects/categories.effects';
+import { filtersReducer } from './reducers/filters.reducer';
+import { productsReducer } from './reducers/products.reducer';
+import { FiltersEffects } from './effects/filters.effects';
+import { ProductsEffects } from './effects/products.effects';
 
 // components
 import { AppComponent } from './app.component';
@@ -44,9 +46,10 @@ import { ProductDetailsComponent } from './components/product-details/product-de
   imports: [
     BrowserModule,
     HttpClientModule,
-    EffectsModule.forRoot([CategoriesEffects]),
+    EffectsModule.forRoot([FiltersEffects, ProductsEffects]),
     StoreModule.forRoot({
-      categories: categoriesReducer,
+      filters: filtersReducer,
+      products: productsReducer,
     }),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states

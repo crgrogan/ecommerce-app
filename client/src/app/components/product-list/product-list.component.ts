@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/models/product.model';
+import { Category } from 'src/models/category.model';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { getProducts } from 'src/app/actions/products.actions';
+import { getFilters } from 'src/app/actions/filters.actions';
 
 @Component({
   selector: 'app-product-list',
@@ -7,55 +12,39 @@ import { Product } from 'src/models/product.model';
   styleUrls: ['./product-list.component.css'],
 })
 export class ProductListComponent implements OnInit {
-  /*  const { products, isLoading, error } = useSelector(
-    (state) => state.productsList
-  ); */
+  products$: Observable<Product[]>;
+  categories$: Observable<Category[]>;
+  brands$: Observable<String[]>;
+  colours$: Observable<String[]>;
 
-  productDetails: Product[] = [
-    /* {
-      description:
-        'Tommy Hilfiger oxford shirt with stretch in slim fit in white',
-      brand: 'Tommy Hilfiger',
-      rating: 5,
-      numReviews: 10,
-      price: 21.95,
-      image:
-        'https://images.asos-media.com/products/river-island-slim-oxford-shirt-with-grandad-collar-in-white/22724287-1-white?$n_320w$&wid=317&fit=constrain',
-    },
-    {
-      description:
-        'Tommy Hilfiger oxford shirt with stretch in slim fit in white',
-      brand: 'Tommy Hilfiger',
-      rating: 5,
-      numReviews: 10,
-      price: 11.95,
-      image:
-        'https://images.asos-media.com/products/river-island-slim-oxford-shirt-with-grandad-collar-in-white/22724287-1-white?$n_320w$&wid=317&fit=constrain',
-    },
-    {
-      description:
-        'Tommy Hilfiger oxford shirt with stretch in slim fit in white',
-      brand: 'Tommy Hilfiger',
-      rating: 5,
-      numReviews: 10,
-      price: 25.95,
-      image:
-        'https://images.asos-media.com/products/river-island-slim-oxford-shirt-with-grandad-collar-in-white/22724287-1-white?$n_320w$&wid=317&fit=constrain',
-    },
-    {
-      description:
-        'Tommy Hilfiger oxford shirt with stretch in slim fit in white',
-      brand: 'Tommy Hilfiger',
-      rating: 3,
-      numReviews: 8,
-      price: 25.95,
-      image:
-        'https://images.asos-media.com/products/river-island-slim-oxford-shirt-with-grandad-collar-in-white/22724287-1-white?$n_320w$&wid=317&fit=constrain',
-    }, */
-  ];
-  constructor() {}
+  constructor(
+    private store: Store<{
+      products: { productsList: Product[]; isLoading: Boolean };
+      filters: {
+        categoriesList: Category[];
+        brandsList: String[];
+        coloursList: String[];
+        isLoading: Boolean;
+      };
+    }>
+  ) {
+    this.products$ = this.store.select((state) => state.products.productsList);
+    this.categories$ = this.store.select(
+      (state) => state.filters.categoriesList
+    );
+    this.brands$ = this.store.select((state) => state.filters.brandsList);
+    this.colours$ = this.store.select((state) => state.filters.coloursList);
+  }
 
   ngOnInit(): void {
-    /* dispatch(getProducts()); */
+    // get all products
+    this.store.dispatch(getProducts());
+
+    // get all filters
+    this.store.dispatch(getFilters());
+  }
+
+  submitForm() {
+    console.log('submit');
   }
 }

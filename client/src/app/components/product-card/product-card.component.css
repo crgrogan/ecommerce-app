@@ -8,7 +8,8 @@
 .product-image {
   display: block;
   margin: auto;
-  max-width: 25rem;
+  width: 100%;
+  max-width: 20rem;
 }
 
 .product-details {
@@ -33,13 +34,3 @@
 .add-to-cart {
   float: right;
 }
-
-/* .product-name {
-  font-size: 2rem;
-  font-weight: bold;
-}
-
-.product-rating {
-  margin-bottom: 1rem;
-}
- */

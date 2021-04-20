@@ -3,8 +3,9 @@ export interface Product {
   description: string;
   category: string;
   brand: string;
-  image: string;
+  img: string;
   price: number;
+  color: string;
   rating: number;
   numReviews: number;
   countInStock: number;

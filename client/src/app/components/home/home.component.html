@@ -1,12 +1,12 @@
-<section class="categories">
-  <carousel width="{{ width }}" [height]="299" *ngIf="categories.length > 0">
+<section class="categories" *ngIf="categories$ | async as categories">
+  <carousel [width]="width" [height]="299" *ngIf="categories.length > 0">
     <div class="carousel-cell" *ngFor="let category of categories">
       <app-category-card [category]="category"></app-category-card>
     </div>
   </carousel>
 </section>
 <section class="featured-category" id="shoes">
-  <button>Shop Now</button>
+  <a href="/products"><button>Shop Now</button></a>
 </section>
 <section class="featured-category" id="tshirts">
   <button>Shop Now</button>

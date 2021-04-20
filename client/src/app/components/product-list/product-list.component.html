@@ -1,5 +1,47 @@
-<!-- <ul class="products">
-  <li *ngFor="let product of productDetails">
+<section class="search-products">
+  <h1>Search Products</h1>
+  <form class="search-filters">
+    <select (change)="submitForm()" name="sortby" id="">
+      <option value="" selected>Sort By</option>
+      <option value="low">Price - Low to High</option>
+      <option value="high">Price - High to Low</option>
+    </select>
+    <select
+      (change)="submitForm()"
+      name="category"
+      id=""
+      *ngIf="categories$ | async as categories"
+    >
+      <option value="" selected>Product Category</option>
+      <option *ngFor="let category of categories" [value]="category.name">
+        {{ category.name }}
+      </option>
+    </select>
+    <select
+      (change)="submitForm()"
+      name="brand"
+      *ngIf="brands$ | async as brands"
+    >
+      <option value="" selected>Brand</option>
+      <option *ngFor="let brand of brands" [value]="brand">
+        {{ brand }}
+      </option>
+    </select>
+    <select
+      (change)="submitForm()"
+      name="color"
+      id=""
+      *ngIf="colours$ | async as colours"
+    >
+      <option value="" selected>Colour</option>
+      <option *ngFor="let colour of colours" [value]="colour">
+        {{ colour }}
+      </option>
+    </select>
+  </form>
+</section>
+<ul class="products" *ngIf="products$ | async as products">
+  <li *ngFor="let product of products">
     <app-product-card [data]="product"></app-product-card>
   </li>
-</ul> -->
+</ul>

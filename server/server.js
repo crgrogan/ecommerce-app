@@ -5,7 +5,7 @@ const cors = require("cors");
 
 import userRoutes from "./routes/users";
 import productRoutes from "./routes/products";
-import categoryRoutes from "./routes/categories";
+import filterRoutes from "./routes/filters";
 
 dotenv.config();
 
@@ -28,7 +28,7 @@ app.use(express.json());
 // routes
 app.use("/api/users", userRoutes);
 app.use("/api/products", productRoutes);
-app.use("/api/categories", categoryRoutes);
+app.use("/api/filters", filterRoutes);
 
 const PORT = process.env.PORT || 5000;
 

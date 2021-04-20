@@ -1,19 +1,17 @@
-<!-- <div class="product">
-  <div class="product-image-container">
-    <a href="">
-      <img class="product-image" src="{{ data.image }}" alt="product" />
-    </a>
-  </div>
-  <div class="product-details">
-    <a href="">
+<a href="#">
+  <div class="product">
+    <div class="product-image-container">
+      <img class="product-image" src="{{ data.img }}" alt="product" />
+    </div>
+    <div class="product-details">
       <div class="product-name">
         {{ data.description }}
       </div>
-    </a>
-    <div class="product-brand">by {{ data.brand }}</div>
-    <div class="product-rating">
-      {{ data.rating }} stars ({{ data.reviews }} reviews)
+      <div class="product-brand">by {{ data.brand }}</div>
+      <div class="product-rating">
+        {{ data.rating }} stars ({{ data.numReviews }} reviews)
+      </div>
+      <span class="product-price">€{{ data.price }}</span>
     </div>
-    <span class="product-price">€{{ data.price }}</span>
   </div>
-</div> -->
+</a>

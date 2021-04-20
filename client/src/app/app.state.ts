@@ -1,5 +1,7 @@
 import { Category } from 'src/models/category.model';
+import { Product } from 'src/models/product.model';
 
 export interface AppState {
-  categories: ReadonlyArray<Category>;
+  filters; // add typescript
+  products: ReadonlyArray<Product>;
 }
