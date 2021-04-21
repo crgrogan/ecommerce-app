@@ -5,9 +5,12 @@ import {
   getProducts,
   productsLoadedSuccess,
   productsLoadedFailed,
+  getProduct,
+  productLoadedSuccess,
+  productLoadedFailed,
 } from '../actions/products.actions';
 
-const initialState: {
+const initialProductsState: {
   productsList: Product[];
   isLoading: Boolean;
   err?: String;
@@ -17,7 +20,7 @@ const initialState: {
 };
 
 export const productsReducer = createReducer(
-  initialState,
+  initialProductsState,
   on(getProducts, (state) => {
     return { ...state, isLoading: true };
   }),
@@ -27,5 +30,28 @@ export const productsReducer = createReducer(
   }),
   on(productsLoadedFailed, (state, { error }) => {
     return { ...state, productsList: [], isLoading: false, err: error };
+  })
+);
+
+const initialProductState: {
+  selectedProduct: Product | null;
+  isLoading: Boolean;
+  err?: String;
+} = {
+  selectedProduct: null,
+  isLoading: false,
+};
+
+export const productReducer = createReducer(
+  initialProductState,
+  on(getProduct, (state) => {
+    return { ...state, isLoading: true };
+  }),
+  on(productLoadedSuccess, (state, { product }) => {
+    const newState = { ...state, selectedProduct: product, isLoading: false };
+    return newState;
+  }),
+  on(productLoadedFailed, (state, { error }) => {
+    return { ...state, selectedProduct: null, isLoading: false, err: error };
   })
 );

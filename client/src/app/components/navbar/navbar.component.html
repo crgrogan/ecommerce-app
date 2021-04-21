@@ -5,7 +5,7 @@
       (click)="toggleMenu()"
       class="open-hamburger-menu"
     ></fa-icon>
-    <a href="/">ecom</a>
+    <a routerLink="/">ecom</a>
   </div>
   <div
     [ngClass]="
@@ -25,10 +25,10 @@
     <span class="open-searchbar">
       <fa-icon [icon]="faSearch" (click)="toggleSearchbar()"></fa-icon>
     </span>
-    <a href="/profile">
+    <a routerLink="/profile">
       <fa-icon [icon]="faUserCircle"></fa-icon>
     </a>
-    <a href="/cart">
+    <a routerLink="/cart">
       <fa-icon [icon]="faShoppingBasket"></fa-icon>
     </a>
   </div>

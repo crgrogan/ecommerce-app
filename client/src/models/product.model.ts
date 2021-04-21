@@ -5,8 +5,9 @@ export interface Product {
   brand: string;
   img: string;
   price: number;
-  color: string;
+  colour: string;
   rating: number;
   numReviews: number;
   countInStock: number;
+  _id: number;
 }

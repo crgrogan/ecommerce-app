@@ -10,9 +10,9 @@ import { environment } from '../environments/environment';
 
 import { AppRoutingModule } from './app-routing.module';
 import { filtersReducer } from './reducers/filters.reducer';
-import { productsReducer } from './reducers/products.reducer';
+import { productsReducer, productReducer } from './reducers/products.reducer';
 import { FiltersEffects } from './effects/filters.effects';
-import { ProductsEffects } from './effects/products.effects';
+import { ProductsEffects, ProductEffects } from './effects/products.effects';
 
 // components
 import { AppComponent } from './app.component';
@@ -46,10 +46,11 @@ import { ProductDetailsComponent } from './components/product-details/product-de
   imports: [
     BrowserModule,
     HttpClientModule,
-    EffectsModule.forRoot([FiltersEffects, ProductsEffects]),
+    EffectsModule.forRoot([FiltersEffects, ProductsEffects, ProductEffects]),
     StoreModule.forRoot({
       filters: filtersReducer,
       products: productsReducer,
+      product: productReducer,
     }),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states

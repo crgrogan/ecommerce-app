@@ -45,13 +45,13 @@ router.post("/", isAuth, isAdmin, async (req, res) => {
 });
 
 // Get specific product
-router.get("/:id", (req, res) => {
+router.get("/:id", async (req, res) => {
   const id = req.params.id;
-  const currentProduct = Product.find({ id });
+  const currentProduct = await Product.findById(id);
   if (currentProduct) {
     res.send(currentProduct);
   } else {
-    res.status(404).json({ mag: "Product not found" });
+    res.status(404).json({ msg: "Product not found" });
   }
 });
 

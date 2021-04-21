@@ -1,11 +1,11 @@
-<a href="#">
+<a [routerLink]="['/products', data._id]">
   <div class="product">
     <div class="product-image-container">
       <img class="product-image" src="{{ data.img }}" alt="product" />
     </div>
     <div class="product-details">
       <div class="product-name">
-        {{ data.description }}
+        {{ data.name }}
       </div>
       <div class="product-brand">by {{ data.brand }}</div>
       <div class="product-rating">

@@ -10,4 +10,8 @@ export class ProductsService {
   getAll() {
     return this.http.get('http://localhost:5000/api/products');
   }
+
+  getSelected(productId) {
+    return this.http.get(`http://localhost:5000/api/products/${productId}`);
+  }
 }

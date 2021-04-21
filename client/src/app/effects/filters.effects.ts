@@ -7,7 +7,7 @@ import {
   filtersLoadedSuccess,
   filtersLoadedFailed,
 } from '../actions/filters.actions';
-import { FiltersService } from '../components/home/filters.service';
+import { FiltersService } from '../services/filters.service';
 
 // categoriesLoadedSuccess({ categories: data })
 
