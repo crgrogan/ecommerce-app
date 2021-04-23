@@ -10,6 +10,7 @@ const productSchema = new Schema({
   description: { type: String, required: true },
   numReviews: { type: Number, default: 0, required: true },
   countInStock: { type: Number, default: 0, required: true },
+  qty: { type: Number },
 });
 
 export default model("Product", productSchema);

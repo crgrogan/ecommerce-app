@@ -55,6 +55,19 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// Get product details for cart and update with quantity
+router.post("/:id", async (req, res) => {
+  const id = req.params.id;
+  const { qty } = req.body;
+  const currentProduct = await Product.findById(id);
+  currentProduct.qty = qty;
+  if (currentProduct) {
+    res.send(currentProduct);
+  } else {
+    res.status(404).json({ msg: "Product not found" });
+  }
+});
+
 // edit product
 router.put("/:id", isAuth, isAdmin, async (req, res) => {
   const productId = req.params.id;

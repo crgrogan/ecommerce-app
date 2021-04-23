@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { Product } from 'src/models/product.model';
-import { getProduct } from 'src/app/actions/products.actions';
+import { getProduct } from 'src/app/store/actions/products.actions';
 
 @Component({
   selector: 'app-product-details',
@@ -13,6 +13,7 @@ import { getProduct } from 'src/app/actions/products.actions';
 export class ProductDetailsComponent implements OnInit {
   id: string;
   product$: Observable<Product>;
+  selectedValue: number = 1;
 
   constructor(
     private route: ActivatedRoute,
@@ -29,7 +30,11 @@ export class ProductDetailsComponent implements OnInit {
     this.store.dispatch(getProduct(this.id));
   }
 
-  createArray(num: number) {
-    return new Array(num);
+  createOptionsArray(countInStock: number) {
+    return new Array(countInStock);
+  }
+
+  onSelectedChange(value: number) {
+    this.selectedValue = value;
   }
 }

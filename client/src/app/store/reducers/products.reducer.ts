@@ -10,11 +10,15 @@ import {
   productLoadedFailed,
 } from '../actions/products.actions';
 
-const initialProductsState: {
+// all products
+
+export interface ProductsState {
   productsList: Product[];
   isLoading: Boolean;
   err?: String;
-} = {
+}
+
+const initialProductsState: ProductsState = {
   productsList: [],
   isLoading: false,
 };
@@ -33,11 +37,15 @@ export const productsReducer = createReducer(
   })
 );
 
-const initialProductState: {
+// selected product
+
+export interface ProductState {
   selectedProduct: Product | null;
   isLoading: Boolean;
   err?: String;
-} = {
+}
+
+const initialProductState: ProductState = {
   selectedProduct: null,
   isLoading: false,
 };

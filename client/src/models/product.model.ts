@@ -10,4 +10,5 @@ export interface Product {
   numReviews: number;
   countInStock: number;
   _id: number;
+  qty?: number;
 }

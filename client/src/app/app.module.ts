@@ -2,17 +2,29 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { IvyCarouselModule } from 'angular-responsive-carousel';
-import { StoreModule } from '@ngrx/store';
+import {
+  ActionReducer,
+  ActionReducerMap,
+  MetaReducer,
+  StoreModule,
+} from '@ngrx/store';
 import { HttpClientModule } from '@angular/common/http';
 import { EffectsModule } from '@ngrx/effects';
+import { FormsModule } from '@angular/forms';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { environment } from '../environments/environment';
+import { localStorageSync } from 'ngrx-store-localstorage';
 
+/* import { hydrationMetaReducer } from './store/reducers/hydration.reducer'; */
+import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
-import { filtersReducer } from './reducers/filters.reducer';
-import { productsReducer, productReducer } from './reducers/products.reducer';
-import { FiltersEffects } from './effects/filters.effects';
-import { ProductsEffects, ProductEffects } from './effects/products.effects';
+import { filtersReducer } from './store/reducers/filters.reducer';
+import {
+  productsReducer,
+  productReducer,
+} from './store/reducers/products.reducer';
+import { cartReducer } from './store/reducers/cart.reducer';
+import { FiltersEffects } from './store/effects/filters.effects';
+import { ProductsEffects } from './store/effects/products.effects';
 
 // components
 import { AppComponent } from './app.component';
@@ -27,6 +39,16 @@ import { ProductCardComponent } from './components/product-card/product-card.com
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { CategoryCardComponent } from './components/category-card/category-card.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
+import { CartEffects } from './store/effects/cart.effects';
+import { GetCartTotalPipe } from './components/cart/total.pipe';
+import { reducers } from './store';
+
+export function localStorageSyncReducer(
+  reducer: ActionReducer<any>
+): ActionReducer<any> {
+  return localStorageSync({ keys: ['cart'], rehydrate: true })(reducer);
+}
+const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
 
 @NgModule({
   declarations: [
@@ -42,16 +64,20 @@ import { ProductDetailsComponent } from './components/product-details/product-de
     ProductListComponent,
     CategoryCardComponent,
     ProductDetailsComponent,
+    GetCartTotalPipe,
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     HttpClientModule,
-    EffectsModule.forRoot([FiltersEffects, ProductsEffects, ProductEffects]),
-    StoreModule.forRoot({
+    EffectsModule.forRoot([FiltersEffects, ProductsEffects, CartEffects]),
+    /* StoreModule.forRoot({
       filters: filtersReducer,
       products: productsReducer,
       product: productReducer,
-    }),
+      cart: cartReducer,
+    }), */
+    StoreModule.forRoot(reducers, { metaReducers }),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
       logOnly: environment.production, // Restrict extension to log-only mode

@@ -8,13 +8,15 @@ import { Category } from 'src/models/category.model';
 import { state } from '@angular/animations';
 import { Action } from 'rxjs/internal/scheduler/Action';
 
-const initialState: {
+export interface FiltersState {
   categoriesList: Category[];
   brandsList: String[];
   coloursList: String[];
   isLoading: Boolean;
   err?: String;
-} = {
+}
+
+const initialState: FiltersState = {
   categoriesList: [],
   brandsList: [],
   coloursList: [],
@@ -27,8 +29,6 @@ export const filtersReducer = createReducer(
     return { ...state, isLoading: true };
   }),
   on(filtersLoadedSuccess, (state, { filters }) => {
-    console.log(filters);
-
     const newState = {
       ...state,
       categoriesList: filters.categories,

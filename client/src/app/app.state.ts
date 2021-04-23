@@ -1,8 +1,10 @@
-import { Category } from 'src/models/category.model';
-import { Product } from 'src/models/product.model';
+import { CartState } from './store/reducers/cart.reducer';
+import { FiltersState } from './store/reducers/filters.reducer';
+import { ProductsState, ProductState } from './store/reducers/products.reducer';
 
 export interface AppState {
-  filters; // add typescript
-  products: ReadonlyArray<Product>;
-  product: Product;
+  filters: FiltersState;
+  products: ProductsState;
+  product: ProductState;
+  cart: CartState;
 }

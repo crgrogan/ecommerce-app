@@ -3,8 +3,8 @@ import { Product } from 'src/models/product.model';
 import { Category } from 'src/models/category.model';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { getProducts } from 'src/app/actions/products.actions';
-import { getFilters } from 'src/app/actions/filters.actions';
+import { getProducts } from 'src/app/store/actions/products.actions';
+import { getFilters } from 'src/app/store/actions/filters.actions';
 
 @Component({
   selector: 'app-product-list',

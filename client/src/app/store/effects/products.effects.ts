@@ -26,14 +26,6 @@ export class ProductsEffects {
     )
   );
 
-  constructor(
-    private actions$: Actions,
-    private productsService: ProductsService
-  ) {}
-}
-
-@Injectable()
-export class ProductEffects {
   loadProduct$ = createEffect(() =>
     this.actions$.pipe(
       ofType(getProduct),

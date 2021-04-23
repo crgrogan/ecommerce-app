@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app.state';
 import { Category } from 'src/models/category.model';
-import { getFilters } from 'src/app/actions/filters.actions';
+import { getFilters } from 'src/app/store/actions/filters.actions';
 
 @Component({
   selector: 'app-home',

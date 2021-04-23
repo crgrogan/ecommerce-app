@@ -15,12 +15,29 @@
     <label for="selected-product-qty" class="selected-product-qty-label mb-25">
       Quantity
     </label>
-    <select name="selected-product-qty" id="selected-product-qty" class="mb-25">
-      <option *ngFor="let item of createArray(20); let index = index">
+    <select
+      [ngModel]="selectedValue"
+      (ngModelChange)="onSelectedChange($event)"
+      name="selected-product-qty"
+      id="selected-product-qty"
+      class="mb-25"
+    >
+      <option
+        *ngFor="
+          let item of createOptionsArray(product.countInStock);
+          let index = index
+        "
+      >
         {{ index + 1 }}
       </option>
     </select>
-    <button class="add-to-cart mb-25">Add to Cart</button>
+    <button
+      [routerLink]="['/cart', id]"
+      [queryParams]="{ qty: selectedValue }"
+      class="add-to-cart mb-25"
+    >
+      Add to Cart
+    </button>
   </div>
   <div class="selected-product-description">
     <h3>Product Description</h3>
