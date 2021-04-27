@@ -2,27 +2,15 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { IvyCarouselModule } from 'angular-responsive-carousel';
-import {
-  ActionReducer,
-  ActionReducerMap,
-  MetaReducer,
-  StoreModule,
-} from '@ngrx/store';
+import { ActionReducer, MetaReducer, StoreModule } from '@ngrx/store';
 import { HttpClientModule } from '@angular/common/http';
 import { EffectsModule } from '@ngrx/effects';
 import { FormsModule } from '@angular/forms';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { localStorageSync } from 'ngrx-store-localstorage';
 
-/* import { hydrationMetaReducer } from './store/reducers/hydration.reducer'; */
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
-import { filtersReducer } from './store/reducers/filters.reducer';
-import {
-  productsReducer,
-  productReducer,
-} from './store/reducers/products.reducer';
-import { cartReducer } from './store/reducers/cart.reducer';
 import { FiltersEffects } from './store/effects/filters.effects';
 import { ProductsEffects } from './store/effects/products.effects';
 
@@ -71,12 +59,6 @@ const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
     FormsModule,
     HttpClientModule,
     EffectsModule.forRoot([FiltersEffects, ProductsEffects, CartEffects]),
-    /* StoreModule.forRoot({
-      filters: filtersReducer,
-      products: productsReducer,
-      product: productReducer,
-      cart: cartReducer,
-    }), */
     StoreModule.forRoot(reducers, { metaReducers }),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states

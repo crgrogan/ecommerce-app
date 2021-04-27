@@ -1,7 +1,10 @@
 import { createAction, props } from '@ngrx/store';
 
 // get all products
-export const getProducts = createAction('[Product] Get Products');
+export const getProducts = createAction(
+  '[Product] Get Products',
+  (queryString) => ({ queryString })
+);
 
 export const productsLoadedSuccess = createAction(
   '[Product] Products Loaded Success',

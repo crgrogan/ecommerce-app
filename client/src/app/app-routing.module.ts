@@ -10,8 +10,9 @@ import { RegisterComponent } from './components/register/register.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'products', component: ProductListComponent },
-  { path: 'products/:id', component: ProductDetailsComponent },
+  { path: 'products', redirectTo: 'products/', pathMatch: 'full' },
+  { path: 'products/:filter?', component: ProductListComponent },
+  { path: 'products/selected/:id', component: ProductDetailsComponent },
   { path: 'cart', redirectTo: 'cart/', pathMatch: 'full' },
   { path: 'cart/:id', component: CartComponent },
   { path: 'login', component: LoginComponent },

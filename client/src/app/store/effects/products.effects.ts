@@ -17,8 +17,8 @@ export class ProductsEffects {
   loadProducts$ = createEffect(() =>
     this.actions$.pipe(
       ofType(getProducts),
-      switchMap(() =>
-        this.productsService.getAll().pipe(
+      switchMap((action) =>
+        this.productsService.getAll(action.queryString).pipe(
           map((data) => productsLoadedSuccess({ products: data })),
           catchError((err) => of(productsLoadedFailed({ error: err.message })))
         )

@@ -11,6 +11,30 @@ router.get("/", async (req, res) => {
   res.send(products);
 });
 
+// get products based on filters provided
+router.get("/filter", async (req, res) => {
+  const { category, colour, brand, sortby } = req.query;
+  let filters = {
+    category,
+    colour,
+    brand,
+  };
+  for (let key in filters) {
+    let value = filters[key];
+    // delete property if empty string or undefined
+    if (!value) {
+      delete filters[key];
+    } else {
+      // capitalize words in remaining values in filters
+      filters[key] = value.replace(/\b\w/g, (l) => l.toUpperCase());
+    }
+  }
+  const products = sortby
+    ? await Product.find({ ...filters }).sort({ price: sortby })
+    : await Product.find({ ...filters });
+  res.send(products);
+});
+
 // add new product
 router.post("/", isAuth, isAdmin, async (req, res) => {
   const {
