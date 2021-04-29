@@ -4,7 +4,6 @@ import { Category } from 'src/models/category.model';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { getProducts } from 'src/app/store/actions/products.actions';
-import { getFilters } from 'src/app/store/actions/filters.actions';
 import { Location, PathLocationStrategy } from '@angular/common';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Filter } from 'src/models/filter.model';
@@ -27,12 +26,12 @@ export class ProductListComponent implements OnInit {
 
   constructor(
     private store: Store<{
-      products: { productsList: Product[]; isLoading: Boolean };
+      products: { productsList: Product[]; isLoading: boolean };
       filters: {
         categoriesList: Category[];
-        brandsList: String[];
-        coloursList: String[];
-        isLoading: Boolean;
+        brandsList: string[];
+        coloursList: string[];
+        isLoading: boolean;
       };
     }>,
     private location: Location,
@@ -49,14 +48,10 @@ export class ProductListComponent implements OnInit {
   ngOnInit(): void {
     // check url for query string
     const params = this.route.snapshot.queryParams;
-    /* const params = new URLSearchParams(window.location.search);
-    params.forEach((val, key) => {
-      this.filterObj[key] = val;
-    }); */
-    // get product filters
-    this.store.dispatch(getFilters());
+
     // set initial value of filters based on query string
     this.setSelectedValues(params);
+
     // filter products based on filters provided
     this.filterResults(params);
   }
@@ -91,7 +86,7 @@ export class ProductListComponent implements OnInit {
     const filter = e.target.value.toLowerCase();
     const name = e.target.name;
     const params = new URLSearchParams(window.location.search);
-    // loop through current url seacrh params and populate filterObj
+    // loop through current url search params and populate filterObj
     params.forEach((val, key) => {
       this.filterObj[key] = val;
     });

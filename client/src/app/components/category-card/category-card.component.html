@@ -1,8 +1,11 @@
-<!-- <a routerLink="/products/{{ category.name }}"> -->
-<div class="category">
-  <img class="category-image" src="{{ category.img }}" alt="category" />
-  <div class="category-name">
-    <span>{{ category.name }}</span>
+<a
+  [routerLink]="['/products/filter']"
+  [queryParams]="{ category: category.name.toLowerCase() }"
+>
+  <div class="category">
+    <img class="category-image" src="{{ category.img }}" alt="category" />
+    <div class="category-name">
+      <span>{{ category.name }}</span>
+    </div>
   </div>
-</div>
-<!-- </a> -->
+</a>

@@ -29,10 +29,13 @@ router.post("/login", async (req, res) => {
 
 // register new user
 router.post("/register", async (req, res) => {
-  const { name, email, password, confirmPassword } = req.body;
+  const { name, email, password } = req.body;
   try {
     // check if email already in use
     const emailInUse = await User.findOne({ email });
+    if (emailInUse) {
+      return res.status(409).send({ msg: "Email already in use" });
+    }
     const user = new User({
       name,
       email,
@@ -48,11 +51,9 @@ router.post("/register", async (req, res) => {
         isAdmin: user.isAdmin,
         token: getToken(user),
       });
-    } else {
-      res.status(401).send({ msg: "Invalid credentials" });
     }
   } catch (err) {
-    res.send({ msg: err.message });
+    res.status(409).send({ msg: err.message });
   }
 });
 

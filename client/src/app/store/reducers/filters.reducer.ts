@@ -10,10 +10,10 @@ import { Action } from 'rxjs/internal/scheduler/Action';
 
 export interface FiltersState {
   categoriesList: Category[];
-  brandsList: String[];
-  coloursList: String[];
-  isLoading: Boolean;
-  err?: String;
+  brandsList: string[];
+  coloursList: string[];
+  isLoading: boolean;
+  err?: string;
 }
 
 const initialState: FiltersState = {

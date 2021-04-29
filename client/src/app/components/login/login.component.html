@@ -1,1 +1,46 @@
-<p>login works!</p>
+<div class="form-container">
+  <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm.value)">
+    <ul class="form">
+      <li>
+        <h2>Login</h2>
+      </li>
+      <li>
+        <div *ngIf="error$ | async as error">{{ error }}</div>
+        <div *ngIf="loading$ | async as loading">Loading...</div>
+      </li>
+      <li>
+        <label for="email">Email</label>
+      </li>
+      <li>
+        <input
+          type="email"
+          name="email"
+          id="email"
+          placeholder="Email"
+          [(ngModel)]="email"
+        />
+      </li>
+      <li>
+        <label for="password">Password</label>
+      </li>
+      <li>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Password"
+          [(ngModel)]="password"
+        />
+      </li>
+      <li>
+        <button type="submit" class="submit-form-btn">Login</button>
+      </li>
+      <li>
+        <div>New to Ecom?</div>
+        <a routerLink="/register">
+          <button class="create-account-btn">Create an Account</button>
+        </a>
+      </li>
+    </ul>
+  </form>
+</div>

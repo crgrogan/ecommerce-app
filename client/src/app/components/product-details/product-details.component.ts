@@ -18,7 +18,7 @@ export class ProductDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private store: Store<{
-      product: { selectedProduct: Product; isLoading: Boolean };
+      product: { selectedProduct: Product; isLoading: boolean };
     }>
   ) {
     this.product$ = this.store.select((state) => state.product.selectedProduct);

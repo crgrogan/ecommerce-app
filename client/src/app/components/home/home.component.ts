@@ -13,11 +13,11 @@ import { getFilters } from 'src/app/store/actions/filters.actions';
 export class HomeComponent implements OnInit {
   width: number;
   categories$: Observable<Category[]>;
-  loadingState: Boolean;
+  loadingState: boolean;
 
   constructor(
     private store: Store<{
-      filters: { categoriesList: Category[]; isLoading: Boolean };
+      filters: { categoriesList: Category[]; isLoading: boolean };
     }>
   ) {
     this.categories$ = this.store.select(
@@ -26,9 +26,6 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // get all filters
-    this.store.dispatch(getFilters());
-
     // set width of carousel based on width of window
     this.setCarouselWidth();
   }

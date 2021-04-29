@@ -10,5 +10,5 @@ export const filtersLoadedSuccess = createAction(
 
 export const filtersLoadedFailed = createAction(
   '[CATEGORY] Categories Loaded Failed',
-  props<{ error: String }>()
+  props<{ error: string }>()
 );

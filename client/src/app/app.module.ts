@@ -13,6 +13,10 @@ import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { FiltersEffects } from './store/effects/filters.effects';
 import { ProductsEffects } from './store/effects/products.effects';
+import { CartEffects } from './store/effects/cart.effects';
+import { GetCartTotalPipe } from './components/cart/total.pipe';
+import { reducers } from './store';
+import { UserEffects } from './store/effects/user.effects';
 
 // components
 import { AppComponent } from './app.component';
@@ -27,14 +31,15 @@ import { ProductCardComponent } from './components/product-card/product-card.com
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { CategoryCardComponent } from './components/category-card/category-card.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
-import { CartEffects } from './store/effects/cart.effects';
-import { GetCartTotalPipe } from './components/cart/total.pipe';
-import { reducers } from './store';
+import { ProfileComponent } from './components/profile/profile.component';
 
 export function localStorageSyncReducer(
   reducer: ActionReducer<any>
 ): ActionReducer<any> {
-  return localStorageSync({ keys: ['cart'], rehydrate: true })(reducer);
+  // save slices of state specified in keys array to local storage
+  return localStorageSync({ keys: ['cart', 'currentUser'], rehydrate: true })(
+    reducer
+  );
 }
 const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
 
@@ -53,12 +58,18 @@ const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
     CategoryCardComponent,
     ProductDetailsComponent,
     GetCartTotalPipe,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    EffectsModule.forRoot([FiltersEffects, ProductsEffects, CartEffects]),
+    EffectsModule.forRoot([
+      FiltersEffects,
+      ProductsEffects,
+      CartEffects,
+      UserEffects,
+    ]),
     StoreModule.forRoot(reducers, { metaReducers }),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states

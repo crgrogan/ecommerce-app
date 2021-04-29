@@ -1,15 +1,42 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import {
+  registerPageUnloaded,
+  registerUser,
+} from 'src/app/store/actions/user.actions';
+import { User } from 'src/models/user.model';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
+  name: string = '';
+  email: string = '';
+  password: string = '';
+  confirmPassword: string = '';
+  loading$: Observable<boolean>;
+  error$: Observable<string>;
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor(
+    private store: Store<{
+      newUser: { userInfo: User; isLoading: boolean; err: string };
+    }>
+  ) {
+    this.error$ = this.store.select((state) => state.newUser.err);
+    this.loading$ = this.store.select((state) => state.newUser.isLoading);
   }
 
+  ngOnInit(): void {}
+
+  onSubmit(data: { name: string; email: string; password: string }) {
+    this.store.dispatch(registerUser(data.name, data.email, data.password));
+  }
+
+  ngOnDestroy(): void {
+    // set error state in store back to null
+    this.store.dispatch(registerPageUnloaded());
+  }
 }

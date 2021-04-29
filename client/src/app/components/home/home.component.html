@@ -6,8 +6,15 @@
   </carousel>
 </section>
 <section class="featured-category" id="shoes">
-  <a routerLink="/products"><button>Shop Now</button></a>
+  <a [routerLink]="['/products/filter']" [queryParams]="{ category: 'shoes' }"
+    ><button>Shop Now</button></a
+  >
 </section>
 <section class="featured-category" id="tshirts">
-  <button>Shop Now</button>
+  <a
+    [routerLink]="['/products/filter']"
+    [queryParams]="{ category: 't-shirts' }"
+  >
+    <button>Shop Now</button>
+  </a>
 </section>

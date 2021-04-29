@@ -36,7 +36,7 @@ router.get("/filter", async (req, res) => {
 });
 
 // add new product
-router.post("/", isAuth, isAdmin, async (req, res) => {
+router.post("/", async (req, res) => {
   const {
     img,
     category,
@@ -71,11 +71,18 @@ router.post("/", isAuth, isAdmin, async (req, res) => {
 // Get specific product
 router.get("/:id", async (req, res) => {
   const id = req.params.id;
-  const currentProduct = await Product.findById(id);
-  if (currentProduct) {
-    res.send(currentProduct);
-  } else {
-    res.status(404).json({ msg: "Product not found" });
+  try {
+    const currentProduct = await Product.findById(id);
+    if (currentProduct) {
+      res.send(currentProduct);
+      return;
+    } else {
+      res.status(404).send({ msg: "Product not found" });
+      return;
+    }
+  } catch (err) {
+    console.log(err);
+    res.send({ msg: err.message });
   }
 });
 
@@ -88,7 +95,7 @@ router.post("/:id", async (req, res) => {
   if (currentProduct) {
     res.send(currentProduct);
   } else {
-    res.status(404).json({ msg: "Product not found" });
+    res.status(404).send({ msg: "Product not found" });
   }
 });
 

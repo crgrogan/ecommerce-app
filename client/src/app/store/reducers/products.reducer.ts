@@ -14,8 +14,8 @@ import {
 
 export interface ProductsState {
   productsList: Product[];
-  isLoading: Boolean;
-  err?: String;
+  isLoading: boolean;
+  err?: string;
 }
 
 const initialProductsState: ProductsState = {
@@ -41,8 +41,8 @@ export const productsReducer = createReducer(
 
 export interface ProductState {
   selectedProduct: Product | null;
-  isLoading: Boolean;
-  err?: String;
+  isLoading: boolean;
+  err?: string;
 }
 
 const initialProductState: ProductState = {

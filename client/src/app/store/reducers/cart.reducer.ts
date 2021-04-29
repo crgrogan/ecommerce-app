@@ -11,7 +11,7 @@ import {
 
 export interface CartState {
   cartItems: Product[];
-  err?: String;
+  err?: string;
 }
 
 const initialCartState: CartState = {

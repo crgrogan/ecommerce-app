@@ -21,5 +21,5 @@ export const updateQty = createAction('[CART] Update Qty', (id, qty) => ({
 
 export const cartError = createAction(
   '[CART] Cart Error',
-  props<{ error: String }>()
+  props<{ error: string }>()
 );
