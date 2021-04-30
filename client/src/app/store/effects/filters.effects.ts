@@ -19,7 +19,7 @@ export class FiltersEffects {
       mergeMap(() =>
         this.filtersService.getAll().pipe(
           map((data) => filtersLoadedSuccess({ filters: data[0] })),
-          catchError((err) => of(filtersLoadedFailed({ error: err.message })))
+          catchError((err) => of(filtersLoadedFailed({ error: err.error.msg })))
         )
       )
     )

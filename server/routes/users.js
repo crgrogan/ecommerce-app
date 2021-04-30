@@ -6,7 +6,7 @@ import { getToken } from "../utils";
 const router = express.Router();
 
 // login user
-router.post("/login", async (req, res) => {
+router.post("/login", async (req, res, next) => {
   const { email, password } = req.body;
   try {
     // check if user exists in database
@@ -23,12 +23,12 @@ router.post("/login", async (req, res) => {
       res.status(401).send({ msg: "Invalid email or password" });
     }
   } catch (err) {
-    res.send({ msg: err.message });
+    next(err);
   }
 });
 
 // register new user
-router.post("/register", async (req, res) => {
+router.post("/register", async (req, res, next) => {
   const { name, email, password } = req.body;
   try {
     // check if email already in use
@@ -44,33 +44,39 @@ router.post("/register", async (req, res) => {
     });
     const newUser = await user.save();
     if (newUser) {
-      res.send({
+      res.status(201).send({
         _id: user.id,
         email: user.email,
         name: user.name,
         isAdmin: user.isAdmin,
         token: getToken(user),
       });
+    } else {
+      res.status(400).send({ msg: "Error creating new user" });
     }
   } catch (err) {
-    res.status(409).send({ msg: err.message });
+    next(err);
   }
 });
 
 // create new administrator
-router.get("/createadmin", async (req, res) => {
+router.get("/createadmin", async (req, res, next) => {
+  const { name, email, password } = req.body;
   try {
     const user = new User({
-      name: "Conor",
-      email: "conor@gmail.com",
-      password: "123456",
+      name,
+      email,
+      password,
       isAdmin: true,
     });
-
     const newUser = await user.save();
-    res.send({ user: newUser });
+    if (newUser) {
+      res.status(201).send({ user: newUser });
+    } else {
+      res.status(400).send({ msg: "Error creating new administrator" });
+    }
   } catch (err) {
-    res.send({ msg: err.message });
+    next(err);
   }
 });
 

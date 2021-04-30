@@ -1,5 +1,4 @@
 import { createReducer, on } from '@ngrx/store';
-import { Action } from 'rxjs/internal/scheduler/Action';
 import { Product } from 'src/models/product.model';
 import {
   getProducts,
@@ -11,7 +10,6 @@ import {
 } from '../actions/products.actions';
 
 // all products
-
 export interface ProductsState {
   productsList: Product[];
   isLoading: boolean;
@@ -33,12 +31,13 @@ export const productsReducer = createReducer(
     return newState;
   }),
   on(productsLoadedFailed, (state, { error }) => {
+    console.log(error);
+
     return { ...state, productsList: [], isLoading: false, err: error };
   })
 );
 
 // selected product
-
 export interface ProductState {
   selectedProduct: Product | null;
   isLoading: boolean;

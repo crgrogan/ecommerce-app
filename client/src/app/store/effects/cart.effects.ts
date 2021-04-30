@@ -1,13 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { combineLatest, of } from 'rxjs';
-import {
-  map,
-  catchError,
-  switchMap,
-  mergeMap,
-  concatMap,
-} from 'rxjs/operators';
+import { map, catchError, switchMap } from 'rxjs/operators';
 import {
   addToCart,
   addItemSuccess,
@@ -24,7 +18,7 @@ export class CartEffects {
       switchMap((action) =>
         this.cartService.getProductDetails(action.id, action.qty).pipe(
           map((data) => addItemSuccess({ newItem: data })),
-          catchError((err) => of(cartError({ error: err.message })))
+          catchError((err) => of(cartError({ error: err.error.msg })))
         )
       )
     )
