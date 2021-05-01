@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import {
@@ -31,8 +32,14 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onSubmit(data: { name: string; email: string; password: string }) {
-    this.store.dispatch(registerUser(data.name, data.email, data.password));
+  onSubmit(form: NgForm) {
+    if (form.valid) {
+      this.store.dispatch(
+        registerUser(form.value.name, form.value.email, form.value.password)
+      );
+    }
+    // reset form values
+    form.resetForm();
   }
 
   ngOnDestroy(): void {

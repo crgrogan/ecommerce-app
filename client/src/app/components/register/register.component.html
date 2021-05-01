@@ -1,10 +1,14 @@
 <div class="form-container">
-  <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm.value)">
+  <form
+    #registerForm="ngForm"
+    appPasswordMatch
+    (ngSubmit)="onSubmit(registerForm)"
+  >
     <ul class="form">
       <li>
-        <h2>Register</h2>
+        <h2 class="form-heading">Register</h2>
       </li>
-      <li>
+      <li class="form-status">
         <div *ngIf="error$ | async as error">{{ error }}</div>
         <div *ngIf="loading$ | async as loading">Loading...</div>
       </li>
@@ -16,9 +20,18 @@
           type="text"
           name="name"
           id="name"
+          [class.has-error]="nameControl.invalid && nameControl.touched"
+          [class.has-success]="nameControl.valid"
           placeholder="Name"
           [(ngModel)]="name"
+          #nameControl="ngModel"
+          required
         />
+        <span
+          class="input-error-msg"
+          *ngIf="nameControl.invalid && nameControl.touched"
+          >Name is required</span
+        >
       </li>
       <li>
         <label for="email">Email</label>
@@ -28,9 +41,28 @@
           type="email"
           name="email"
           id="email"
+          [class.has-error]="emailControl.invalid && emailControl.touched"
+          [class.has-success]="emailControl.valid"
           placeholder="Email"
           [(ngModel)]="email"
+          required
+          email
+          #emailControl="ngModel"
         />
+        <span
+          class="input-error-msg"
+          *ngIf="emailControl.value?.length === 0 && emailControl.touched"
+          >Email is required</span
+        >
+        <span
+          class="input-error-msg"
+          *ngIf="
+            emailControl.value?.length > 0 &&
+            emailControl.invalid &&
+            emailControl.touched
+          "
+          >Input must be a valid email</span
+        >
       </li>
       <li>
         <label for="password">Password</label>
@@ -40,21 +72,59 @@
           type="password"
           name="password"
           id="password"
+          [class.has-error]="passwordControl.invalid && passwordControl.touched"
+          [class.has-success]="passwordControl.valid"
           placeholder="Password"
           [(ngModel)]="password"
+          #passwordControl="ngModel"
+          required
         />
+        <span
+          class="input-error-msg"
+          *ngIf="passwordControl.invalid && passwordControl.touched"
+          >Password is required</span
+        >
       </li>
       <li>
         <input
           type="password"
           name="confirmPassword"
           id="confirmPassword"
+          [class.has-error]="
+            confirmPasswordControl.invalid && confirmPasswordControl.touched
+          "
+          [class.has-success]="confirmPasswordControl.valid"
           placeholder="Confirm Password"
           [(ngModel)]="confirmPassword"
+          #confirmPasswordControl="ngModel"
+          required
         />
+        <span
+          class="input-error-msg"
+          *ngIf="
+            confirmPasswordControl.invalid && confirmPasswordControl.touched
+          "
+          >Please confirm password</span
+        >
+        <span
+          *ngIf="
+            confirmPasswordControl.value?.length > 0 &&
+            registerForm.errors?.matchError &&
+            confirmPasswordControl.touched
+          "
+          class="input-error-msg"
+        >
+          Passwords must match
+        </span>
       </li>
       <li>
-        <button type="submit" class="submit-form-btn">Register</button>
+        <button
+          type="submit"
+          [disabled]="registerForm.invalid || registerForm.errors?.matchError"
+          class="submit-form-btn"
+        >
+          Register
+        </button>
       </li>
     </ul>
   </form>

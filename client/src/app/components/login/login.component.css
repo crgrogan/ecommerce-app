@@ -17,6 +17,10 @@
   padding: 1em 2em;
 }
 
+.form label {
+  font-weight: 700;
+}
+
 .form li {
   display: flex;
   flex-direction: column;
@@ -28,6 +32,7 @@
   border: 1px #c0c0c0 solid;
   border-radius: 5px;
   margin-bottom: 0.75em;
+  outline-color: #b6d4fe;
 }
 
 .form li:first-child {
@@ -36,8 +41,16 @@
   justify-content: space-between;
 }
 
+.form-heading {
+  margin: 0.5em 0;
+}
+
 .form li:last-child {
   padding-top: 1em;
+}
+
+.form-status {
+  color: var(--validation-error-color);
 }
 
 .submit-form-btn {
@@ -61,14 +74,33 @@
   background-color: #ebe7e7;
   border: 1.5px #808080 solid;
   border-radius: 5px;
+  -moz-outline-radius: 5px;
   width: 100%;
   text-align: center;
   font-weight: bold;
   padding: 0.75em;
-  margin-top: 0.75em;
+}
+
+.form li:last-child div {
+  margin-bottom: 0.75em;
 }
 
 .create-account-btn:hover {
   border: 1.5px #252525 solid;
   border-radius: 5px;
+}
+
+.has-error {
+  border: 1px solid var(--validation-error-color) !important;
+  outline-color: var(--validation-error-color) !important;
+}
+
+.has-success {
+  border: 1px solid var(--validation-success-color) !important;
+  outline-color: var(--validation-success-color) !important;
+}
+
+.input-error-msg {
+  font-size: 1.4rem;
+  color: var(--validation-error-color);
 }

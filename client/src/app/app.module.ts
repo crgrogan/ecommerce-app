@@ -32,14 +32,16 @@ import { ProductListComponent } from './components/product-list/product-list.com
 import { CategoryCardComponent } from './components/category-card/category-card.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { PasswordMatchValidatorDirective } from './shared/password-match.directive';
 
 export function localStorageSyncReducer(
   reducer: ActionReducer<any>
 ): ActionReducer<any> {
   // save slices of state specified in keys array to local storage
-  return localStorageSync({ keys: ['cart', 'currentUser'], rehydrate: true })(
-    reducer
-  );
+  return localStorageSync({
+    keys: [{ cart: ['cartItems'] }, { currentUser: ['userInfo'] }],
+    rehydrate: true,
+  })(reducer);
 }
 const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
 
@@ -57,8 +59,9 @@ const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
     ProductListComponent,
     CategoryCardComponent,
     ProductDetailsComponent,
-    GetCartTotalPipe,
     ProfileComponent,
+    GetCartTotalPipe,
+    PasswordMatchValidatorDirective,
   ],
   imports: [
     BrowserModule,

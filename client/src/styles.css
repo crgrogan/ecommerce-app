@@ -5,6 +5,8 @@
   --secondary-bg-color: #ffffff; /* #ff8000; */
   --primary-font-color: #000000;
   --secondary-font-color: #ffffff;
+  --validation-error-color: #dc3545;
+  --validation-success-color: #28a745;
 }
 
 html {

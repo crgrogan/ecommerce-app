@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -20,7 +21,6 @@ export class LoginComponent implements OnInit {
   confirmPassword: string = '';
   loading$: Observable<boolean>;
   error$: Observable<string>;
-  sub;
 
   constructor(
     private store: Store<{
@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     // if user is logged in, redirect to profile page
-    this.sub = this.store
+    this.store
       .select((state) => state.currentUser.userInfo)
       .subscribe((user) => {
         if (user) this.router.navigate(['/profile']);
@@ -42,8 +42,12 @@ export class LoginComponent implements OnInit {
       .unsubscribe();
   }
 
-  onSubmit(data: { email: string; password: string }) {
-    this.store.dispatch(loginUser(data.email, data.password));
+  onSubmit(form: NgForm) {
+    if (form.valid) {
+      this.store.dispatch(loginUser(form.value.email, form.value.password));
+    }
+    // reset form values
+    form.resetForm();
   }
 
   ngOnDestroy(): void {

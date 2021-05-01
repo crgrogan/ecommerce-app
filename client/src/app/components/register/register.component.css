@@ -17,6 +17,10 @@
   padding: 1em 2em;
 }
 
+.form label {
+  font-weight: 700;
+}
+
 .form li {
   display: flex;
   flex-direction: column;
@@ -36,6 +40,14 @@
   justify-content: space-between;
 }
 
+.form-heading {
+  margin: 0.5em 0;
+}
+
+.form-status {
+  color: var(--validation-error-color);
+}
+
 .submit-form-btn {
   cursor: pointer;
   background-color: rgb(255, 206, 0);
@@ -50,4 +62,19 @@
 .submit-form-btn:hover {
   border: 1.5px #252525 solid;
   border-radius: 5px;
+}
+
+.has-error {
+  border: 1px solid var(--validation-error-color) !important;
+  outline-color: var(--validation-error-color);
+}
+
+.has-success {
+  border: 1px solid var(--validation-success-color) !important;
+  outline-color: var(--validation-success-color);
+}
+
+.input-error-msg {
+  font-size: 1.4rem;
+  color: var(--validation-error-color);
 }
