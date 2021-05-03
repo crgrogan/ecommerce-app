@@ -32,7 +32,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onSubmit(form: NgForm) {
+  submitForm(form: NgForm) {
     if (form.valid) {
       this.store.dispatch(
         registerUser(form.value.name, form.value.email, form.value.password)

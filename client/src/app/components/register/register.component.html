@@ -2,15 +2,19 @@
   <form
     #registerForm="ngForm"
     appPasswordMatch
-    (ngSubmit)="onSubmit(registerForm)"
+    (ngSubmit)="submitForm(registerForm)"
   >
     <ul class="form">
       <li>
         <h2 class="form-heading">Register</h2>
       </li>
-      <li class="form-status">
-        <div *ngIf="error$ | async as error">{{ error }}</div>
-        <div *ngIf="loading$ | async as loading">Loading...</div>
+      <li>
+        <div class="form-msg-error" *ngIf="error$ | async as error">
+          {{ error }}
+        </div>
+        <div class="form-msg-loading" *ngIf="loading$ | async as loading">
+          Loading...
+        </div>
       </li>
       <li>
         <label for="name">Name</label>
@@ -78,11 +82,20 @@
           [(ngModel)]="password"
           #passwordControl="ngModel"
           required
+          minlength="4"
         />
         <span
           class="input-error-msg"
-          *ngIf="passwordControl.invalid && passwordControl.touched"
+          *ngIf="passwordControl.value?.length === 0 && passwordControl.touched"
           >Password is required</span
+        >
+        <span
+          class="input-error-msg"
+          *ngIf="
+            passwordControl.value?.length > 0 &&
+            passwordControl.errors?.minlength
+          "
+          >Password must be at least 4 characters long</span
         >
       </li>
       <li>
@@ -91,9 +104,15 @@
           name="confirmPassword"
           id="confirmPassword"
           [class.has-error]="
-            confirmPasswordControl.invalid && confirmPasswordControl.touched
+            (confirmPasswordControl.invalid &&
+              confirmPasswordControl.touched) ||
+            registerForm.errors?.matchError
           "
-          [class.has-success]="confirmPasswordControl.valid"
+          [class.has-success]="
+            confirmPasswordControl.touched &&
+            confirmPasswordControl.valid &&
+            !registerForm.errors?.matchError
+          "
           placeholder="Confirm Password"
           [(ngModel)]="confirmPassword"
           #confirmPasswordControl="ngModel"

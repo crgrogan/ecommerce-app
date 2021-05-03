@@ -1,1 +1,136 @@
-<p>management works!</p>
+<div class="management-container">
+  <div *ngIf="isOpen" class="form-container">
+    <form #productForm="ngForm" (ngSubmit)="submitForm(productForm.value)">
+      <ul class="form">
+        <li>
+          <h2>{{ _id ? "Edit Product" : "Create Product" }}</h2>
+          <button class="close-modal-btn" (click)="closeModal()">
+            <fa-icon [icon]="faTimes"></fa-icon>
+          </button>
+        </li>
+        <li>
+          <div *ngIf="loading$ | async as loading" class="form-msg-loading">
+            Loading...
+          </div>
+          <div *ngIf="error$ | async as error" class="form-msg-error">
+            {{ error }}
+          </div>
+          <div *ngIf="saveMsg$ | async as saveMsg" class="form-msg-success">
+            {{ saveMsg }}
+          </div>
+        </li>
+        <li>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            placeholder="Name"
+            [(ngModel)]="name"
+          />
+        </li>
+        <li>
+          <input
+            type="text"
+            name="brand"
+            id="brand"
+            placeholder="Brand"
+            [(ngModel)]="brand"
+          />
+        </li>
+        <li>
+          <input
+            type="text"
+            name="colour"
+            id="colour"
+            placeholder="Colour"
+            [(ngModel)]="colour"
+          />
+        </li>
+        <li>
+          <input
+            type="text"
+            name="price"
+            id="price"
+            placeholder="Price"
+            [(ngModel)]="price"
+          />
+        </li>
+        <li>
+          <input
+            type="text"
+            name="img"
+            id="img"
+            placeholder="Image URL"
+            [(ngModel)]="img"
+          />
+        </li>
+        <li>
+          <input
+            type="text"
+            name="category"
+            id="category"
+            placeholder="Category"
+            [(ngModel)]="category"
+          />
+        </li>
+        <li>
+          <input
+            type="text"
+            name="description"
+            id="description"
+            placeholder="Description"
+            [(ngModel)]="description"
+          />
+        </li>
+        <li>
+          <input
+            type="text"
+            name="countInStock"
+            id="countInStock"
+            placeholder="Number of item in stock"
+            [(ngModel)]="countInStock"
+          />
+        </li>
+        <li>
+          <button type="submit" class="submit-form-btn">
+            {{ _id ? "Update" : "Create" }}
+          </button>
+          <button class="cancel-modal-btn" (click)="closeModal()">
+            Cancel
+          </button>
+        </li>
+      </ul>
+    </form>
+  </div>
+  <div *ngIf="!isOpen">
+    <h2>Product Manager</h2>
+    <button (click)="openModal()" class="open-product-modal">
+      Create Product
+    </button>
+    <table class="products-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Price (€)</th>
+          <th>Category</th>
+          <th>Brand</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="products$ | async as products">
+        <tr *ngFor="let product of products">
+          <td>{{ product._id }}</td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.price }}</td>
+          <td>{{ product.category }}</td>
+          <td>{{ product.brand }}</td>
+          <td>
+            <button class="edit-btn" (click)="openModal(product)">Edit</button>
+            <button (click)="deleteProduct(product._id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
       .unsubscribe();
   }
 
-  onSubmit(form: NgForm) {
+  submitForm(form: NgForm) {
     if (form.valid) {
       this.store.dispatch(loginUser(form.value.email, form.value.password));
     }

@@ -1,12 +1,16 @@
 <div class="form-container">
-  <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+  <form #loginForm="ngForm" (ngSubmit)="submitForm(loginForm)">
     <ul class="form">
       <li>
         <h2 class="form-heading">Login</h2>
       </li>
-      <li class="form-status">
-        <div *ngIf="error$ | async as error">{{ error }}</div>
-        <div *ngIf="loading$ | async as loading">Loading...</div>
+      <li>
+        <div *ngIf="error$ | async as error" class="form-msg-error">
+          {{ error }}
+        </div>
+        <div *ngIf="loading$ | async as loading" class="form-msg-loading">
+          Loading...
+        </div>
       </li>
       <li>
         <label for="email">Email</label>
@@ -53,12 +57,21 @@
           placeholder="Password"
           [(ngModel)]="password"
           required
+          minlength="4"
           #passwordControl="ngModel"
         />
         <span
           class="input-error-msg"
-          *ngIf="passwordControl.invalid && passwordControl.touched"
+          *ngIf="passwordControl.value?.length === 0 && passwordControl.touched"
           >Password is required</span
+        >
+        <span
+          class="input-error-msg"
+          *ngIf="
+            passwordControl.value?.length > 0 &&
+            passwordControl.errors?.minlength
+          "
+          >Password must be at least 4 characters long</span
         >
       </li>
       <li>

@@ -9,6 +9,12 @@ import {
   getProduct,
   productLoadedFailed,
   productLoadedSuccess,
+  saveProduct,
+  productSaveSuccess,
+  productSaveFailed,
+  deleteProduct,
+  productDeleteFailed,
+  productDeleteSuccess,
 } from '../actions/products.actions';
 import { ProductsService } from '../services/products.service';
 
@@ -37,6 +43,38 @@ export class ProductsEffects {
         this.productsService.getSelected(action.id).pipe(
           map((data) => productLoadedSuccess({ product: data })),
           catchError((err) => of(productLoadedFailed({ error: err.error.msg })))
+        )
+      )
+    )
+  );
+
+  // create/update product
+  saveProduct$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(saveProduct),
+      switchMap((action) =>
+        this.productsService.createProduct(action.payload).pipe(
+          switchMap((data) => {
+            // if product is successfully created/updated, dispatch getProducts to get updated product list
+            return [productSaveSuccess({ product: data }), getProducts('')];
+          }),
+          catchError((err) => of(productSaveFailed({ error: err.error.msg })))
+        )
+      )
+    )
+  );
+
+  // delete product from database
+  deleteProduct$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteProduct),
+      switchMap((action) =>
+        this.productsService.deleteProduct(action.id).pipe(
+          switchMap((data) => {
+            // if product is successfully deleted, dispatch getProducts to get updated product list
+            return [productDeleteSuccess({ product: data }), getProducts('')];
+          }),
+          catchError((err) => of(productDeleteFailed({ error: err.error.msg })))
         )
       )
     )

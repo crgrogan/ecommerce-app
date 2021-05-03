@@ -6,9 +6,9 @@ export interface Product {
   img: string;
   price: number;
   colour: string;
-  rating: number;
-  numReviews: number;
+  rating?: number;
+  numReviews?: number;
   countInStock: number;
-  _id: number;
+  _id: string;
   qty?: number;
 }

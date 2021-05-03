@@ -1,0 +1,81 @@
+.management-container {
+  padding: 2.5em;
+}
+
+.products-table {
+  width: 100%;
+  border: 1px solid #203040;
+}
+
+.products-table,
+th,
+td {
+  border-right: 1px solid #203040;
+  border-left: 1px solid #203040;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.products-table thead {
+  background-color: #203040;
+  color: rgb(253, 251, 251);
+}
+
+.products-table tr:nth-child(2n) {
+  background: #dbdbdb;
+}
+
+.products-table th,
+td {
+  padding: 0.5em;
+}
+
+.edit-btn {
+  margin-right: 0.5em;
+}
+
+.open-product-modal {
+  background-color: #ffce00;
+  border: 1.5px #808080 solid;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: bold;
+  padding: 0.75em;
+  margin-bottom: 3em;
+}
+
+.open-product-modal:hover {
+  border: 1.5px #252525 solid;
+  border-radius: 5px;
+}
+
+.close-modal-btn {
+  align-self: flex-start;
+  padding: 0.25em;
+  font-weight: bold;
+  font-size: 2.8rem;
+  background-color: transparent;
+  border: none;
+  opacity: 0.7;
+}
+
+.close-modal-btn:hover {
+  opacity: 1;
+}
+
+.cancel-modal-btn {
+  cursor: pointer;
+  background-color: #dbd8d8;
+  border: 1.5px #808080 solid;
+  border-radius: 5px;
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  padding: 0.75em;
+  margin-top: 1em;
+}
+
+.cancel-modal-btn:hover {
+  border: 1.5px #252525 solid;
+  border-radius: 5px;
+}

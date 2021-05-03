@@ -5,8 +5,6 @@ export const passwordMatchValidator: ValidatorFn = (
 ): ValidationErrors | null => {
   const password = control.get('password');
   const confirmPassword = control.get('confirmPassword');
-  if (password && confirmPassword)
-    console.log(password.value, confirmPassword.value);
 
   return password && confirmPassword && password.value === confirmPassword.value
     ? null
