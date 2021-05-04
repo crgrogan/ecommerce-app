@@ -38,7 +38,7 @@ export class RegisterComponent implements OnInit {
         registerUser(form.value.name, form.value.email, form.value.password)
       );
     }
-    // reset form values
+    // reset form values and state
     form.resetForm();
   }
 

@@ -44,13 +44,14 @@ router.get("/filter", async (req, res, next) => {
 });
 
 // add new product
-router.post("/", async (req, res, next) => {
+router.post("/", isAuth, isAdmin, async (req, res, next) => {
   const {
     img,
     category,
     name,
     brand,
     price,
+    colour,
     description,
     rating,
     countInStock,
@@ -63,6 +64,7 @@ router.post("/", async (req, res, next) => {
       category,
       brand,
       price,
+      colour,
       description,
       rating,
       countInStock,
@@ -113,7 +115,7 @@ router.post("/:id", async (req, res, next) => {
 });
 
 // edit product
-router.put("/:id", async (req, res, next) => {
+router.put("/:id", isAuth, isAdmin, async (req, res, next) => {
   const productId = req.params.id;
   const {
     img,
@@ -123,6 +125,7 @@ router.put("/:id", async (req, res, next) => {
     price,
     description,
     countInStock,
+    colour,
   } = req.body;
   try {
     const product = await Product.findById(productId);
@@ -134,6 +137,7 @@ router.put("/:id", async (req, res, next) => {
       product.brand = brand;
       product.description = description;
       product.countInStock = countInStock;
+      product.colour = colour;
     }
 
     const updatedProduct = await product.save();
@@ -150,7 +154,7 @@ router.put("/:id", async (req, res, next) => {
 });
 
 // delete product
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", isAuth, isAdmin, async (req, res, next) => {
   const productId = req.params.id;
   try {
     const productToDelete = await Product.findById(productId);

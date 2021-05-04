@@ -1,16 +1,32 @@
 import { Schema, model } from "mongoose";
 
 const productSchema = new Schema({
-  img: { type: String, required: true },
-  category: { type: String, required: true },
-  name: { type: String, required: true },
-  brand: { type: String, required: true },
-  price: { type: Number, required: true },
+  img: { type: String, required: [true, "Image URL is required"] },
+  category: { type: String, required: [true, "Item category is required"] },
+  name: { type: String, required: [true, "Item name is required"] },
+  brand: { type: String, required: [true, "Item brand is required"] },
+  colour: { type: String, required: [true, "Item colour is required"] },
+  price: { type: Number, required: [true, "Item price is required"] },
   rating: { type: Number, default: 0, required: true },
-  description: { type: String, required: true },
+  description: {
+    type: String,
+    required: [true, "Item description is required"],
+  },
   numReviews: { type: Number, default: 0, required: true },
-  countInStock: { type: Number, default: 0, required: true },
-  qty: { type: Number },
+  countInStock: {
+    type: Number,
+    default: 0,
+    required: [true, "Number of item in stock is required"],
+  },
+});
+
+// capitalize strings before saving to database
+productSchema.pre("save", function (next) {
+  this.name = this.name.replace(/\b\w/g, (l) => l.toUpperCase());
+  this.category = this.category.replace(/\b\w/g, (l) => l.toUpperCase());
+  this.brand = this.brand.replace(/\b\w/g, (l) => l.toUpperCase());
+  this.colour = this.colour.replace(/\b\w/g, (l) => l.toUpperCase());
+  next();
 });
 
 export default model("Product", productSchema);

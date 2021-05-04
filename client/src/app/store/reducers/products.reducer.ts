@@ -92,7 +92,7 @@ const initialNewProductState: NewProductState = {
 export const newProductReducer = createReducer(
   initialNewProductState,
   on(saveProduct, (state) => {
-    return { ...state, isLoading: true };
+    return { ...state, isLoading: true, err: null };
   }),
   on(productSaveSuccess, (state, { product }) => {
     const newState = {

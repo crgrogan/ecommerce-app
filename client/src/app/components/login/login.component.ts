@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
     if (form.valid) {
       this.store.dispatch(loginUser(form.value.email, form.value.password));
     }
-    // reset form values
+    // reset form values and state
     form.resetForm();
   }
 

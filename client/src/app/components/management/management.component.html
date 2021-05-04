@@ -1,6 +1,6 @@
 <div class="management-container">
   <div *ngIf="isOpen" class="form-container">
-    <form #productForm="ngForm" (ngSubmit)="submitForm(productForm.value)">
+    <form #productForm="ngForm" (ngSubmit)="submitForm(productForm)">
       <ul class="form">
         <li>
           <h2>{{ _id ? "Edit Product" : "Create Product" }}</h2>
@@ -24,75 +24,162 @@
             type="text"
             name="name"
             id="name"
+            [class.has-error]="nameControl.invalid && nameControl.touched"
+            [class.has-success]="nameControl.valid && nameControl.touched"
             placeholder="Name"
             [(ngModel)]="name"
+            required
+            #nameControl="ngModel"
           />
+          <span
+            class="input-error-msg"
+            *ngIf="nameControl.invalid && nameControl.touched"
+            >Item name is required</span
+          >
         </li>
         <li>
           <input
             type="text"
             name="brand"
             id="brand"
+            [class.has-error]="brandControl.invalid && brandControl.touched"
+            [class.has-success]="brandControl.valid && brandControl.touched"
             placeholder="Brand"
             [(ngModel)]="brand"
+            required
+            #brandControl="ngModel"
           />
+          <span
+            class="input-error-msg"
+            *ngIf="brandControl.invalid && brandControl.touched"
+            >Item brand is required</span
+          >
         </li>
         <li>
           <input
             type="text"
             name="colour"
             id="colour"
+            [class.has-error]="colourControl.invalid && colourControl.touched"
+            [class.has-success]="colourControl.valid && colourControl.touched"
             placeholder="Colour"
             [(ngModel)]="colour"
+            required
+            #colourControl="ngModel"
           />
+          <span
+            class="input-error-msg"
+            *ngIf="colourControl.invalid && colourControl.touched"
+            >Item colour is required</span
+          >
         </li>
         <li>
           <input
             type="text"
             name="price"
             id="price"
+            [class.has-error]="priceControl.invalid && priceControl.touched"
+            [class.has-success]="priceControl.valid && priceControl.touched"
             placeholder="Price"
             [(ngModel)]="price"
+            required
+            #priceControl="ngModel"
           />
+          <span
+            class="input-error-msg"
+            *ngIf="priceControl.invalid && priceControl.touched"
+            >Item price is required</span
+          >
         </li>
         <li>
           <input
             type="text"
             name="img"
             id="img"
+            [class.has-error]="imgControl.invalid && imgControl.touched"
+            [class.has-success]="imgControl.valid && imgControl.touched"
             placeholder="Image URL"
             [(ngModel)]="img"
+            required
+            #imgControl="ngModel"
           />
+          <span
+            class="input-error-msg"
+            *ngIf="imgControl.invalid && imgControl.touched"
+            >Image URL is required</span
+          >
         </li>
         <li>
           <input
             type="text"
             name="category"
             id="category"
+            [class.has-error]="
+              categoryControl.invalid && categoryControl.touched
+            "
+            [class.has-success]="
+              categoryControl.valid && categoryControl.touched
+            "
             placeholder="Category"
             [(ngModel)]="category"
+            #categoryControl="ngModel"
           />
+          <span
+            class="input-error-msg"
+            *ngIf="categoryControl.invalid && categoryControl.touched"
+            >Category is required</span
+          >
         </li>
         <li>
           <input
             type="text"
             name="description"
             id="description"
+            [class.has-error]="
+              descriptionControl.invalid && descriptionControl.touched
+            "
+            [class.has-success]="
+              descriptionControl.valid && descriptionControl.touched
+            "
             placeholder="Description"
             [(ngModel)]="description"
+            required
+            #descriptionControl="ngModel"
           />
+          <span
+            class="input-error-msg"
+            *ngIf="descriptionControl.invalid && descriptionControl.touched"
+            >Item description is required</span
+          >
         </li>
         <li>
           <input
             type="text"
             name="countInStock"
             id="countInStock"
+            [class.has-error]="
+              countInStockControl.invalid && countInStockControl.touched
+            "
+            [class.has-success]="
+              countInStockControl.valid && countInStockControl.touched
+            "
             placeholder="Number of item in stock"
             [(ngModel)]="countInStock"
+            required
+            #countInStockControl="ngModel"
           />
+          <span
+            class="input-error-msg"
+            *ngIf="countInStockControl.invalid && countInStockControl.touched"
+            >Number of item in stock is required</span
+          >
         </li>
         <li>
-          <button type="submit" class="submit-form-btn">
+          <button
+            [disabled]="productForm.invalid"
+            type="submit"
+            class="submit-form-btn"
+          >
             {{ _id ? "Update" : "Create" }}
           </button>
           <button class="cancel-modal-btn" (click)="closeModal()">

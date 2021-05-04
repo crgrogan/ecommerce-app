@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -48,7 +49,7 @@ export class ManagementComponent implements OnInit {
     this.store.dispatch(getProducts(''));
   }
 
-  submitForm(formValues) {
+  submitForm(form: NgForm) {
     const {
       _id,
       name,
@@ -59,21 +60,27 @@ export class ManagementComponent implements OnInit {
       category,
       countInStock,
       description,
-    } = formValues;
-    this.store.dispatch(
-      saveProduct({
-        _id,
-        name,
-        brand,
-        price,
-        img,
-        colour,
-        category,
-        countInStock,
-        description,
-      })
-    );
+    } = form.value;
+    if (form.valid) {
+      this.store.dispatch(
+        saveProduct({
+          _id: this._id,
+          name,
+          brand,
+          price,
+          img,
+          colour,
+          category,
+          countInStock,
+          description,
+        })
+      );
+    }
+
     window.scroll(0, 0);
+
+    // reset form values and state
+    form.resetForm();
   }
 
   deleteProduct(id: string) {
