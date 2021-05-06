@@ -72,7 +72,6 @@ export const productReducer = createReducer(
 
 // create/update product
 
-// selected product
 export interface NewProductState {
   success: boolean;
   product: Product | null;

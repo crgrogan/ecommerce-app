@@ -1,7 +1,10 @@
 import { ActionReducerMap, MetaReducer } from '@ngrx/store';
 import { AppState } from '../app.state';
 import { cartReducer } from './reducers/cart.reducer';
-import { filtersReducer } from './reducers/filters.reducer';
+import {
+  filtersReducer,
+  updateFiltersReducer,
+} from './reducers/filters.reducer';
 import {
   deleteProductReducer,
   newProductReducer,
@@ -19,4 +22,5 @@ export const reducers: ActionReducerMap<AppState> = {
   currentUser: loginReducer,
   newProduct: newProductReducer,
   deleteProduct: deleteProductReducer,
+  updateFilters: updateFiltersReducer,
 };

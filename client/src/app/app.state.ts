@@ -1,5 +1,8 @@
 import { CartState } from './store/reducers/cart.reducer';
-import { FiltersState } from './store/reducers/filters.reducer';
+import {
+  FiltersState,
+  UpdateFiltersState,
+} from './store/reducers/filters.reducer';
 import {
   DeleteProductState,
   NewProductState,
@@ -17,4 +20,5 @@ export interface AppState {
   currentUser: UserState;
   newProduct: NewProductState;
   deleteProduct: DeleteProductState;
+  updateFilters: UpdateFiltersState;
 }

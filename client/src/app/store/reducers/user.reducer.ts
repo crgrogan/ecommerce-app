@@ -9,6 +9,7 @@ import {
   userLoginFailed,
   registerPageUnloaded,
   loginPageUnloaded,
+  logoutUser,
 } from '../actions/user.actions';
 
 export interface UserState {
@@ -53,5 +54,8 @@ export const loginReducer = createReducer(
   }),
   on(loginPageUnloaded, (state) => {
     return { ...state, err: null };
+  }),
+  on(logoutUser, (state) => {
+    return { ...state, userInfo: null, isLoading: false, err: null };
   })
 );

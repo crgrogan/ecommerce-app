@@ -44,3 +44,5 @@ export const registerPageUnloaded = createAction(
 
 // set error state in login reducer back to null
 export const loginPageUnloaded = createAction('[USER] Login Page Unloaded');
+
+export const logoutUser = createAction('[USER] User Logout');

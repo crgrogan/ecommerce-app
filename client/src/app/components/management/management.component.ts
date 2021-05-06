@@ -4,11 +4,18 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import {
+  deleteFilter,
+  filtersUpdatedFailed,
+  resetFiltersUpdateState,
+  updateFilters,
+} from 'src/app/store/actions/filters.actions';
+import {
   deleteProduct,
   getProducts,
   resetSaveState,
   saveProduct,
 } from 'src/app/store/actions/products.actions';
+import { updateFiltersReducer } from 'src/app/store/reducers/filters.reducer';
 import { Product } from 'src/models/product.model';
 
 @Component({
@@ -18,7 +25,8 @@ import { Product } from 'src/models/product.model';
 })
 export class ManagementComponent implements OnInit {
   faTimes = faTimes;
-  isOpen: boolean = false;
+  productModalOpen: boolean = false;
+  filtersModalOpen: boolean = false;
   name: string = '';
   description: string = '';
   category: string = '';
@@ -28,20 +36,48 @@ export class ManagementComponent implements OnInit {
   colour: string = '';
   countInStock: number = null;
   _id: string = '';
+  filterCategoriesName: string = '';
+  filterCategoriesImg: string = '';
+  filterBrands: string = '';
+  filterColours: string = '';
+  formIsEmpty: boolean = false;
   loading$: Observable<boolean>;
   error$: Observable<string>;
   saveMsg$: Observable<string>;
   products$: Observable<Product[]>;
+  categories$: Observable<[]>;
+  brands$: Observable<[]>;
+  colours$: Observable<[]>;
+  filtersSaveLoading$: Observable<boolean>;
+  filtersSaveError$: Observable<string>;
+  filtersSaveMsg$: Observable<string>;
 
   constructor(
     private store: Store<{
-      products: { productsList: Product[]; isLoading: boolean; err: string };
-      newProduct: { msg: string; err: string };
+      products: { productsList: Product[] };
+      newProduct: { msg: string; err: string; isLoading };
+      filters: { categoriesList: []; brandsList: []; coloursList: [] };
+      updateFilters: { isLoading: boolean; msg: string; err: string };
     }>
   ) {
     this.products$ = this.store.select((state) => state.products.productsList);
+    this.loading$ = this.store.select((state) => state.newProduct.isLoading);
     this.saveMsg$ = this.store.select((state) => state.newProduct.msg);
     this.error$ = this.store.select((state) => state.newProduct.err);
+    this.categories$ = this.store.select(
+      (state) => state.filters.categoriesList
+    );
+    this.brands$ = this.store.select((state) => state.filters.brandsList);
+    this.colours$ = this.store.select((state) => state.filters.coloursList);
+    this.filtersSaveLoading$ = this.store.select(
+      (state) => state.updateFilters.isLoading
+    );
+    this.filtersSaveMsg$ = this.store.select(
+      (state) => state.updateFilters.msg
+    );
+    this.filtersSaveError$ = this.store.select(
+      (state) => state.updateFilters.err
+    );
   }
 
   ngOnInit(): void {
@@ -49,7 +85,9 @@ export class ManagementComponent implements OnInit {
     this.store.dispatch(getProducts(''));
   }
 
-  submitForm(form: NgForm) {
+  // Products
+
+  submitProductForm(form: NgForm) {
     const {
       _id,
       name,
@@ -87,7 +125,7 @@ export class ManagementComponent implements OnInit {
     this.store.dispatch(deleteProduct(id));
   }
 
-  openModal(product: Product) {
+  openProductModal(product: Product) {
     if (product) {
       this._id = product._id;
       this.name = product.name;
@@ -99,10 +137,10 @@ export class ManagementComponent implements OnInit {
       this.countInStock = product.countInStock;
       this.description = product.description;
     }
-    this.isOpen = !this.isOpen;
+    this.productModalOpen = !this.productModalOpen;
   }
 
-  closeModal() {
+  closeProductModal() {
     this._id = '';
     this.name = '';
     this.brand = '';
@@ -112,13 +150,76 @@ export class ManagementComponent implements OnInit {
     this.colour = '';
     this.countInStock = null;
     this.description = '';
-    this.isOpen = !this.isOpen;
+    this.productModalOpen = !this.productModalOpen;
+
     window.scroll(0, 0);
+    // set error state in store back to null
     this.store.dispatch(resetSaveState());
+  }
+
+  // Filters
+
+  openFiltersModal() {
+    this.filtersModalOpen = !this.filtersModalOpen;
+  }
+
+  submitFiltersForm(form: NgForm) {
+    if (Object.values(form.value).every((prop) => prop == '' || prop == null)) {
+      this.store.dispatch(
+        filtersUpdatedFailed({ error: 'Form cannot be empty' })
+      );
+      window.scroll(0, 0);
+      // reset form values and state
+      form.resetForm();
+      return;
+    }
+
+    const {
+      filterCategoriesName,
+      filterCategoriesImg,
+      filterBrands,
+      filterColours,
+    } = form.value;
+    if (form.valid) {
+      this.store.dispatch(
+        updateFilters({
+          category: {
+            name: filterCategoriesName,
+            img: filterCategoriesImg,
+          },
+          brand: {
+            name: filterBrands,
+          },
+          colour: {
+            name: filterColours,
+          },
+        })
+      );
+    }
+
+    window.scroll(0, 0);
+    // reset form values and state
+    form.resetForm();
+  }
+
+  closeFiltersModal() {
+    this.filterCategoriesName = '';
+    this.filterCategoriesImg = '';
+    this.filterColours = '';
+    this.filterBrands = '';
+    this.filtersModalOpen = !this.filtersModalOpen;
+    // set error state in store back to null
+    this.store.dispatch(resetFiltersUpdateState());
+    window.scroll(0, 0);
+  }
+
+  deleteFilter(id: string, category: string) {
+    this.store.dispatch(deleteFilter(id, category));
   }
 
   ngOnDestroy(): void {
     // set error state in store back to null
     this.store.dispatch(resetSaveState());
+    this.store.dispatch(resetFiltersUpdateState());
   }
 }

@@ -1,6 +1,5 @@
 .management-container {
   padding: 2.5em;
-  overflow-x: hidden;
 }
 
 .products-table {
@@ -9,6 +8,7 @@
 }
 
 .products-table,
+.filters-table,
 th,
 td {
   border-right: 1px solid #203040;
@@ -17,16 +17,16 @@ td {
   text-align: center;
 }
 
-.products-table thead {
+thead {
   background-color: #203040;
   color: #fdfbfb;
 }
 
-.products-table tr:nth-child(2n) {
+tr:nth-child(2n) {
   background: #dbdbdb;
 }
 
-.products-table th,
+th,
 td {
   padding: 0.5em;
 }
@@ -35,7 +35,7 @@ td {
   margin-right: 0.5em;
 }
 
-.open-product-modal {
+.open-modal {
   background-color: #ffce00;
   border: 1.5px #808080 solid;
   border-radius: 5px;
@@ -45,9 +45,13 @@ td {
   margin-bottom: 3em;
 }
 
-.open-product-modal:hover {
+.open-modal:hover {
   border: 1.5px #252525 solid;
   border-radius: 5px;
+}
+
+#open-product-modal {
+  margin-right: 2em;
 }
 
 .close-modal-btn {
@@ -81,29 +85,53 @@ td {
   border-radius: 5px;
 }
 
+/* Filters modal */
+
+.filters-table-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: -1.5em 0 0 0; /* Creates margin between tables when items wrap */
+}
+
+.filters-table-container > * {
+  margin-top: 1.5em;
+}
+
+.filters-table {
+  width: 30%;
+  min-width: 250px;
+  max-width: 375px;
+  border: 1px solid #203040;
+}
+
+.delete-filters-container {
+  width: 75px;
+}
+
 @media only screen and (max-width: 768px) {
   /* Force table to not be like tables anymore */
-  table,
-  thead,
-  tbody,
-  th,
-  td,
-  tr {
+  .products-table,
+  .products-table thead,
+  .products-table tbody,
+  .products-table th,
+  .products-table td,
+  .products-table tr {
     display: block;
   }
 
   /* Hide table headers (but not display: none;, for accessibility) */
-  thead tr {
+  .products-table thead tr {
     position: absolute;
     top: -9999px;
     left: -9999px;
   }
 
-  tr {
+  .products-table tr {
     border: 1px solid #dbdbdb;
   }
 
-  td {
+  .products-table td {
     /* Behave  like a "row" */
     border: none;
     border-bottom: 1px solid #eee;
@@ -112,7 +140,7 @@ td {
     overflow-x: auto;
   }
 
-  td:before {
+  .products-table td:before {
     /* Now like a table header */
     position: absolute;
     /* Top/left values mimic padding */
@@ -126,38 +154,42 @@ td {
   /*
 	Label the data
 	*/
-  td:nth-of-type(1):before {
+  .products-table td:nth-of-type(1):before {
     content: "ID";
     font-weight: 700;
   }
-  td:nth-of-type(2):before {
+  .products-table td:nth-of-type(2):before {
     content: "Name";
     font-weight: 700;
   }
-  td:nth-of-type(3):before {
+  .products-table td:nth-of-type(3):before {
     content: "Price(€)";
     font-weight: 700;
   }
-  td:nth-of-type(4):before {
+  .products-table td:nth-of-type(4):before {
     content: "Category";
     font-weight: 700;
   }
-  td:nth-of-type(5):before {
+  .products-table td:nth-of-type(5):before {
     content: "Brand";
     font-weight: 700;
   }
-  td:nth-of-type(6):before {
+  .products-table td:nth-of-type(6):before {
     content: "Action";
     font-weight: 700;
   }
 }
 
 @media screen and (max-width: 576px) {
-  td {
+  .products-table td {
     padding-left: 35%;
   }
 
-  td:before {
+  .products-table td:before {
     width: 30%;
+  }
+
+  .filters-table-container {
+    justify-content: center;
   }
 }

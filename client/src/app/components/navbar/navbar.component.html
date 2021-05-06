@@ -25,9 +25,27 @@
     <span class="open-searchbar">
       <fa-icon [icon]="faSearch" (click)="toggleSearchbar()"></fa-icon>
     </span>
-    <a routerLink="/login">
-      <fa-icon [icon]="faUserCircle"></fa-icon>
-    </a>
+    <div class="dropdown">
+      <a routerLink="/login">
+        <fa-icon [icon]="faUserCircle"></fa-icon>
+      </a>
+      <ul *ngIf="currentUser$ | async as user" class="profile-dropdown-menu">
+        <li id="user-details-container">
+          <span>Hi {{ user.name }}</span
+          ><span (click)="logoutUser()" id="sign-out-link">Sign Out</span>
+        </li>
+        <li>
+          <a routerLink="/profile"
+            ><fa-icon [icon]="faUser"></fa-icon><span>My Profile</span></a
+          >
+        </li>
+        <li *ngIf="user.isAdmin">
+          <a routerLink="/management">
+            <fa-icon [icon]="faWrench"></fa-icon><span>Management</span></a
+          >
+        </li>
+      </ul>
+    </div>
     <a routerLink="/cart">
       <fa-icon [icon]="faShoppingBasket"></fa-icon>
     </a>
@@ -36,11 +54,8 @@
     <div class="close-hamburger-menu">
       <fa-icon [icon]="faTimes" (click)="toggleMenu()"></fa-icon>
     </div>
-    <ul>
-      <li>Pants</li>
-      <li>Shirts</li>
-      <li>Shoes</li>
-      <li>Jumpers</li>
+    <ul *ngIf="categories$ | async as categories">
+      <li *ngFor="let category of categories">{{ category.name }}</li>
     </ul>
   </div>
   <!-- Background modal for hamburger menu -->

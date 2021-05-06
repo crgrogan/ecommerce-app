@@ -1,10 +1,11 @@
 <div class="management-container">
-  <div *ngIf="isOpen" class="form-container">
-    <form #productForm="ngForm" (ngSubmit)="submitForm(productForm)">
+  <!-- Product Form -->
+  <div *ngIf="productModalOpen" class="form-container">
+    <form #productForm="ngForm" (ngSubmit)="submitProductForm(productForm)">
       <ul class="form">
         <li>
           <h2>{{ _id ? "Edit Product" : "Create Product" }}</h2>
-          <button class="close-modal-btn" (click)="closeModal()">
+          <button class="close-modal-btn" (click)="closeProductModal()">
             <fa-icon [icon]="faTimes"></fa-icon>
           </button>
         </li>
@@ -122,6 +123,7 @@
             "
             placeholder="Category"
             [(ngModel)]="category"
+            required
             #categoryControl="ngModel"
           />
           <span
@@ -182,17 +184,196 @@
           >
             {{ _id ? "Update" : "Create" }}
           </button>
-          <button class="cancel-modal-btn" (click)="closeModal()">
+          <button class="cancel-modal-btn" (click)="closeProductModal()">
             Cancel
           </button>
         </li>
       </ul>
     </form>
   </div>
-  <div *ngIf="!isOpen">
+  <!-- Filters Form -->
+  <div *ngIf="filtersModalOpen">
+    <div class="form-container">
+      <form
+        #filtersForm="ngForm"
+        appCategoryValid
+        (ngSubmit)="submitFiltersForm(filtersForm)"
+      >
+        <ul class="form">
+          <li>
+            <h2>Update Filters</h2>
+            <button class="close-modal-btn" (click)="closeFiltersModal()">
+              <fa-icon [icon]="faTimes"></fa-icon>
+            </button>
+          </li>
+          <li>
+            <div
+              *ngIf="filtersSaveLoading$ | async as filtersSaveLoading"
+              class="form-msg-loading"
+            >
+              Loading...
+            </div>
+            <div
+              *ngIf="filtersSaveError$ | async as filtersSaveError"
+              class="form-msg-error"
+            >
+              {{ filtersSaveError }}
+            </div>
+            <div
+              *ngIf="filtersSaveMsg$ | async as filtersSaveMsg"
+              class="form-msg-success"
+            >
+              {{ filtersSaveMsg }}
+            </div>
+          </li>
+          <li>
+            <label for="filterCategoriesName">Categories</label>
+          </li>
+          <li>
+            <input
+              type="text"
+              name="filterCategoriesName"
+              id="filterCategoriesName"
+              placeholder="Name of category to be added"
+              [(ngModel)]="filterCategoriesName"
+              #filterCategoriesNameControl="ngModel"
+            />
+          </li>
+          <li>
+            <input
+              type="text"
+              name="filterCategoriesImg"
+              id="filterCategoriesImg"
+              [class.has-error]="filtersForm.errors?.validationError"
+              placeholder="Category image URL"
+              [(ngModel)]="filterCategoriesImg"
+              #filterCategoriesImgControl="ngModel"
+            />
+            <span
+              class="input-error-msg"
+              *ngIf="filtersForm.errors?.validationError"
+              >Category Image URL must be provided</span
+            >
+          </li>
+          <li>
+            <label for="filterBrands">Brands</label>
+          </li>
+          <li>
+            <input
+              type="text"
+              name="filterBrands"
+              id="filterBrands"
+              placeholder="Brand to be added"
+              [(ngModel)]="filterBrands"
+            />
+          </li>
+          <li>
+            <label for="filterColours">Colours</label>
+          </li>
+          <li>
+            <input
+              type="text"
+              name="filterColours"
+              id="filterColours"
+              placeholder="Colour to be added"
+              [(ngModel)]="filterColours"
+            />
+          </li>
+          <li>
+            <button
+              [disabled]="filtersForm.errors?.validationError"
+              type="submit"
+              class="submit-form-btn"
+            >
+              Add Filters
+            </button>
+            <button class="cancel-modal-btn" (click)="closeFiltersModal()">
+              Cancel
+            </button>
+          </li>
+        </ul>
+      </form>
+    </div>
+    <div
+      class="filters-table-container"
+      *ngIf="{
+        categories: categories$ | async,
+        brands: brands$ | async,
+        colours: colours$ | async
+      } as data"
+    >
+      <table class="filters-table">
+        <thead>
+          <tr>
+            <th colspan="2">Categories</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let category of data?.categories">
+            <td>
+              {{ category.name }}
+            </td>
+            <td class="delete-filters-container">
+              <button (click)="deleteFilter(category._id, 'categories')">
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="filters-table">
+        <thead>
+          <tr>
+            <th colspan="2">Brands</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let brand of data?.brands">
+            <td>
+              {{ brand.name }}
+            </td>
+            <td class="delete-filters-container">
+              <button (click)="deleteFilter(brand._id, 'brands')">
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="filters-table">
+        <thead>
+          <tr>
+            <th colspan="2">Colours</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let colour of data?.colours">
+            <td>
+              {{ colour.name }}
+            </td>
+            <td class="delete-filters-container">
+              <button (click)="deleteFilter(colour._id, 'colours')">
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Management Home Screen -->
+  <div *ngIf="!productModalOpen && !filtersModalOpen">
     <h2>Product Manager</h2>
-    <button (click)="openModal()" class="open-product-modal">
+    <button
+      (click)="openProductModal()"
+      class="open-modal"
+      id="open-product-modal"
+    >
       Create Product
+    </button>
+    <button (click)="openFiltersModal()" class="open-modal">
+      Update Filters
     </button>
     <table class="products-table">
       <thead>

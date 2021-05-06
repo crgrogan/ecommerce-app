@@ -5,7 +5,13 @@ import {
   faSearch,
   faShoppingBasket,
   faBars,
+  faUser,
+  faWrench,
 } from '@fortawesome/free-solid-svg-icons';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { logoutUser } from 'src/app/store/actions/user.actions';
+import { Category } from 'src/models/category.model';
 
 @Component({
   selector: 'app-navbar',
@@ -20,8 +26,26 @@ export class NavbarComponent implements OnInit {
   faSearch = faSearch;
   faShoppingBasket = faShoppingBasket;
   faBars = faBars;
+  faUser = faUser;
+  faWrench = faWrench;
+  currentUser$: Observable<{}>;
+  categories$: Observable<Category[]>;
 
-  constructor() {}
+  constructor(
+    private store: Store<{
+      currentUser: { userInfo };
+      filters: {
+        categoriesList: Category[];
+      };
+    }>
+  ) {
+    this.currentUser$ = this.store.select(
+      (state) => state.currentUser.userInfo
+    );
+    this.categories$ = this.store.select(
+      (state) => state.filters.categoriesList
+    );
+  }
 
   ngOnInit(): void {}
 
@@ -32,5 +56,9 @@ export class NavbarComponent implements OnInit {
 
   toggleSearchbar() {
     this.searchbarOpen = !this.searchbarOpen;
+  }
+
+  logoutUser() {
+    this.store.dispatch(logoutUser());
   }
 }

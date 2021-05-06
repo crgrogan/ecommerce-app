@@ -29,7 +29,7 @@
     >
       <option value="">Brand</option>
       <option *ngFor="let brand of brands" [value]="brand">
-        {{ brand }}
+        {{ brand.name }}
       </option>
     </select>
     <select
@@ -40,7 +40,7 @@
     >
       <option value="">Colour</option>
       <option *ngFor="let colour of colours" [value]="colour">
-        {{ colour }}
+        {{ colour.name }}
       </option>
     </select>
   </form>

@@ -34,6 +34,8 @@ export const productLoadedFailed = createAction(
 
 // management screen actions
 
+// add/update product
+
 export const saveProduct = createAction(
   '[PRODUCTS] Save Product',
   (product: Product) => ({
@@ -51,6 +53,8 @@ export const productSaveFailed = createAction(
   props<{ error: string }>()
 );
 
+// delete product
+
 export const deleteProduct = createAction(
   '[PRODUCTS] Delete Product',
   (id: string) => ({
@@ -67,20 +71,5 @@ export const productDeleteFailed = createAction(
   '[PRODUCTS] Product Delete Failed',
   props<{ error: string }>()
 );
-
-/* export const deleteProduct = (id) => async (dispatch, getState) => {
-  try {
-    const {
-      currentUser: { userInfo },
-    } = getState();
-    dispatch({ type: 'PRODUCT_DELETE_REQUEST', payload: id });
-    const { data } = await axios.delete(`/api/products/${id}`, {
-      headers: { authorization: `Bearer ${userInfo.token}` },
-    });
-    return dispatch({ type: 'PRODUCT_DELETE_SUCCESS', payload: data });
-  } catch (err) {
-    return dispatch({ type: 'PRODUCT_DELETE_FAILED', payload: err.message });
-  }
-}; */
 
 export const resetSaveState = createAction('[PRODUCTS] Reset Save State');

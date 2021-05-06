@@ -3,12 +3,20 @@ import { Schema, model } from "mongoose";
 const filterSchema = new Schema({
   categories: [
     {
-      img: { type: String, required: [true, "Category image URL is required"] },
-      name: { type: String, required: [true, "Category name is required"] },
+      img: { type: String },
+      name: { type: String },
     },
   ],
-  colours: { type: [String], required: true },
-  brands: { type: [String], required: true },
+  colours: [
+    {
+      name: { type: String },
+    },
+  ],
+  brands: [
+    {
+      name: { type: String },
+    },
+  ],
 });
 
 export default model("Filter", filterSchema);

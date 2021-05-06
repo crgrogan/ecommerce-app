@@ -33,6 +33,7 @@ import { CategoryCardComponent } from './components/category-card/category-card.
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { PasswordMatchValidatorDirective } from './shared/password-match.directive';
+import { FilterCategoryValidatorDirective } from './shared/filter-category.directive';
 
 export function localStorageSyncReducer(
   reducer: ActionReducer<any>
@@ -62,6 +63,7 @@ const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
     ProfileComponent,
     GetCartTotalPipe,
     PasswordMatchValidatorDirective,
+    FilterCategoryValidatorDirective,
   ],
   imports: [
     BrowserModule,
