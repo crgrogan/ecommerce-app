@@ -1,21 +1,36 @@
 import { createReducer, on } from '@ngrx/store';
-import { Action } from 'rxjs/internal/scheduler/Action';
 import { Product } from 'src/models/product.model';
 import {
-  addToCart,
   addItemSuccess,
   cartError,
   removeCartItem,
   updateQty,
+  saveShippingAddress,
+  savePaymentMethod,
+  clearCart,
 } from '../actions/cart.actions';
+import { logoutUser } from '../actions/user.actions';
+
+export interface ShippingAddress {
+  name: string;
+  address: string;
+  city: string;
+  county: string;
+  postalCode: string;
+  country: string;
+}
 
 export interface CartState {
   cartItems: Product[];
+  shippingAddress: ShippingAddress;
+  paymentMethod: string;
   err?: string;
 }
 
 const initialCartState: CartState = {
   cartItems: [],
+  shippingAddress: null,
+  paymentMethod: null,
   err: null,
 };
 
@@ -45,7 +60,16 @@ export const cartReducer = createReducer(
     );
     return { ...state, cartItems: updatedCart };
   }),
+  on(saveShippingAddress, (state, { shippingDetails }) => {
+    return { ...state, shippingAddress: shippingDetails };
+  }),
+  on(savePaymentMethod, (state, { method }) => {
+    return { ...state, paymentMethod: method };
+  }),
   on(cartError, (state, { error }) => {
     return { ...state, cartItems: [], err: error };
+  }),
+  on(logoutUser, clearCart, (state) => {
+    return initialCartState;
   })
 );

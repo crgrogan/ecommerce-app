@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { AppState } from 'src/app/app.state';
 import {
   addToCart,
   removeCartItem,
   updateQty,
 } from 'src/app/store/actions/cart.actions';
+import { selectCartItems } from 'src/app/store/selectors/cart.selectors';
 import { Product } from 'src/models/product.model';
 
 @Component({
@@ -21,20 +23,23 @@ export class CartComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private store: Store<{
-      cart: { cartItems: Product[] };
-    }>
+    private store: Store<AppState>,
+    private router: Router
   ) {
-    this.cartItems$ = this.store.select((state) => state.cart.cartItems);
+    this.cartItems$ = this.store.select(selectCartItems);
   }
 
   ngOnInit(): void {
-    // get product id and quantity from url
-    this.id = this.route.snapshot.paramMap.get('id');
-    this.qty = Number(this.route.snapshot.queryParamMap.get('qty'));
-    // add item to cart
-    if (this.id) {
-      this.store.dispatch(addToCart(this.id, this.qty));
+    // check if prevPage is provided in history state to prevent
+    // cart from updating on page refresh
+    if (history.state.prevPage) {
+      // get product id and quantity from url
+      this.id = this.route.snapshot.paramMap.get('id');
+      this.qty = Number(this.route.snapshot.queryParamMap.get('qty'));
+      // add item to cart
+      if (this.id) {
+        this.store.dispatch(addToCart(this.id, this.qty));
+      }
     }
   }
 
@@ -42,7 +47,7 @@ export class CartComponent implements OnInit {
     return new Array(countInStock);
   }
 
-  updateCartQty(itemId, newQty: number) {
+  updateCartQty(itemId: string, newQty: number) {
     this.store.dispatch(updateQty(itemId, Number(newQty)));
   }
 
@@ -50,6 +55,7 @@ export class CartComponent implements OnInit {
     this.store.dispatch(removeCartItem(itemId));
   };
 
-  /*  updateCartQty = (itemId: string, newQty: number) => {
-  }; */
+  checkout() {
+    this.router.navigate(['/shipping']);
+  }
 }

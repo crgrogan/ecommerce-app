@@ -394,7 +394,9 @@
           <td>{{ product.category }}</td>
           <td>{{ product.brand }}</td>
           <td>
-            <button class="edit-btn" (click)="openModal(product)">Edit</button>
+            <button class="edit-btn" (click)="openProductModal(product)">
+              Edit
+            </button>
             <button (click)="deleteProduct(product._id)">Delete</button>
           </td>
         </tr>

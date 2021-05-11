@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 
-const productSchema = new Schema({
+export const productSchema = new Schema({
   img: { type: String, required: [true, "Image URL is required"] },
   category: { type: String, required: [true, "Item category is required"] },
   name: { type: String, required: [true, "Item name is required"] },
@@ -18,6 +18,7 @@ const productSchema = new Schema({
     default: 0,
     required: [true, "Number of item in stock is required"],
   },
+  qty: { type: Number },
 });
 
 // capitalize strings before saving to database

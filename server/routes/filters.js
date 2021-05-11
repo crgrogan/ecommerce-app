@@ -50,7 +50,7 @@ router.post("/", isAuth, isAdmin, async (req, res, next) => {
 });
 
 // delete filter
-router.put("/:id", async (req, res, next) => {
+router.put("/:id", isAuth, isAdmin, async (req, res, next) => {
   const filterId = req.params.id;
   const { category } = req.body;
   try {

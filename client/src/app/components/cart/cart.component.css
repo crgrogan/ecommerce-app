@@ -37,8 +37,8 @@
 }
 
 .cart-item-image img {
-  max-width: 10rem;
-  max-height: 10rem;
+  max-width: 100px;
+  max-height: 100px;
 }
 
 .cart-item-details {

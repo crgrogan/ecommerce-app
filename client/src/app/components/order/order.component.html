@@ -1,0 +1,97 @@
+<app-checkout-steps
+  [steps]="{ step1: true, step2: true, step3: true, step4: true }"
+></app-checkout-steps>
+<div
+  class="order-container"
+  *ngIf="{
+    shippingAddress: shippingAddress$ | async,
+    paymentMethod: paymentMethod$ | async,
+    cartItems: cartItems$ | async
+  } as data"
+>
+  <div class="order-info">
+    <div>
+      <h3>Shipping Details</h3>
+      <div *ngIf="data.shippingAddress">
+        <div><strong>Name:</strong> {{ data.shippingAddress.name }}</div>
+        <div>
+          <strong>Address:</strong> {{ data.shippingAddress.address }},
+          {{ data.shippingAddress.city }}, {{ data.shippingAddress.county }},
+          {{ data.shippingAddress.postalCode }},
+          {{ data.shippingAddress.country }},
+        </div>
+      </div>
+    </div>
+    <div>
+      <h3>Payment Method</h3>
+      <div *ngIf="data.paymentMethod">
+        <strong>Chosen:</strong> {{ data.paymentMethod }}
+      </div>
+    </div>
+    <div>
+      <ul>
+        <li>
+          <h3>Order Details</h3>
+        </li>
+        <li *ngFor="let item of data.cartItems" class="order-details">
+          <div class="order-item-image">
+            <img src="{{ item.img }}" alt="product" />
+          </div>
+          <div class="order-item-details">
+            <div class="order-item-name">
+              <span>{{ item.name }}</span>
+            </div>
+            <div class="order-item-brand">
+              <span>{{ item.brand }}</span>
+            </div>
+            <div class="order-item-price">€{{ item.price }}</div>
+            <div><span class="order-item-qty"> Qty:</span> {{ item.qty }}</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="order-action">
+    <ul *ngIf="data.cartItems">
+      <li class="order-action-header">
+        <h3>Order Summary</h3>
+        <a routerLink="/cart" class="edit-order">Edit</a>
+      </li>
+      <li>
+        <div>Subtotal</div>
+        <div>€{{ data.cartItems | getCartTotal }}</div>
+      </li>
+      <li>
+        <div>Shipping</div>
+        <div>€{{ shippingCost.toFixed(2) }}</div>
+      </li>
+      <li class="order-total">
+        <div>Order Total</div>
+        <div>
+          €{{ data.cartItems | getCartTotal | getOrderTotal: shippingCost }}
+        </div>
+      </li>
+      <li>
+        <button
+          class="submit-order-btn"
+          [disabled]="data.cartItems.length === 0"
+          (click)="
+            submitOrder(
+              data.cartItems,
+              data.shippingAddress,
+              data.paymentMethod
+            )
+          "
+        >
+          Place Order
+        </button>
+        <div *ngIf="error$ | async as error" class="form-msg-error">
+          {{ error }}
+        </div>
+        <div *ngIf="loading$ | async as loading" class="form-msg-loading">
+          Loading...
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { IvyCarouselModule } from 'angular-responsive-carousel';
 import { ActionReducer, MetaReducer, StoreModule } from '@ngrx/store';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { EffectsModule } from '@ngrx/effects';
 import { FormsModule } from '@angular/forms';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -14,7 +14,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { FiltersEffects } from './store/effects/filters.effects';
 import { ProductsEffects } from './store/effects/products.effects';
 import { CartEffects } from './store/effects/cart.effects';
-import { GetCartTotalPipe } from './components/cart/total.pipe';
+import { GetCartTotalPipe } from './components/cart/cart-total.pipe';
 import { reducers } from './store';
 import { UserEffects } from './store/effects/user.effects';
 
@@ -34,13 +34,24 @@ import { ProductDetailsComponent } from './components/product-details/product-de
 import { ProfileComponent } from './components/profile/profile.component';
 import { PasswordMatchValidatorDirective } from './shared/password-match.directive';
 import { FilterCategoryValidatorDirective } from './shared/filter-category.directive';
+import { AuthInterceptor } from './auth/auth-error-handler';
+import { ShippingComponent } from './components/shipping/shipping.component';
+import { CheckoutStepsComponent } from './components/checkout-steps/checkout-steps.component';
+import { PaymentComponent } from './components/payment/payment.component';
+import { OrderComponent } from './components/order/order.component';
+import { GetOrderTotalPipe } from './components/order/order-total.pipe';
+import { OrderEffects } from './store/effects/order.effects';
+import { OrderDetailsComponent } from './components/order-details/order-details.component';
 
 export function localStorageSyncReducer(
   reducer: ActionReducer<any>
 ): ActionReducer<any> {
   // save slices of state specified in keys array to local storage
   return localStorageSync({
-    keys: [{ cart: ['cartItems'] }, { currentUser: ['userInfo'] }],
+    keys: [
+      { cart: ['cartItems', 'shippingAddress', 'paymentMethod'] },
+      { currentUser: ['userInfo'] },
+    ],
     rehydrate: true,
   })(reducer);
 }
@@ -62,8 +73,14 @@ const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
     ProductDetailsComponent,
     ProfileComponent,
     GetCartTotalPipe,
+    GetOrderTotalPipe,
     PasswordMatchValidatorDirective,
     FilterCategoryValidatorDirective,
+    ShippingComponent,
+    CheckoutStepsComponent,
+    PaymentComponent,
+    OrderComponent,
+    OrderDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -74,6 +91,7 @@ const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
       ProductsEffects,
       CartEffects,
       UserEffects,
+      OrderEffects,
     ]),
     StoreModule.forRoot(reducers, { metaReducers }),
     StoreDevtoolsModule.instrument({
@@ -84,7 +102,9 @@ const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
     AppRoutingModule,
     IvyCarouselModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

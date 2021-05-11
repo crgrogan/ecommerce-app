@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { AppState } from 'src/app/app.state';
 import {
   deleteFilter,
   filtersUpdatedFailed,
@@ -16,6 +17,21 @@ import {
   saveProduct,
 } from 'src/app/store/actions/products.actions';
 import { updateFiltersReducer } from 'src/app/store/reducers/filters.reducer';
+import {
+  selectCategoriesList,
+  selectBrandsList,
+  selectColoursList,
+  selectUpdateFiltersLoading,
+  selectUpdateFiltersMsg,
+  selectUpdateFiltersError,
+} from 'src/app/store/selectors/filters.selectors';
+import {
+  selectNewProductErr,
+  selectNewProductMsg,
+  selectProductsList,
+  selectNewProductLoading,
+} from 'src/app/store/selectors/products.selectors';
+import { Category } from 'src/models/category.model';
 import { Product } from 'src/models/product.model';
 
 @Component({
@@ -23,7 +39,7 @@ import { Product } from 'src/models/product.model';
   templateUrl: './management.component.html',
   styleUrls: ['./management.component.css'],
 })
-export class ManagementComponent implements OnInit {
+export class ManagementComponent implements OnInit, OnDestroy {
   faTimes = faTimes;
   productModalOpen: boolean = false;
   filtersModalOpen: boolean = false;
@@ -45,39 +61,24 @@ export class ManagementComponent implements OnInit {
   error$: Observable<string>;
   saveMsg$: Observable<string>;
   products$: Observable<Product[]>;
-  categories$: Observable<[]>;
-  brands$: Observable<[]>;
-  colours$: Observable<[]>;
+  categories$: Observable<Category[]>;
+  brands$: Observable<string[]>;
+  colours$: Observable<string[]>;
   filtersSaveLoading$: Observable<boolean>;
   filtersSaveError$: Observable<string>;
   filtersSaveMsg$: Observable<string>;
 
-  constructor(
-    private store: Store<{
-      products: { productsList: Product[] };
-      newProduct: { msg: string; err: string; isLoading };
-      filters: { categoriesList: []; brandsList: []; coloursList: [] };
-      updateFilters: { isLoading: boolean; msg: string; err: string };
-    }>
-  ) {
-    this.products$ = this.store.select((state) => state.products.productsList);
-    this.loading$ = this.store.select((state) => state.newProduct.isLoading);
-    this.saveMsg$ = this.store.select((state) => state.newProduct.msg);
-    this.error$ = this.store.select((state) => state.newProduct.err);
-    this.categories$ = this.store.select(
-      (state) => state.filters.categoriesList
-    );
-    this.brands$ = this.store.select((state) => state.filters.brandsList);
-    this.colours$ = this.store.select((state) => state.filters.coloursList);
-    this.filtersSaveLoading$ = this.store.select(
-      (state) => state.updateFilters.isLoading
-    );
-    this.filtersSaveMsg$ = this.store.select(
-      (state) => state.updateFilters.msg
-    );
-    this.filtersSaveError$ = this.store.select(
-      (state) => state.updateFilters.err
-    );
+  constructor(private store: Store<AppState>) {
+    this.products$ = this.store.select(selectProductsList);
+    this.loading$ = this.store.select(selectNewProductLoading);
+    this.saveMsg$ = this.store.select(selectNewProductMsg);
+    this.error$ = this.store.select(selectNewProductErr);
+    this.categories$ = this.store.select(selectCategoriesList);
+    this.brands$ = this.store.select(selectBrandsList);
+    this.colours$ = this.store.select(selectColoursList);
+    this.filtersSaveLoading$ = this.store.select(selectUpdateFiltersLoading);
+    this.filtersSaveMsg$ = this.store.select(selectUpdateFiltersMsg);
+    this.filtersSaveError$ = this.store.select(selectUpdateFiltersError);
   }
 
   ngOnInit(): void {

@@ -98,8 +98,8 @@ export const newProductReducer = createReducer(
       ...state,
       isLoading: false,
       success: true,
-      product: product,
-      msg: 'Product created/updated successfully',
+      product: product.data,
+      msg: product.msg,
     };
     return newState;
   }),

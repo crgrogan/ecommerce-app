@@ -30,7 +30,7 @@ export class FiltersService {
   // delete filter
   delete(id: string, category: string) {
     const { userInfo } = JSON.parse(localStorage.getItem('currentUser'));
-    // use put request as httpClient doesn't allow body to be sent
+    // use put request as httpClient doesn't allow body to be sent in delete request
     return this.http.put(
       `http://localhost:5000/api/filters/${id}`,
       { category },

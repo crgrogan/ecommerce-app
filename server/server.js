@@ -7,6 +7,7 @@ const errorController = require("./controllers/errorController");
 import userRoutes from "./routes/users";
 import productRoutes from "./routes/products";
 import filterRoutes from "./routes/filters";
+import orderRoutes from "./routes/orders";
 
 dotenv.config();
 
@@ -31,6 +32,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/users", userRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/filters", filterRoutes);
+app.use("/api/orders", orderRoutes);
 
 // error handling middleware
 app.use(errorController);

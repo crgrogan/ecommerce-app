@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { map, catchError, switchMap, mergeMap } from 'rxjs/operators';
+import { map, catchError, switchMap, mergeMap, tap } from 'rxjs/operators';
 import {
   registerUser,
   userRegisterFailed,
@@ -10,6 +10,7 @@ import {
   loginUser,
   userLoginFailed,
   userLoginSuccess,
+  logoutUser,
 } from '../actions/user.actions';
 import { UserService } from '../services/user.service';
 
@@ -33,7 +34,7 @@ export class UserEffects {
     )
   );
 
-  LoginUser$ = createEffect(() =>
+  loginUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loginUser),
       switchMap((action) =>
@@ -46,6 +47,17 @@ export class UserEffects {
         )
       )
     )
+  );
+
+  logoutUser$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(logoutUser),
+        tap(() => {
+          this.router.navigate(['/']);
+        })
+      ),
+    { dispatch: false }
   );
 
   constructor(

@@ -37,6 +37,10 @@ export const userLoginFailed = createAction(
   props<{ error }>()
 );
 
+// logout user
+
+export const logoutUser = createAction('[USER] User Logout');
+
 // set error state in register reducer back to null
 export const registerPageUnloaded = createAction(
   '[USER] Register Page Unloaded'
@@ -44,5 +48,3 @@ export const registerPageUnloaded = createAction(
 
 // set error state in login reducer back to null
 export const loginPageUnloaded = createAction('[USER] Login Page Unloaded');
-
-export const logoutUser = createAction('[USER] User Logout');

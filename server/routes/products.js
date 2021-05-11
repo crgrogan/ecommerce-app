@@ -72,11 +72,12 @@ router.post("/", isAuth, isAdmin, async (req, res, next) => {
     });
     const newProduct = await product.save();
     if (newProduct) {
-      return res
-        .status(201)
-        .send({ msg: "New product created", data: newProduct });
+      return res.status(201).send({
+        msg: "Product created/updated successfully",
+        data: newProduct,
+      });
     }
-    return res.status(400).send("Error creating product");
+    return res.status(400).send("Error creating/updating product");
   } catch (err) {
     next(err);
   }

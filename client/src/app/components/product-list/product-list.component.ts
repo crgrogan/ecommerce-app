@@ -7,6 +7,13 @@ import { getProducts } from 'src/app/store/actions/products.actions';
 import { Location, PathLocationStrategy } from '@angular/common';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Filter } from 'src/models/filter.model';
+import { selectProductsList } from 'src/app/store/selectors/products.selectors';
+import {
+  selectBrandsList,
+  selectCategoriesList,
+  selectColoursList,
+} from 'src/app/store/selectors/filters.selectors';
+import { AppState } from 'src/app/app.state';
 
 @Component({
   selector: 'app-product-list',
@@ -25,24 +32,14 @@ export class ProductListComponent implements OnInit {
   colourSelected: string = '';
 
   constructor(
-    private store: Store<{
-      products: { productsList: Product[]; isLoading: boolean };
-      filters: {
-        categoriesList: Category[];
-        brandsList: string[];
-        coloursList: string[];
-        isLoading: boolean;
-      };
-    }>,
+    private store: Store<AppState>,
     private location: Location,
     private route: ActivatedRoute
   ) {
-    this.products$ = this.store.select((state) => state.products.productsList);
-    this.categories$ = this.store.select(
-      (state) => state.filters.categoriesList
-    );
-    this.brands$ = this.store.select((state) => state.filters.brandsList);
-    this.colours$ = this.store.select((state) => state.filters.coloursList);
+    this.products$ = this.store.select(selectProductsList);
+    this.categories$ = this.store.select(selectCategoriesList);
+    this.brands$ = this.store.select(selectBrandsList);
+    this.colours$ = this.store.select(selectColoursList);
   }
 
   ngOnInit(): void {
@@ -59,10 +56,12 @@ export class ProductListComponent implements OnInit {
   setSelectedValues(params: Params) {
     const { brand = '', category = '', colour = '', sortby = '' } = params;
 
-    this.brandSelected = brand.replace(/\b\w/g, (l) => l.toUpperCase());
-    this.colourSelected = colour.replace(/\b\w/g, (l) => l.toUpperCase());
-    this.categorySelected = category.replace(/\b\w/g, (l) => l.toUpperCase());
-    this.sortBySelected = sortby.replace(/\b\w/g, (l) => l.toUpperCase());
+    this.brandSelected = brand.replace(/\b\w/g, (char) => char.toUpperCase());
+    this.colourSelected = colour.replace(/\b\w/g, (char) => char.toUpperCase());
+    this.categorySelected = category.replace(/\b\w/g, (char) =>
+      char.toUpperCase()
+    );
+    this.sortBySelected = sortby.replace(/\b\w/g, (char) => char.toUpperCase());
   }
 
   filterResults(params: Params) {

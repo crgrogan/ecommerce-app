@@ -2,18 +2,22 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { AppState } from 'src/app/app.state';
 import {
   registerPageUnloaded,
   registerUser,
 } from 'src/app/store/actions/user.actions';
-import { User } from 'src/models/user.model';
+import {
+  selectNewUserError,
+  selectNewUserLoading,
+} from 'src/app/store/selectors/user.selectors';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
   name: string = '';
   email: string = '';
   password: string = '';
@@ -21,13 +25,9 @@ export class RegisterComponent implements OnInit {
   loading$: Observable<boolean>;
   error$: Observable<string>;
 
-  constructor(
-    private store: Store<{
-      newUser: { userInfo: User; isLoading: boolean; err: string };
-    }>
-  ) {
-    this.error$ = this.store.select((state) => state.newUser.err);
-    this.loading$ = this.store.select((state) => state.newUser.isLoading);
+  constructor(private store: Store<AppState>) {
+    this.error$ = this.store.select(selectNewUserError);
+    this.loading$ = this.store.select(selectNewUserLoading);
   }
 
   ngOnInit(): void {}

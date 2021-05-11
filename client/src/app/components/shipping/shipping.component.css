@@ -1,0 +1,43 @@
+.shipping-form {
+  width: 40%;
+  margin: auto;
+  margin-top: 2em;
+  max-width: 400px;
+  min-width: 275px;
+}
+
+.shipping-form li {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.75em;
+}
+
+.shipping-form label {
+  margin-bottom: 0.5em;
+  font-weight: 700;
+}
+
+.shipping-form input {
+  padding: 0.75em;
+  border: 1px #c0c0c0 solid;
+  border-radius: 5px;
+  margin-bottom: 0.75em;
+  outline-color: #b6d4fe;
+}
+
+.submit-shipping-form-btn {
+  cursor: pointer;
+  background-color: #ffce00;
+  border: 1.5px #808080 solid;
+  border-radius: 5px;
+  width: 50%;
+  margin: auto;
+  text-align: center;
+  font-weight: bold;
+  padding: 0.75em;
+}
+
+.submit-shipping-form-btn:hover {
+  border: 1.5px #252525 solid;
+  border-radius: 5px;
+}

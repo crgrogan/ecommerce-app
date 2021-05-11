@@ -1,12 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { AppState } from 'src/app/app.state';
 import {
   loginPageUnloaded,
   loginUser,
 } from 'src/app/store/actions/user.actions';
+import {
+  selectCurrentUserInfo,
+  selectCurrentUserLoading,
+  selectCurrentUserError,
+} from 'src/app/store/selectors/user.selectors';
 import { User } from 'src/models/user.model';
 
 @Component({
@@ -14,7 +20,7 @@ import { User } from 'src/models/user.model';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   name: string = '';
   email: string = '';
   password: string = '';
@@ -22,20 +28,15 @@ export class LoginComponent implements OnInit {
   loading$: Observable<boolean>;
   error$: Observable<string>;
 
-  constructor(
-    private store: Store<{
-      currentUser: { userInfo: User; isLoading: boolean; err: string };
-    }>,
-    private router: Router
-  ) {
-    this.error$ = this.store.select((state) => state.currentUser.err);
-    this.loading$ = this.store.select((state) => state.currentUser.isLoading);
+  constructor(private store: Store<AppState>, private router: Router) {
+    this.error$ = this.store.select(selectCurrentUserError);
+    this.loading$ = this.store.select(selectCurrentUserLoading);
   }
 
   ngOnInit(): void {
     // if user is logged in, redirect to profile page
     this.store
-      .select((state) => state.currentUser.userInfo)
+      .select(selectCurrentUserInfo)
       .subscribe((user) => {
         if (user) this.router.navigate(['/profile']);
       })

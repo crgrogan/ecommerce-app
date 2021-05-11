@@ -34,6 +34,7 @@
     <button
       [routerLink]="['/cart', id]"
       [queryParams]="{ qty: selectedValue }"
+      [state]="{ prevPage: true }"
       class="add-to-basket mb-25"
     >
       Add to Basket

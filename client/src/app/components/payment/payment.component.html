@@ -1,0 +1,40 @@
+<app-checkout-steps
+  [steps]="{ step1: true, step2: true, step3: true, step4: false }"
+></app-checkout-steps>
+<form
+  #paymentMethodForm="ngForm"
+  (ngSubmit)="submitPaymentMethodForm(paymentMethodForm.value)"
+>
+  <ul class="payment-method-form">
+    <li>
+      <h2>Payment Method</h2>
+    </li>
+    <li>
+      <div>
+        <input
+          type="radio"
+          name="paymentMethod"
+          id="paypal"
+          value="PayPal"
+          [(ngModel)]="paymentMethod"
+        />
+        <label for="paypal">PayPal</label>
+      </div>
+    </li>
+    <li>
+      <div>
+        <input
+          type="radio"
+          name="paymentMethod"
+          id="stripe"
+          value="Stripe"
+          [(ngModel)]="paymentMethod"
+        />
+        <label for="stripe">Stripe</label>
+      </div>
+    </li>
+    <li>
+      <button type="submit" class="submit-payment-form-btn">Continue</button>
+    </li>
+  </ul>
+</form>

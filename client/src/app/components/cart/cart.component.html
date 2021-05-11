@@ -6,7 +6,7 @@
   <p class="cart-empty" *ngIf="cartItems.length === 0">No Items to Display</p>
   <div class="cart-items" *ngFor="let item of cartItems">
     <div class="cart-item-image">
-      <a [routerLink]="['/products', item._id]">
+      <a [routerLink]="['/products/selected', item._id]">
         <img src="{{ item.img }}" alt="product" />
       </a>
     </div>
@@ -51,5 +51,5 @@
       cartItems | getCartTotal
     }}
   </h3>
-  <button>Checkout</button>
+  <button (click)="checkout()">Checkout</button>
 </div>

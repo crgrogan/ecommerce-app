@@ -62,6 +62,7 @@ input:active {
 
 .submit-search {
   width: 10%;
+  min-width: 30px;
   padding: 0.5em;
   background-color: var(--secondary-bg-color);
   border: 1px solid var(--secondary-bg-color);
@@ -118,7 +119,7 @@ input:active {
   padding: 1em 1.25em;
 }
 
-.profile-dropdown-menu a {
+.header-links .profile-dropdown-menu a {
   margin: 0;
 }
 
@@ -157,17 +158,6 @@ input:active {
   color: #0770cf;
   cursor: pointer;
 }
-
-/* .profile-dropdown-menu button {
-  padding: 0.5em;
-  width: 100%;
-  color: var(--secondary-font-color);
-  background-color: #ec0d0d;
-  border: 1.5px #808080 solid;
-  text-align: center;
-  font-weight: bold;
-  font-size: inherit;
-} */
 
 .hamburger-menu {
   z-index: 99;
@@ -263,5 +253,9 @@ input:active {
 
   .profile-dropdown-menu {
     min-width: 170px;
+  }
+
+  .profile-dropdown-menu li {
+    padding: 1em;
   }
 }

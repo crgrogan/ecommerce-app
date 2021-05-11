@@ -3,6 +3,7 @@ import {
   FiltersState,
   UpdateFiltersState,
 } from './store/reducers/filters.reducer';
+import { CreateOrderState } from './store/reducers/order.reducer';
 import {
   DeleteProductState,
   NewProductState,
@@ -21,4 +22,5 @@ export interface AppState {
   newProduct: NewProductState;
   deleteProduct: DeleteProductState;
   updateFilters: UpdateFiltersState;
+  newOrder: CreateOrderState;
 }

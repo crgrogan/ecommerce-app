@@ -23,3 +23,19 @@ export const cartError = createAction(
   '[CART] Cart Error',
   props<{ error: string }>()
 );
+
+export const saveShippingAddress = createAction(
+  '[CART] Save Shipping Address',
+  (shippingDetails) => ({
+    shippingDetails,
+  })
+);
+
+export const savePaymentMethod = createAction(
+  '[CART] Save Payment Method',
+  (method: string) => ({
+    method,
+  })
+);
+
+export const clearCart = createAction('[CART] Clear Cart');

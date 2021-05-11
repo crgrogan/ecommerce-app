@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app.state';
 import { Category } from 'src/models/category.model';
-import { getFilters } from 'src/app/store/actions/filters.actions';
+import { selectCategoriesList } from 'src/app/store/selectors/filters.selectors';
 
 @Component({
   selector: 'app-home',
@@ -15,14 +15,8 @@ export class HomeComponent implements OnInit {
   categories$: Observable<Category[]>;
   loadingState: boolean;
 
-  constructor(
-    private store: Store<{
-      filters: { categoriesList: Category[]; isLoading: boolean };
-    }>
-  ) {
-    this.categories$ = this.store.select(
-      (state) => state.filters.categoriesList
-    );
+  constructor(private store: Store<AppState>) {
+    this.categories$ = this.store.select(selectCategoriesList);
   }
 
   ngOnInit(): void {
