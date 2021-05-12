@@ -5,7 +5,11 @@ import {
   filtersReducer,
   updateFiltersReducer,
 } from './reducers/filters.reducer';
-import { createOrderReducer } from './reducers/order.reducer';
+import {
+  createOrderReducer,
+  orderDetailsReducer,
+  orderPaidStatusReducer,
+} from './reducers/order.reducer';
 import {
   deleteProductReducer,
   newProductReducer,
@@ -25,4 +29,6 @@ export const reducers: ActionReducerMap<AppState> = {
   deleteProduct: deleteProductReducer,
   updateFilters: updateFiltersReducer,
   newOrder: createOrderReducer,
+  orderDetails: orderDetailsReducer,
+  orderPaidStatus: orderPaidStatusReducer,
 };

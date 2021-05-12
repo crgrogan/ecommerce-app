@@ -38,4 +38,43 @@ router.post("/", isAuth, async (req, res, next) => {
   }
 });
 
+// get order details for an existing order
+router.get("/:id", async (req, res, next) => {
+  const id = req.params.id;
+  try {
+    const order = await Order.findById(id);
+    if (order) {
+      res.send(order);
+    } else {
+      res.status(404).send({ msg: "Order not found" });
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
+// update isPaid status after an order has been paid
+router.put("/:id", async (req, res, next) => {
+  const id = req.params.id;
+  const { update_time, status, email_address } = req.body;
+  try {
+    const order = await Order.findById(id);
+    if (order) {
+      order.isPaid = true;
+      order.paymentDetails = {
+        userId: id,
+        status,
+        email: email_address,
+        paidAt: update_time,
+      };
+      const updatedOrder = await order.save();
+      res.send(updatedOrder);
+    } else {
+      res.status(404).send({ msg: "Order not found" });
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
 export default router;

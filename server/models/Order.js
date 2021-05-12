@@ -12,6 +12,13 @@ const orderSchema = new Schema({
     country: { type: String, required: true },
   },
   paymentMethod: { type: String, required: true },
+  paymentDetails: {
+    userId: { type: String },
+    status: { type: String },
+    email: { type: String },
+    paidAt: { type: String },
+  },
+  isPaid: { type: Boolean, default: false },
   subtotal: { type: Number, required: true },
   shippingCost: { type: Number, required: true },
   totalPrice: { type: Number, required: true },

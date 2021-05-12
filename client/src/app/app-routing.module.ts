@@ -25,7 +25,7 @@ const routes: Routes = [
   { path: 'cart/:id', component: CartComponent },
   { path: 'shipping', component: ShippingComponent },
   { path: 'payment', component: PaymentComponent },
-  { path: 'order', component: OrderComponent },
+  { path: 'placeorder', component: OrderComponent },
   { path: 'order/:id', component: OrderDetailsComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },

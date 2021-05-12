@@ -29,7 +29,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
 
   submitPaymentMethodForm({ paymentMethod }) {
     this.store.dispatch(savePaymentMethod(paymentMethod));
-    this.route.navigate(['/order']);
+    this.route.navigate(['/placeorder']);
   }
 
   ngOnDestroy() {

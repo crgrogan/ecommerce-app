@@ -3,7 +3,11 @@ import {
   FiltersState,
   UpdateFiltersState,
 } from './store/reducers/filters.reducer';
-import { CreateOrderState } from './store/reducers/order.reducer';
+import {
+  CreateOrderState,
+  OrderDetailsState,
+  OrderPaidStatusState,
+} from './store/reducers/order.reducer';
 import {
   DeleteProductState,
   NewProductState,
@@ -23,4 +27,6 @@ export interface AppState {
   deleteProduct: DeleteProductState;
   updateFilters: UpdateFiltersState;
   newOrder: CreateOrderState;
+  orderDetails: OrderDetailsState;
+  orderPaidStatus: OrderPaidStatusState;
 }

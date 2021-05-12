@@ -8,6 +8,12 @@ import {
   createOrder,
   createOrderSuccess,
   createOrderFailed,
+  getOrderDetails,
+  orderDetailsSuccess,
+  orderDetailsFailed,
+  payOrder,
+  orderPaidStatusSuccess,
+  orderPaidStatusFailed,
 } from '../actions/order.actions';
 import { OrderService } from '../services/order.service';
 
@@ -24,6 +30,38 @@ export class OrderEffects {
             return [createOrderSuccess({ newOrder: data }), clearCart()];
           }),
           catchError((err) => of(createOrderFailed({ error: err.error.msg })))
+        )
+      )
+    )
+  );
+
+  getOrderDetails$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(getOrderDetails),
+      switchMap((action) =>
+        this.orderService.getOrderDetails(action.id).pipe(
+          map((data) => orderDetailsSuccess({ order: data })),
+          catchError((err) => of(orderDetailsFailed({ error: err.error.msg })))
+        )
+      )
+    )
+  );
+
+  // update order paid status
+  payOrder$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(payOrder),
+      switchMap((action) =>
+        this.orderService.payOrder(action.id, action.paymentDetails).pipe(
+          switchMap((data) => {
+            return [
+              orderPaidStatusSuccess({ order: data }),
+              orderDetailsSuccess({ order: data }),
+            ];
+          }),
+          catchError((err) =>
+            of(orderPaidStatusFailed({ error: err.error.msg }))
+          )
         )
       )
     )

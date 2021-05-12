@@ -1,0 +1,109 @@
+.order-container {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0.75em;
+  padding-bottom: 3em;
+  padding-top: 3em;
+  justify-content: space-between;
+}
+
+.order-info {
+  flex: 3 1 600px;
+}
+
+.order-info > div {
+  border: 1px #c0c0c0 solid;
+  border-radius: 5px;
+  background-color: #fcfcfc;
+  padding: 0.75em;
+  margin: 1em 0.5em 1em 0.5em;
+}
+
+.order-info > div:first-child {
+  margin-top: 0;
+}
+
+/* Order Details */
+
+.order-details {
+  display: flex;
+  padding: 0.5em 0;
+}
+
+.order-item-image {
+  flex: 1 1;
+}
+
+.order-item-image img {
+  max-width: 100px;
+  max-height: 100px;
+}
+
+.order-item-details {
+  flex: 8 1;
+  display: flex;
+  margin-left: 1em;
+  flex-direction: column;
+  justify-content: space-around;
+  font-weight: 700;
+}
+
+.order-item-brand {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #a9a9a9;
+}
+
+.order-item-qty {
+  font-weight: 500;
+}
+
+/* Actions */
+
+.order-action {
+  flex: 1 1 200px;
+  border: 1px #c0c0c0 solid;
+  border-radius: 5px;
+  background-color: #fcfcfc;
+  padding: 0.75em;
+  align-self: flex-start;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+}
+
+.order-action > ul {
+  padding: 0;
+  list-style-type: none;
+}
+
+.order-action > ul > li {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1em;
+}
+
+.order-action > ul > li:first-child {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2em;
+}
+
+.order-action-header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px #d3d1d1 solid;
+}
+
+.order-total {
+  font-weight: 700;
+  font-size: 1.8rem;
+}
+
+#paypal-container {
+  display: flex;
+  justify-content: center;
+}
+
+ngx-paypal {
+  z-index: 90;
+}

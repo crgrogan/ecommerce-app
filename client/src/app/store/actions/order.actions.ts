@@ -17,3 +17,45 @@ export const createOrderFailed = createAction(
   '[ORDER] Create Order Failed',
   props<{ error: string }>()
 );
+
+// get details of a specific order
+export const getOrderDetails = createAction(
+  '[ORDER] Get Order Details',
+  (id: string) => ({
+    id,
+  })
+);
+
+export const orderDetailsSuccess = createAction(
+  '[ORDER] Order Details Success',
+  props<{ order }>()
+);
+
+export const orderDetailsFailed = createAction(
+  '[ORDER] Order Details Failed',
+  props<{ error: string }>()
+);
+
+// update order paid status
+export const payOrder = createAction(
+  '[ORDER] Pay Order',
+  (id: string, data) => ({
+    id,
+    paymentDetails: data,
+  })
+);
+
+export const orderPaidStatusSuccess = createAction(
+  '[ORDER] Order Paid Status Success',
+  props<{ order }>()
+);
+
+export const orderPaidStatusFailed = createAction(
+  '[ORDER] Order Paid Status Failed',
+  props<{ error: string }>()
+);
+
+// reset order paid state
+export const clearOrderPaidStatus = createAction(
+  '[ORDER] Clear Order Paid Status'
+);

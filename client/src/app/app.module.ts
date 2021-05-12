@@ -8,6 +8,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { FormsModule } from '@angular/forms';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { localStorageSync } from 'ngrx-store-localstorage';
+import { NgxPayPalModule } from 'ngx-paypal';
 
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
@@ -17,6 +18,11 @@ import { CartEffects } from './store/effects/cart.effects';
 import { GetCartTotalPipe } from './components/cart/cart-total.pipe';
 import { reducers } from './store';
 import { UserEffects } from './store/effects/user.effects';
+import { GetOrderTotalPipe } from './components/order/order-total.pipe';
+import { OrderEffects } from './store/effects/order.effects';
+import { PasswordMatchValidatorDirective } from './shared/password-match.directive';
+import { FilterCategoryValidatorDirective } from './shared/filter-category.directive';
+import { AuthInterceptor } from './auth/auth-error-handler';
 
 // components
 import { AppComponent } from './app.component';
@@ -32,15 +38,10 @@ import { ProductListComponent } from './components/product-list/product-list.com
 import { CategoryCardComponent } from './components/category-card/category-card.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { ProfileComponent } from './components/profile/profile.component';
-import { PasswordMatchValidatorDirective } from './shared/password-match.directive';
-import { FilterCategoryValidatorDirective } from './shared/filter-category.directive';
-import { AuthInterceptor } from './auth/auth-error-handler';
 import { ShippingComponent } from './components/shipping/shipping.component';
 import { CheckoutStepsComponent } from './components/checkout-steps/checkout-steps.component';
 import { PaymentComponent } from './components/payment/payment.component';
 import { OrderComponent } from './components/order/order.component';
-import { GetOrderTotalPipe } from './components/order/order-total.pipe';
-import { OrderEffects } from './store/effects/order.effects';
 import { OrderDetailsComponent } from './components/order-details/order-details.component';
 
 export function localStorageSyncReducer(
@@ -101,6 +102,7 @@ const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
     FontAwesomeModule,
     AppRoutingModule,
     IvyCarouselModule,
+    NgxPayPalModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
