@@ -1,0 +1,105 @@
+.profile-container {
+  padding: 3em 2em;
+}
+
+.profile-container h1 {
+  margin-top: 0;
+}
+
+section {
+  margin-bottom: 4em;
+}
+
+.user-details-form {
+  max-width: 250px;
+}
+
+.user-details-form label {
+  font-weight: 700;
+  margin-bottom: 0.5em;
+  color: #555555;
+}
+
+.user-details-form div {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.75em;
+}
+
+.user-details-form input {
+  padding: 0.75em;
+  border: 1px #c0c0c0 solid;
+  margin-bottom: 0.75em;
+  outline-color: #b6d4fe;
+}
+
+.user-details-form .submit-form-btn {
+  border-radius: 0;
+  color: var(--secondary-font-color);
+  text-transform: uppercase;
+  background-color: #2c2c2c;
+}
+
+.user-details-form .submit-form-btn:hover {
+  border-radius: 0;
+  background-color: #000000;
+}
+
+.user-details-form .submit-form-btn:disabled {
+  opacity: 0.3;
+}
+
+.change-password {
+  margin-top: 4em;
+}
+
+.password-btn {
+  background-color: blue;
+}
+
+.user-orders-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.user-orders-table tbody tr:nth-of-type(odd) {
+  background-color: #f4f4f4;
+}
+
+.user-orders-table td,
+.user-orders-table th {
+  text-align: center;
+  border: 1px solid #e4e4e4;
+  padding: 0.4em;
+}
+
+.user-orders-table button {
+  margin: 0 2px;
+}
+
+.management-btn {
+  padding: 0.6em 1.2em;
+  background-color: #247a24;
+  color: var(--secondary-font-color);
+  margin-right: 2em;
+  text-transform: uppercase;
+  font-size: 1.8rem;
+  border: none;
+}
+
+.management-btn:hover {
+  background-color: #186318;
+}
+
+.logout-btn {
+  padding: 0.6em 1.2em;
+  background-color: #f32727;
+  color: var(--secondary-font-color);
+  text-transform: uppercase;
+  font-size: 1.8rem;
+  border: none;
+}
+
+.logout-btn:hover {
+  background-color: #d61313;
+}

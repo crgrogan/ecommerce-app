@@ -31,6 +31,7 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
   public payPalConfig?: IPayPalConfig;
 
   constructor(private store: Store<AppState>, private route: ActivatedRoute) {
+    // get order id from url
     this.orderId = this.route.snapshot.paramMap.get('id');
     /* this.orderInfo$ = this.store.select(selectOrderDetailsInfo); */
     this.orderInfoSubscription = this.store

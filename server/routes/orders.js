@@ -77,4 +77,19 @@ router.put("/:id", async (req, res, next) => {
   }
 });
 
+// return all orders for given user
+router.get("/list/:id", isAuth, async (req, res, next) => {
+  const userId = req.params.id;
+  try {
+    const orders = await Order.find({ user: userId });
+    if (orders) {
+      res.send(orders);
+    } else {
+      res.status(404).send({ msg: "No orders found for current user" });
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
 export default router;

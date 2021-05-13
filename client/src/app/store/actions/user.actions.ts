@@ -1,4 +1,5 @@
 import { createAction, props } from '@ngrx/store';
+import { User } from 'src/models/user.model';
 
 export const registerUser = createAction(
   '[USER] Register User',
@@ -48,3 +49,26 @@ export const registerPageUnloaded = createAction(
 
 // set error state in login reducer back to null
 export const loginPageUnloaded = createAction('[USER] Login Page Unloaded');
+
+// updated user's details
+export const updateUserDetails = createAction(
+  '[USER] Update User Details',
+  (name, email, password) => ({
+    name,
+    email,
+    password,
+  })
+);
+
+export const updateUserDetailsSuccess = createAction(
+  '[USER] Update User Details Success',
+  props<{ updatedUser }>()
+);
+
+export const updateUserDetailsFailed = createAction(
+  '[USER] Update User Details Failed',
+  props<{ error; field }>()
+);
+
+// set state in update user reducer back to initial state
+export const clearUpdateUser = createAction('[USER] Clear Update User');

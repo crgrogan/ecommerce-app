@@ -1,6 +1,6 @@
 import { createSelector } from '@ngrx/store';
 import { AppState } from 'src/app/app.state';
-import { UserState } from '../reducers/user.reducer';
+import { UpdatedUserState, UserState } from '../reducers/user.reducer';
 
 export const selectCurrentUser = (state: AppState) => state.currentUser;
 
@@ -20,7 +20,6 @@ export const selectCurrentUserError = createSelector(
 );
 
 // new user created
-
 export const selectNewUser = (state: AppState) => state.newUser;
 
 export const selectNewUserError = createSelector(
@@ -31,4 +30,27 @@ export const selectNewUserError = createSelector(
 export const selectNewUserLoading = createSelector(
   selectNewUser,
   (state: UserState) => state.isLoading
+);
+
+// update user details
+export const selectUpdateUser = (state: AppState) => state.updatedUser;
+
+export const selectUpdateUserError = createSelector(
+  selectUpdateUser,
+  (state: UpdatedUserState) => state.err
+);
+
+export const selectUpdateUserLoading = createSelector(
+  selectUpdateUser,
+  (state: UpdatedUserState) => state.isLoading
+);
+
+export const selectUpdateUserSuccess = createSelector(
+  selectUpdateUser,
+  (state: UpdatedUserState) => state.msg
+);
+
+export const selectUpdateUserField = createSelector(
+  selectUpdateUser,
+  (state: UpdatedUserState) => state.field
 );

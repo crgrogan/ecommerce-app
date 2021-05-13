@@ -59,3 +59,16 @@ export const orderPaidStatusFailed = createAction(
 export const clearOrderPaidStatus = createAction(
   '[ORDER] Clear Order Paid Status'
 );
+
+// get all orders for current user
+export const getUserOrders = createAction('[ORDER] Get User Orders');
+
+export const userOrdersSuccess = createAction(
+  '[ORDER] User Orders Success',
+  props<{ orders }>()
+);
+
+export const userOrdersFailed = createAction(
+  '[ORDER] User Orders Failed',
+  props<{ error: string }>()
+);

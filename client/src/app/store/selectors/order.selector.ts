@@ -4,6 +4,7 @@ import {
   CreateOrderState,
   OrderDetailsState,
   OrderPaidStatusState,
+  UserOrdersState,
 } from '../reducers/order.reducer';
 
 // newly created order
@@ -43,4 +44,12 @@ export const selectOrderPaidStatus = (state: AppState) => state.orderPaidStatus;
 export const selectOrderPaidStatusSuccess = createSelector(
   selectOrderPaidStatus,
   (state: OrderPaidStatusState) => state.success
+);
+
+// orders list for specific user
+export const selectUserOrders = (state: AppState) => state.userOrders;
+
+export const selectUserOrdersList = createSelector(
+  selectUserOrders,
+  (state: UserOrdersState) => state.ordersList
 );

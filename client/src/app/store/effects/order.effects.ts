@@ -14,6 +14,9 @@ import {
   payOrder,
   orderPaidStatusSuccess,
   orderPaidStatusFailed,
+  getUserOrders,
+  userOrdersSuccess,
+  userOrdersFailed,
 } from '../actions/order.actions';
 import { OrderService } from '../services/order.service';
 
@@ -62,6 +65,18 @@ export class OrderEffects {
           catchError((err) =>
             of(orderPaidStatusFailed({ error: err.error.msg }))
           )
+        )
+      )
+    )
+  );
+
+  userOrders$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(getUserOrders),
+      switchMap((action) =>
+        this.orderService.getUserOrders().pipe(
+          map((data) => userOrdersSuccess({ orders: data })),
+          catchError((err) => of(userOrdersFailed({ error: err.error.msg })))
         )
       )
     )

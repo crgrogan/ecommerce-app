@@ -10,6 +10,10 @@ import {
   registerPageUnloaded,
   loginPageUnloaded,
   logoutUser,
+  updateUserDetails,
+  updateUserDetailsSuccess,
+  updateUserDetailsFailed,
+  clearUpdateUser,
 } from '../actions/user.actions';
 
 export interface UserState {
@@ -57,5 +61,49 @@ export const loginReducer = createReducer(
   }),
   on(logoutUser, (state) => {
     return { ...state, userInfo: null, isLoading: false, err: null };
+  })
+);
+
+// updated user details
+export interface UpdatedUserState {
+  msg: string;
+  isLoading: boolean;
+  field: string;
+  err: string;
+}
+
+const initialUpdatedUserState: UpdatedUserState = {
+  msg: null,
+  isLoading: false,
+  field: null,
+  err: null,
+};
+
+export const updatedUserReducer = createReducer(
+  initialUpdatedUserState,
+  on(updateUserDetails, (state) => {
+    return { ...state, isLoading: true, err: null, msg: null };
+  }),
+  on(updateUserDetailsSuccess, (state, { updatedUser }) => {
+    console.log(updatedUser);
+
+    const newState = {
+      ...state,
+      msg: updatedUser.msg,
+      isLoading: false,
+      field: updatedUser.field,
+    };
+    return newState;
+  }),
+  on(updateUserDetailsFailed, (state, { error, field }) => {
+    return {
+      ...state,
+      isLoading: false,
+      err: error,
+      field: field,
+    };
+  }),
+  on(clearUpdateUser, (state) => {
+    return initialUpdatedUserState;
   })
 );

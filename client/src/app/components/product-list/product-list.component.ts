@@ -4,8 +4,8 @@ import { Category } from 'src/models/category.model';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { getProducts } from 'src/app/store/actions/products.actions';
-import { Location, PathLocationStrategy } from '@angular/common';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Location } from '@angular/common';
+import { ActivatedRoute, Params } from '@angular/router';
 import { Filter } from 'src/models/filter.model';
 import { selectProductsList } from 'src/app/store/selectors/products.selectors';
 import {

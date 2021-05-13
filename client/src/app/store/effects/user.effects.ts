@@ -11,6 +11,9 @@ import {
   userLoginFailed,
   userLoginSuccess,
   logoutUser,
+  updateUserDetails,
+  updateUserDetailsSuccess,
+  updateUserDetailsFailed,
 } from '../actions/user.actions';
 import { UserService } from '../services/user.service';
 
@@ -54,10 +57,35 @@ export class UserEffects {
       this.actions$.pipe(
         ofType(logoutUser),
         tap(() => {
-          this.router.navigate(['/']);
+          this.router.navigate(['/login']);
         })
       ),
     { dispatch: false }
+  );
+
+  // update user's details
+  updateUserDetails$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateUserDetails),
+      switchMap((action) =>
+        this.userService.update(action).pipe(
+          switchMap((data: { user; field: string }) => {
+            return [
+              updateUserDetailsSuccess({ updatedUser: data }),
+              userLoginSuccess({ user: data.user }),
+            ];
+          }),
+          catchError((err) =>
+            of(
+              updateUserDetailsFailed({
+                error: err.error.msg,
+                field: err.error.field,
+              })
+            )
+          )
+        )
+      )
+    )
   );
 
   constructor(

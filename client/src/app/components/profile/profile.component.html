@@ -1,1 +1,232 @@
-<p>profile works!</p>
+<div class="profile-container" *ngIf="user">
+  <h1>My Profile</h1>
+  <section class="user-details">
+    <h2>User Info</h2>
+    <form
+      #userInfoForm="ngForm"
+      class="user-details-form"
+      (ngSubmit)="submitUserInfoForm(userInfoForm)"
+    >
+      <div class="form-messages" *ngIf="updateUserField === 'details'">
+        <div class="form-msg-error" *ngIf="updateUserError$ | async as error">
+          {{ error }}
+        </div>
+        <div
+          class="form-msg-loading"
+          *ngIf="updateUserLoading$ | async as loading"
+        >
+          Loading...
+        </div>
+        <div
+          class="form-msg-success"
+          *ngIf="updateUserSuccess$ | async as successMsg"
+        >
+          {{ successMsg }}
+        </div>
+      </div>
+      <div>
+        <label for="name">Name</label>
+        <input
+          id="name"
+          type="text"
+          name="name"
+          [class.has-error]="nameControl.invalid && nameControl.touched"
+          [class.has-success]="nameControl.valid && nameControl.dirty"
+          placeholder="Enter Name"
+          [(ngModel)]="name"
+          #nameControl="ngModel"
+          required
+        />
+        <span
+          class="input-error-msg"
+          *ngIf="nameControl.invalid && nameControl.touched"
+          >Name is required</span
+        >
+      </div>
+      <div>
+        <label for="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          name="email"
+          [class.has-error]="emailControl.invalid && emailControl.touched"
+          [class.has-success]="emailControl.valid && emailControl.dirty"
+          placeholder="Enter Email"
+          [(ngModel)]="email"
+          required
+          email
+          #emailControl="ngModel"
+        />
+        <span
+          class="input-error-msg"
+          *ngIf="emailControl.value?.length === 0 && emailControl.touched"
+          >Email is required</span
+        >
+        <span
+          class="input-error-msg"
+          *ngIf="
+            emailControl.value?.length > 0 &&
+            emailControl.invalid &&
+            emailControl.touched
+          "
+          >Input must be a valid email</span
+        >
+      </div>
+      <div>
+        <button
+          type="submit"
+          class="submit-form-btn"
+          [disabled]="userInfoForm.invalid || userInfoForm.pristine"
+        >
+          Save Changes
+        </button>
+      </div>
+    </form>
+    <section class="change-password">
+      <h2>Change Password</h2>
+      <form
+        #changePasswordForm="ngForm"
+        appPasswordMatch
+        class="user-details-form"
+        (ngSubmit)="submitPasswordForm(changePasswordForm)"
+      >
+        <div class="form-messages" *ngIf="updateUserField === 'password'">
+          <div class="form-msg-error" *ngIf="updateUserError$ | async as error">
+            {{ error }}
+          </div>
+          <div class="form-msg-loading" *ngIf="updateUserLoading$ | async">
+            Loading...
+          </div>
+          <div
+            class="form-msg-success"
+            *ngIf="updateUserSuccess$ | async as successMsg"
+          >
+            {{ successMsg }}
+          </div>
+        </div>
+        <div>
+          <label for="password">Password</label>
+          <input
+            id="password"
+            type="password"
+            [class.has-error]="
+              passwordControl.invalid && passwordControl.touched
+            "
+            [class.has-success]="passwordControl.valid"
+            placeholder="Enter Password"
+            name="password"
+            [(ngModel)]="password"
+            #passwordControl="ngModel"
+            required
+            minlength="4"
+          />
+          <span
+            class="input-error-msg"
+            *ngIf="
+              passwordControl.value?.length === 0 && passwordControl.touched
+            "
+            >Password is required</span
+          >
+          <span
+            class="input-error-msg"
+            *ngIf="
+              passwordControl.value?.length > 0 &&
+              passwordControl.errors?.minlength
+            "
+            >Password must be at least 4 characters long</span
+          >
+        </div>
+        <div>
+          <label for="confirmPassword">Confirm Password</label>
+          <input
+            id="confirmPassword"
+            type="password"
+            [class.has-error]="
+              (confirmPasswordControl.invalid &&
+                confirmPasswordControl.touched) ||
+              changePasswordForm.errors?.matchError
+            "
+            [class.has-success]="
+              confirmPasswordControl.touched &&
+              confirmPasswordControl.valid &&
+              !changePasswordForm.errors?.matchError
+            "
+            name="confirmPassword"
+            [(ngModel)]="confirmPassword"
+            placeholder="Confirm Password"
+            #confirmPasswordControl="ngModel"
+            required
+          />
+          <span
+            class="input-error-msg"
+            *ngIf="
+              confirmPasswordControl.invalid && confirmPasswordControl.touched
+            "
+            >Please confirm password</span
+          >
+          <span
+            *ngIf="
+              confirmPasswordControl.value?.length > 0 &&
+              changePasswordForm.errors?.matchError &&
+              confirmPasswordControl.touched
+            "
+            class="input-error-msg"
+          >
+            Passwords must match
+          </span>
+        </div>
+        <div>
+          <button
+            type="submit"
+            [disabled]="
+              changePasswordForm.invalid ||
+              changePasswordForm.errors?.matchError
+            "
+            class="submit-form-btn"
+          >
+            Update
+          </button>
+        </div>
+      </form>
+    </section>
+  </section>
+  <section class="order-history">
+    <h2>Order History</h2>
+    <table class="user-orders-table" *ngIf="userOrdersList$ | async as orders">
+      <thead>
+        <tr>
+          <th>ORDER ID</th>
+          <th>DATE</th>
+          <th>TOTAL</th>
+          <th>PAID</th>
+          <th>ACTIONS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orders">
+          <td>{{ order._id }}</td>
+          <td>{{ order.paymentDetails.paidAt | date }}</td>
+          <td>€{{ order.totalPrice.toFixed(2) }}</td>
+          <td>
+            {{ order.isPaid ? "Yes" : "No" }}
+          </td>
+          <td>
+            <button type="button" (click)="goToOrderDetails(order._id)">
+              Details
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  <section class="user-actions">
+    <button
+      *ngIf="user.isAdmin"
+      class="management-btn"
+      (click)="goToManagement()"
+    >
+      Management
+    </button>
+    <button class="logout-btn" (click)="logoutUser()">Logout</button>
+  </section>
+</div>
