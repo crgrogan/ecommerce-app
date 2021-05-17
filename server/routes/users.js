@@ -1,7 +1,7 @@
 import express from "express";
 
 import User from "../models/User";
-import { getToken, isAuth } from "../utils";
+import { getToken, isAuth, isAdmin } from "../utils";
 
 const router = express.Router();
 
@@ -82,8 +82,8 @@ router.post("/createadmin", async (req, res, next) => {
 
 // update existing user's details
 router.put("/profile/details", isAuth, async (req, res) => {
-  const user = await User.findById(req.user._id);
   try {
+    const user = await User.findById(req.user._id);
     if (user) {
       user.name = req.body.name || user.name;
       user.email = req.body.email || user.email;
@@ -109,8 +109,8 @@ router.put("/profile/details", isAuth, async (req, res) => {
 
 // update existing user's password
 router.put("/profile/password", isAuth, async (req, res) => {
-  const user = await User.findById(req.user._id);
   try {
+    const user = await User.findById(req.user._id);
     if (user) {
       user.password = req.body.password;
       const updatedUser = await user.save();
@@ -128,6 +128,31 @@ router.put("/profile/password", isAuth, async (req, res) => {
     } else {
       res.status(404).send({ msg: "User not found", field: "password" });
     }
+  } catch (err) {
+    next(err);
+  }
+});
+
+// get all users
+router.get("/", isAuth, isAdmin, async (req, res) => {
+  try {
+    const users = await User.find({});
+    res.send(users);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// delete user
+router.delete("/:id", isAuth, isAdmin, async (req, res, next) => {
+  const userId = req.params.id;
+  try {
+    const userToDelete = await User.findById(userId);
+    if (userToDelete) {
+      await userToDelete.remove();
+      return res.send({ msg: "User deleted successfully" });
+    }
+    return res.status(400).send({ msg: "Error deleting user" });
   } catch (err) {
     next(err);
   }

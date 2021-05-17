@@ -9,6 +9,7 @@ import {
   createOrderReducer,
   orderDetailsReducer,
   orderPaidStatusReducer,
+  ordersListReducer,
   userOrdersReducer,
 } from './reducers/order.reducer';
 import {
@@ -18,9 +19,11 @@ import {
   productsReducer,
 } from './reducers/products.reducer';
 import {
+  deleteUserReducer,
   loginReducer,
   registerReducer,
   updatedUserReducer,
+  usersListReducer,
 } from './reducers/user.reducer';
 
 export const reducers: ActionReducerMap<AppState> = {
@@ -38,4 +41,7 @@ export const reducers: ActionReducerMap<AppState> = {
   orderPaidStatus: orderPaidStatusReducer,
   userOrders: userOrdersReducer,
   updatedUser: updatedUserReducer,
+  users: usersListReducer,
+  deleteUser: deleteUserReducer,
+  orders: ordersListReducer,
 };

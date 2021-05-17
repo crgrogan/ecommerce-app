@@ -7,6 +7,7 @@ import {
   CreateOrderState,
   OrderDetailsState,
   OrderPaidStatusState,
+  OrdersState,
   UserOrdersState,
 } from './store/reducers/order.reducer';
 import {
@@ -15,7 +16,12 @@ import {
   ProductsState,
   ProductState,
 } from './store/reducers/products.reducer';
-import { UpdatedUserState, UserState } from './store/reducers/user.reducer';
+import {
+  DeleteUserState,
+  UpdatedUserState,
+  UsersState,
+  UserState,
+} from './store/reducers/user.reducer';
 
 export interface AppState {
   filters: FiltersState;
@@ -32,4 +38,7 @@ export interface AppState {
   orderPaidStatus: OrderPaidStatusState;
   userOrders: UserOrdersState;
   updatedUser: UpdatedUserState;
+  users: UsersState;
+  deleteUser: DeleteUserState;
+  orders: OrdersState;
 }

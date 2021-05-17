@@ -8,6 +8,13 @@ import { User } from 'src/models/user.model';
 export class UserService {
   constructor(private http: HttpClient) {}
 
+  getAll() {
+    const { userInfo } = JSON.parse(localStorage.getItem('currentUser'));
+    return this.http.get('http://localhost:5000/api/users', {
+      headers: { authorization: `Bearer ${userInfo.token}` },
+    });
+  }
+
   register(user: { name: string; email: string; password: string }) {
     return this.http.post('http://localhost:5000/api/users/register', user);
   }
@@ -35,5 +42,12 @@ export class UserService {
         }
       );
     }
+  }
+
+  delete(id: string) {
+    const { userInfo } = JSON.parse(localStorage.getItem('currentUser'));
+    return this.http.delete(`http://localhost:5000/api/users/${id}`, {
+      headers: { authorization: `Bearer ${userInfo.token}` },
+    });
   }
 }

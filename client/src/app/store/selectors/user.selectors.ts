@@ -1,6 +1,10 @@
 import { createSelector } from '@ngrx/store';
 import { AppState } from 'src/app/app.state';
-import { UpdatedUserState, UserState } from '../reducers/user.reducer';
+import {
+  UpdatedUserState,
+  UsersState,
+  UserState,
+} from '../reducers/user.reducer';
 
 export const selectCurrentUser = (state: AppState) => state.currentUser;
 
@@ -53,4 +57,23 @@ export const selectUpdateUserSuccess = createSelector(
 export const selectUpdateUserField = createSelector(
   selectUpdateUser,
   (state: UpdatedUserState) => state.field
+);
+
+// get all users
+
+export const selectUsers = (state: AppState) => state.users;
+
+export const selectUsersList = createSelector(
+  selectUsers,
+  (state: UsersState) => state.usersList
+);
+
+export const selectUsersListLoading = createSelector(
+  selectUsers,
+  (state: UsersState) => state.isLoading
+);
+
+export const selectUsersListFailed = createSelector(
+  selectUsers,
+  (state: UsersState) => state.err
 );

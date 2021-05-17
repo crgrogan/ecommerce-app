@@ -4,6 +4,7 @@ import {
   CreateOrderState,
   OrderDetailsState,
   OrderPaidStatusState,
+  OrdersState,
   UserOrdersState,
 } from '../reducers/order.reducer';
 
@@ -52,4 +53,22 @@ export const selectUserOrders = (state: AppState) => state.userOrders;
 export const selectUserOrdersList = createSelector(
   selectUserOrders,
   (state: UserOrdersState) => state.ordersList
+);
+
+// get all orders
+export const selectOrders = (state: AppState) => state.orders;
+
+export const selectOrdersList = createSelector(
+  selectOrders,
+  (state: OrdersState) => state.ordersList
+);
+
+export const selectOrdersListLoading = createSelector(
+  selectOrders,
+  (state: OrdersState) => state.isLoading
+);
+
+export const selectOrdersListFailed = createSelector(
+  selectOrders,
+  (state: OrdersState) => state.err
 );

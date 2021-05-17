@@ -14,8 +14,15 @@ import {
   updateUserDetailsSuccess,
   updateUserDetailsFailed,
   clearUpdateUser,
+  getUsers,
+  usersLoadedSuccess,
+  usersLoadedFailed,
+  deleteUser,
+  UserDeleteSuccess,
+  UserDeleteFailed,
 } from '../actions/user.actions';
 
+// current User
 export interface UserState {
   userInfo: User;
   isLoading: boolean;
@@ -85,8 +92,6 @@ export const updatedUserReducer = createReducer(
     return { ...state, isLoading: true, err: null, msg: null };
   }),
   on(updateUserDetailsSuccess, (state, { updatedUser }) => {
-    console.log(updatedUser);
-
     const newState = {
       ...state,
       msg: updatedUser.msg,
@@ -105,5 +110,70 @@ export const updatedUserReducer = createReducer(
   }),
   on(clearUpdateUser, (state) => {
     return initialUpdatedUserState;
+  })
+);
+
+// users list
+export interface UsersState {
+  usersList: User[];
+  isLoading: boolean;
+  err: string;
+}
+
+const initialUsersListState: UsersState = {
+  usersList: [],
+  isLoading: false,
+  err: null,
+};
+
+export const usersListReducer = createReducer(
+  initialUsersListState,
+  on(getUsers, (state) => {
+    return { ...state, isLoading: true, err: null };
+  }),
+  on(usersLoadedSuccess, (state, { users }) => {
+    return {
+      ...state,
+      usersList: users,
+      isLoading: false,
+    };
+  }),
+  on(usersLoadedFailed, (state, { error }) => {
+    return {
+      ...state,
+      isLoading: false,
+      err: error,
+      usersList: [],
+    };
+  })
+);
+
+// deleteUser
+export interface DeleteUserState {
+  success: boolean;
+  isLoading: boolean;
+  err: string;
+}
+
+const initialDeleteUserState: DeleteUserState = {
+  success: false,
+  isLoading: false,
+  err: null,
+};
+
+export const deleteUserReducer = createReducer(
+  initialDeleteUserState,
+  on(deleteUser, (state) => {
+    return { ...state, isLoading: true, success: false };
+  }),
+  on(UserDeleteSuccess, (state, { user }) => {
+    return {
+      ...state,
+      isLoading: false,
+      success: true,
+    };
+  }),
+  on(UserDeleteFailed, (state, { error }) => {
+    return { ...state, isLoading: false, err: error };
   })
 );

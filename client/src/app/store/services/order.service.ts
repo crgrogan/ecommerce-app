@@ -45,4 +45,12 @@ export class OrderService {
       }
     );
   }
+
+  // get orders for all users
+  getAllOrders() {
+    const { userInfo } = JSON.parse(localStorage.getItem('currentUser'));
+    return this.http.get(`http://localhost:5000/api/orders`, {
+      headers: { authorization: `Bearer ${userInfo.token}` },
+    });
+  }
 }

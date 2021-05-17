@@ -14,11 +14,29 @@ import {
   updateUserDetails,
   updateUserDetailsSuccess,
   updateUserDetailsFailed,
+  getUsers,
+  usersLoadedSuccess,
+  usersLoadedFailed,
+  deleteUser,
+  UserDeleteSuccess,
+  UserDeleteFailed,
 } from '../actions/user.actions';
 import { UserService } from '../services/user.service';
 
 @Injectable()
 export class UserEffects {
+  getUsers$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(getUsers),
+      switchMap(() =>
+        this.userService.getAll().pipe(
+          map((data) => usersLoadedSuccess({ users: data })),
+          catchError((err) => of(usersLoadedFailed({ error: err.error.msg })))
+        )
+      )
+    )
+  );
+
   registerUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(registerUser),
@@ -83,6 +101,22 @@ export class UserEffects {
               })
             )
           )
+        )
+      )
+    )
+  );
+
+  // delete user from database
+  deleteUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteUser),
+      switchMap((action) =>
+        this.userService.delete(action.id).pipe(
+          switchMap((data) => {
+            // if user is successfully deleted, dispatch getUsers to get updated users list
+            return [UserDeleteSuccess({ user: data }), getUsers()];
+          }),
+          catchError((err) => of(UserDeleteFailed({ error: err.error.msg })))
         )
       )
     )

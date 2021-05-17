@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -10,12 +11,14 @@ import {
   resetFiltersUpdateState,
   updateFilters,
 } from 'src/app/store/actions/filters.actions';
+import { getOrders } from 'src/app/store/actions/order.actions';
 import {
   deleteProduct,
   getProducts,
   resetSaveState,
   saveProduct,
 } from 'src/app/store/actions/products.actions';
+import { deleteUser, getUsers } from 'src/app/store/actions/user.actions';
 import { updateFiltersReducer } from 'src/app/store/reducers/filters.reducer';
 import {
   selectCategoriesList,
@@ -25,14 +28,18 @@ import {
   selectUpdateFiltersMsg,
   selectUpdateFiltersError,
 } from 'src/app/store/selectors/filters.selectors';
+import { selectOrdersList } from 'src/app/store/selectors/order.selector';
 import {
   selectNewProductErr,
   selectNewProductMsg,
   selectProductsList,
   selectNewProductLoading,
 } from 'src/app/store/selectors/products.selectors';
+import { selectUsersList } from 'src/app/store/selectors/user.selectors';
 import { Category } from 'src/models/category.model';
+import { Order } from 'src/models/order.model';
 import { Product } from 'src/models/product.model';
+import { User } from 'src/models/user.model';
 
 @Component({
   selector: 'app-management',
@@ -67,8 +74,10 @@ export class ManagementComponent implements OnInit, OnDestroy {
   filtersSaveLoading$: Observable<boolean>;
   filtersSaveError$: Observable<string>;
   filtersSaveMsg$: Observable<string>;
+  users$: Observable<User[]>;
+  orders$: Observable<Order[]>;
 
-  constructor(private store: Store<AppState>) {
+  constructor(private store: Store<AppState>, private router: Router) {
     this.products$ = this.store.select(selectProductsList);
     this.loading$ = this.store.select(selectNewProductLoading);
     this.saveMsg$ = this.store.select(selectNewProductMsg);
@@ -79,15 +88,20 @@ export class ManagementComponent implements OnInit, OnDestroy {
     this.filtersSaveLoading$ = this.store.select(selectUpdateFiltersLoading);
     this.filtersSaveMsg$ = this.store.select(selectUpdateFiltersMsg);
     this.filtersSaveError$ = this.store.select(selectUpdateFiltersError);
+    this.users$ = this.store.select(selectUsersList);
+    this.orders$ = this.store.select(selectOrdersList);
   }
 
   ngOnInit(): void {
     // get all products
     this.store.dispatch(getProducts(''));
+    // get all users
+    this.store.dispatch(getUsers());
+    // get all orders
+    this.store.dispatch(getOrders());
   }
 
   // Products
-
   submitProductForm(form: NgForm) {
     const {
       _id,
@@ -115,9 +129,7 @@ export class ManagementComponent implements OnInit, OnDestroy {
         })
       );
     }
-
     window.scroll(0, 0);
-
     // reset form values and state
     form.resetForm();
   }
@@ -216,6 +228,15 @@ export class ManagementComponent implements OnInit, OnDestroy {
 
   deleteFilter(id: string, category: string) {
     this.store.dispatch(deleteFilter(id, category));
+  }
+
+  // users
+  deleteUser(id: string) {
+    this.store.dispatch(deleteUser(id));
+  }
+
+  viewOrderDetails(id: string) {
+    this.router.navigate(['/order', id]);
   }
 
   ngOnDestroy(): void {

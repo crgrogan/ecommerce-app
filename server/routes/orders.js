@@ -1,7 +1,7 @@
 import express from "express";
 
 import Order from "../models/Order";
-import { isAuth } from "../utils";
+import { isAuth, isAdmin } from "../utils";
 
 const router = express.Router();
 
@@ -87,6 +87,16 @@ router.get("/list/:id", isAuth, async (req, res, next) => {
     } else {
       res.status(404).send({ msg: "No orders found for current user" });
     }
+  } catch (err) {
+    next(err);
+  }
+});
+
+// get all orders
+router.get("/", isAuth, isAdmin, async (req, res) => {
+  try {
+    const orders = await Order.find({});
+    res.send(orders);
   } catch (err) {
     next(err);
   }

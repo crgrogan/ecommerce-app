@@ -7,11 +7,14 @@ import {
   createOrderFailed,
   createOrderSuccess,
   getOrderDetails,
+  getOrders,
   getUserOrders,
   orderDetailsFailed,
   orderDetailsSuccess,
   orderPaidStatusFailed,
   orderPaidStatusSuccess,
+  ordersLoadedFailed,
+  ordersLoadedSuccess,
   payOrder,
   userOrdersFailed,
   userOrdersSuccess,
@@ -125,5 +128,40 @@ export const userOrdersReducer = createReducer(
   }),
   on(userOrdersFailed, (state, { error }) => {
     return { ...state, err: error, isLoading: false, ordersList: [] };
+  })
+);
+
+// orders list
+export interface OrdersState {
+  ordersList: Order[];
+  isLoading: boolean;
+  err: string;
+}
+
+const initialOrdersListState: OrdersState = {
+  ordersList: [],
+  isLoading: false,
+  err: null,
+};
+
+export const ordersListReducer = createReducer(
+  initialOrdersListState,
+  on(getOrders, (state) => {
+    return { ...state, isLoading: true, err: null };
+  }),
+  on(ordersLoadedSuccess, (state, { orders }) => {
+    return {
+      ...state,
+      ordersList: orders,
+      isLoading: false,
+    };
+  }),
+  on(ordersLoadedFailed, (state, { error }) => {
+    return {
+      ...state,
+      isLoading: false,
+      err: error,
+      ordersList: [],
+    };
   })
 );

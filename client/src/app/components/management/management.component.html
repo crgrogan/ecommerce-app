@@ -361,46 +361,100 @@
       </table>
     </div>
   </div>
-
   <!-- Management Home Screen -->
   <div *ngIf="!productModalOpen && !filtersModalOpen">
-    <h2>Product Manager</h2>
-    <button
-      (click)="openProductModal()"
-      class="open-modal"
-      id="open-product-modal"
-    >
-      Create Product
-    </button>
-    <button (click)="openFiltersModal()" class="open-modal">
-      Update Filters
-    </button>
-    <table class="products-table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Price (€)</th>
-          <th>Category</th>
-          <th>Brand</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody *ngIf="products$ | async as products">
-        <tr *ngFor="let product of products">
-          <td>{{ product._id }}</td>
-          <td>{{ product.name }}</td>
-          <td>{{ product.price }}</td>
-          <td>{{ product.category }}</td>
-          <td>{{ product.brand }}</td>
-          <td>
-            <button class="edit-btn" (click)="openProductModal(product)">
-              Edit
-            </button>
-            <button (click)="deleteProduct(product._id)">Delete</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <h1>Management</h1>
+    <section class="management-section">
+      <h2>Product Manager</h2>
+      <button
+        (click)="openProductModal()"
+        class="open-modal"
+        id="open-product-modal"
+      >
+        Create Product
+      </button>
+      <button (click)="openFiltersModal()" class="open-modal">
+        Update Filters
+      </button>
+      <table class="management-table products-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Price (€)</th>
+            <th>Category</th>
+            <th>Brand</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="products$ | async as products">
+          <tr *ngFor="let product of products">
+            <td>{{ product._id }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.category }}</td>
+            <td>{{ product.brand }}</td>
+            <td>
+              <button class="edit-btn" (click)="openProductModal(product)">
+                Edit
+              </button>
+              <button (click)="deleteProduct(product._id)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section class="management-section">
+      <h2>Users</h2>
+      <table class="management-table users-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Administrator</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="users$ | async as users">
+          <tr *ngFor="let user of users">
+            <td>{{ user._id }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.isAdmin ? "Yes" : "No" }}</td>
+            <td>
+              <button (click)="deleteUser(user._id)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section class="management-section">
+      <h2>Orders</h2>
+      <table class="management-table orders-table">
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Date</th>
+            <th>User ID</th>
+            <th>Total (€)</th>
+            <th>Paid</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="orders$ | async as orders">
+          <tr *ngFor="let order of orders">
+            <td>{{ order._id }}</td>
+            <td>{{ order.createdAt | date: medium }}</td>
+            <td>{{ order.user }}</td>
+            <td>{{ order.totalPrice }}</td>
+            <td>{{ order.isPaid ? "Yes" : "No" }}</td>
+            <td>
+              <button (click)="viewOrderDetails(order._id)">View</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
   </div>
 </div>

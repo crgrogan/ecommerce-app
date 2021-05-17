@@ -2,12 +2,16 @@
   padding: 2.5em;
 }
 
-.products-table {
+.management-section {
+  margin-bottom: 3em;
+}
+
+.management-table {
   width: 100%;
   border: 1px solid #203040;
 }
 
-.products-table,
+.management-table,
 .filters-table,
 th,
 td {
@@ -111,27 +115,27 @@ td {
 
 @media only screen and (max-width: 768px) {
   /* Force table to not be like tables anymore */
-  .products-table,
-  .products-table thead,
-  .products-table tbody,
-  .products-table th,
-  .products-table td,
-  .products-table tr {
+  .management-table,
+  .management-table thead,
+  .management-table tbody,
+  .management-table th,
+  .management-table td,
+  .management-table tr {
     display: block;
   }
 
   /* Hide table headers (but not display: none;, for accessibility) */
-  .products-table thead tr {
+  .management-table thead tr {
     position: absolute;
     top: -9999px;
     left: -9999px;
   }
 
-  .products-table tr {
+  .management-table tr {
     border: 1px solid #dbdbdb;
   }
 
-  .products-table td {
+  .management-table td {
     /* Behave  like a "row" */
     border: none;
     border-bottom: 1px solid #eee;
@@ -140,7 +144,7 @@ td {
     overflow-x: auto;
   }
 
-  .products-table td:before {
+  .management-table td:before {
     /* Now like a table header */
     position: absolute;
     /* Top/left values mimic padding */
@@ -151,9 +155,7 @@ td {
     white-space: nowrap;
   }
 
-  /*
-	Label the data
-	*/
+  /* Label the management */
   .products-table td:nth-of-type(1):before {
     content: "ID";
     font-weight: 700;
@@ -163,7 +165,7 @@ td {
     font-weight: 700;
   }
   .products-table td:nth-of-type(3):before {
-    content: "Price(€)";
+    content: "Price (€)";
     font-weight: 700;
   }
   .products-table td:nth-of-type(4):before {
@@ -178,14 +180,60 @@ td {
     content: "Action";
     font-weight: 700;
   }
+
+  .users-table td:nth-of-type(1):before {
+    content: "ID";
+    font-weight: 700;
+  }
+  .users-table td:nth-of-type(2):before {
+    content: "Name";
+    font-weight: 700;
+  }
+  .users-table td:nth-of-type(3):before {
+    content: "Email";
+    font-weight: 700;
+  }
+  .users-table td:nth-of-type(4):before {
+    content: "Admin";
+    font-weight: 700;
+  }
+  .users-table td:nth-of-type(5):before {
+    content: "Actions";
+    font-weight: 700;
+  }
+
+  .orders-table td:nth-of-type(1):before {
+    content: "Order ID";
+    font-weight: 700;
+  }
+  .orders-table td:nth-of-type(2):before {
+    content: "Date";
+    font-weight: 700;
+  }
+  .orders-table td:nth-of-type(3):before {
+    content: "User ID";
+    font-weight: 700;
+  }
+  .orders-table td:nth-of-type(4):before {
+    content: "Total (€)";
+    font-weight: 700;
+  }
+  .orders-table td:nth-of-type(5):before {
+    content: "Paid";
+    font-weight: 700;
+  }
+  .orders-table td:nth-of-type(6):before {
+    content: "Actions";
+    font-weight: 700;
+  }
 }
 
 @media screen and (max-width: 576px) {
-  .products-table td {
+  .management-table td {
     padding-left: 35%;
   }
 
-  .products-table td:before {
+  .management-table td:before {
     width: 30%;
   }
 

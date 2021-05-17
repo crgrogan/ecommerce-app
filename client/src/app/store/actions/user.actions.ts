@@ -1,6 +1,19 @@
 import { createAction, props } from '@ngrx/store';
-import { User } from 'src/models/user.model';
 
+// get all users
+export const getUsers = createAction('[USER] Get All Users');
+
+export const usersLoadedSuccess = createAction(
+  '[USER] Users Loaded Success',
+  props<{ users }>()
+);
+
+export const usersLoadedFailed = createAction(
+  '[USER] Users Loaded Failed',
+  props<{ error }>()
+);
+
+// register users
 export const registerUser = createAction(
   '[USER] Register User',
   (name, email, password) => ({
@@ -20,6 +33,7 @@ export const userRegisterFailed = createAction(
   props<{ error }>()
 );
 
+// login users
 export const loginUser = createAction(
   '[USER] Login User',
   (email, password) => ({
@@ -72,3 +86,18 @@ export const updateUserDetailsFailed = createAction(
 
 // set state in update user reducer back to initial state
 export const clearUpdateUser = createAction('[USER] Clear Update User');
+
+// delete user
+export const deleteUser = createAction('[USER] Delete User', (id: string) => ({
+  id,
+}));
+
+export const UserDeleteSuccess = createAction(
+  '[USER] User Delete Success',
+  props<{ user }>()
+);
+
+export const UserDeleteFailed = createAction(
+  '[USER] User Delete Failed',
+  props<{ error: string }>()
+);

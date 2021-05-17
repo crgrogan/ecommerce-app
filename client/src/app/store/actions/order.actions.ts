@@ -72,3 +72,16 @@ export const userOrdersFailed = createAction(
   '[ORDER] User Orders Failed',
   props<{ error: string }>()
 );
+
+// get all orders
+export const getOrders = createAction('[USER] Get All Orders');
+
+export const ordersLoadedSuccess = createAction(
+  '[USER] Orders Loaded Success',
+  props<{ orders }>()
+);
+
+export const ordersLoadedFailed = createAction(
+  '[USER] Orders Loaded Failed',
+  props<{ error }>()
+);
