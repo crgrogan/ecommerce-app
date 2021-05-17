@@ -1,4 +1,5 @@
 import express from "express";
+import bcrypt from "bcrypt";
 
 import User from "../models/User";
 import { getToken, isAuth, isAdmin } from "../utils";
@@ -10,18 +11,19 @@ router.post("/login", async (req, res, next) => {
   const { email, password } = req.body;
   try {
     // check if user exists in database
-    const userFound = await User.findOne({ email, password });
+    const userFound = await User.findOne({ email });
     if (userFound) {
-      res.send({
-        _id: userFound.id,
-        email: userFound.email,
-        name: userFound.name,
-        isAdmin: userFound.isAdmin,
-        token: getToken(userFound),
-      });
-    } else {
-      res.status(401).send({ msg: "Invalid email or password" });
+      if (bcrypt.compareSync(password, userFound.password)) {
+        return res.send({
+          _id: userFound.id,
+          email: userFound.email,
+          name: userFound.name,
+          isAdmin: userFound.isAdmin,
+          token: getToken(userFound),
+        });
+      }
     }
+    return res.status(401).send({ msg: "Invalid email or password" });
   } catch (err) {
     next(err);
   }
@@ -39,7 +41,7 @@ router.post("/register", async (req, res, next) => {
     const user = new User({
       name,
       email,
-      password,
+      password: bcrypt.hashSync(password, 8),
       isAdmin: false,
     });
     const newUser = await user.save();
@@ -66,7 +68,7 @@ router.post("/createadmin", async (req, res, next) => {
     const user = new User({
       name,
       email,
-      password,
+      password: bcrypt.hashSync(password, 8),
       isAdmin: true,
     });
     const newUser = await user.save();
@@ -112,7 +114,7 @@ router.put("/profile/password", isAuth, async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
     if (user) {
-      user.password = req.body.password;
+      user.password = bcrypt.hashSync(password, 8);
       const updatedUser = await user.save();
       res.send({
         msg: "Password updated successfully",

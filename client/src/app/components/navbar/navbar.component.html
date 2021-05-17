@@ -31,7 +31,7 @@
       </a>
       <ul *ngIf="currentUser" class="profile-dropdown-menu">
         <li id="user-details-container">
-          <span>Hi {{ currentUser.name }}</span
+          <span>Hi {{ currentUser.name.split(" ")[0] }}</span
           ><span (click)="logoutUser()" id="sign-out-link">Sign Out</span>
         </li>
         <li>
