@@ -10,8 +10,15 @@
   color: #c0c0c0;
   flex: 1 1;
   padding-top: 0.75em;
+  text-align: center;
 }
 .checkout-steps > div.active {
   border-top: 3px #f08000 solid;
   color: #f08000;
+}
+
+@media screen and (max-width: 576px) {
+  .checkout-steps {
+    width: 90%;
+  }
 }

@@ -18,7 +18,7 @@ router.get("/", async (req, res, next) => {
 // get products based on filters provided
 router.get("/filter", async (req, res, next) => {
   try {
-    const { category, colour, brand, sortby } = req.query;
+    const { q, category, colour, brand, sortby } = req.query;
     let filters = {
       category,
       colour,
@@ -34,9 +34,24 @@ router.get("/filter", async (req, res, next) => {
         filters[key] = value.replace(/\b\w/g, (l) => l.toUpperCase());
       }
     }
-    const products = sortby
-      ? await Product.find({ ...filters }).sort({ price: sortby })
+    let products;
+    if (q) {
+      products = sortby
+        ? await Product.find({ $text: { $search: q }, ...filters }).sort({
+            price: sortby,
+          })
+        : await Product.find({ $text: { $search: q }, ...filters });
+    } else {
+      products = sortby
+        ? await Product.find({ ...filters }).sort({ price: sortby })
+        : await Product.find({ ...filters });
+    }
+    /*  const products = q
+      ? await Product.find({ $text: { $search: q }, ...filters })
       : await Product.find({ ...filters });
+    if (sortby) {
+     products = await products.sort({ price: sortby });
+    } */
     res.send(products);
   } catch (err) {
     next(err);

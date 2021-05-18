@@ -1,8 +1,11 @@
 <section class="filter-products">
   <h1>Search Products</h1>
-  <form class="search-filters">
+  <h2 *ngIf="searchQuery" class="search-query-heading">
+    Your search results for "{{ searchQuery }}"
+  </h2>
+  <form #searchFilterForm="ngForm" class="search-filters">
     <select
-      (change)="submitForm($event)"
+      (change)="submitForm(searchFilterForm.value)"
       name="sortby"
       [(ngModel)]="sortBySelected"
     >
@@ -11,7 +14,7 @@
       <option value="1">Price - High to Low</option>
     </select>
     <select
-      (change)="submitForm($event)"
+      (change)="submitForm(searchFilterForm.value)"
       name="category"
       *ngIf="categories$ | async as categories"
       [(ngModel)]="categorySelected"
@@ -22,31 +25,33 @@
       </option>
     </select>
     <select
-      (change)="submitForm($event)"
+      (change)="submitForm(searchFilterForm.value)"
       name="brand"
       *ngIf="brands$ | async as brands"
       [(ngModel)]="brandSelected"
     >
       <option value="">Brand</option>
-      <option *ngFor="let brand of brands" [value]="brand">
+      <option *ngFor="let brand of brands" [value]="brand.name">
         {{ brand.name }}
       </option>
     </select>
     <select
-      (change)="submitForm($event)"
+      (change)="submitForm(searchFilterForm.value)"
       name="colour"
       *ngIf="colours$ | async as colours"
       [(ngModel)]="colourSelected"
     >
       <option value="">Colour</option>
-      <option *ngFor="let colour of colours" [value]="colour">
+      <option *ngFor="let colour of colours" [value]="colour.name">
         {{ colour.name }}
       </option>
     </select>
   </form>
 </section>
-<ul class="products" *ngIf="products$ | async as products">
-  <li *ngFor="let product of products">
-    <app-product-card [data]="product"></app-product-card>
-  </li>
-</ul>
+<section class="products-list">
+  <ul class="products" *ngIf="products$ | async as products">
+    <li *ngFor="let product of products">
+      <app-product-card [data]="product"></app-product-card>
+    </li>
+  </ul>
+</section>

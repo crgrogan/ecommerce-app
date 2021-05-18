@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Product } from 'src/models/product.model';
 import { Category } from 'src/models/category.model';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { getProducts } from 'src/app/store/actions/products.actions';
-import { Location } from '@angular/common';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Filter } from 'src/models/filter.model';
 import { selectProductsList } from 'src/app/store/selectors/products.selectors';
 import {
@@ -20,7 +19,8 @@ import { AppState } from 'src/app/app.state';
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css'],
 })
-export class ProductListComponent implements OnInit {
+export class ProductListComponent implements OnInit, OnDestroy {
+  searchQuery: string = '';
   products$: Observable<Product[]>;
   categories$: Observable<Category[]>;
   brands$: Observable<String[]>;
@@ -30,11 +30,12 @@ export class ProductListComponent implements OnInit {
   brandSelected: string = 'hello';
   categorySelected: string = '';
   colourSelected: string = '';
+  queryParamsSubscription: Subscription;
 
   constructor(
     private store: Store<AppState>,
-    private location: Location,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.products$ = this.store.select(selectProductsList);
     this.categories$ = this.store.select(selectCategoriesList);
@@ -43,32 +44,33 @@ export class ProductListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // check url for query string
-    const params = this.route.snapshot.queryParams;
-
-    // set initial value of filters based on query string
-    this.setSelectedValues(params);
-
-    // filter products based on filters provided
-    this.filterResults(params);
+    // subscribe to url and watch for changes to query string
+    this.queryParamsSubscription = this.route.queryParams.subscribe(
+      (params) => {
+        this.searchQuery = params.q;
+        // this.params = params;
+        // set initial value of filters based on query string
+        this.setSelectedValues(params);
+        // get products based on filters in query string
+        this.store.dispatch(getProducts(this.objectToQueryString(params)));
+      }
+    );
   }
 
-  setSelectedValues(params: Params) {
-    const { brand = '', category = '', colour = '', sortby = '' } = params;
-
+  setSelectedValues(filterValues: Params) {
+    const {
+      brand = '',
+      category = '',
+      colour = '',
+      sortby = '',
+    } = filterValues;
+    // capitalize first letter of each word in string
     this.brandSelected = brand.replace(/\b\w/g, (char) => char.toUpperCase());
     this.colourSelected = colour.replace(/\b\w/g, (char) => char.toUpperCase());
     this.categorySelected = category.replace(/\b\w/g, (char) =>
       char.toUpperCase()
     );
     this.sortBySelected = sortby.replace(/\b\w/g, (char) => char.toUpperCase());
-  }
-
-  filterResults(params: Params) {
-    for (let property in params) {
-      this.filterObj[property] = params[property];
-    }
-    this.store.dispatch(getProducts(this.objectToQueryString(this.filterObj)));
   }
 
   // convert object to query string
@@ -81,21 +83,30 @@ export class ProductListComponent implements OnInit {
     return str.join('&');
   }
 
-  submitForm(e) {
-    const filter = e.target.value.toLowerCase();
-    const name = e.target.name;
+  submitForm(formValues) {
     const params = new URLSearchParams(window.location.search);
-    // loop through current url search params and populate filterObj
-    params.forEach((val, key) => {
-      this.filterObj[key] = val;
-    });
-    // add the new filter that prompted the form submission
-    this.filterObj[name] = filter;
-    // update url using filterObj as the queryString
-    this.location.go(
-      '/products/filter',
-      this.objectToQueryString(this.filterObj)
-    );
-    this.store.dispatch(getProducts(this.objectToQueryString(this.filterObj)));
+    // iterate through key/value pairs in formValues object
+    for (let prop in formValues) {
+      // remove property if value is falsey
+      if (!formValues[prop]) {
+        delete formValues[prop];
+        // else convert value to lowercase
+      } else {
+        formValues[prop] = formValues[prop].toLowerCase();
+      }
+    }
+    if (params.has('q')) {
+      this.router.navigate(['/products/filter'], {
+        queryParams: { q: params.get('q'), ...formValues },
+      });
+    } else {
+      this.router.navigate(['/products/filter'], {
+        queryParams: formValues,
+      });
+    }
+  }
+
+  ngOnDestroy() {
+    this.queryParamsSubscription.unsubscribe();
   }
 }

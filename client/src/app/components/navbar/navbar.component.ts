@@ -1,4 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import {
   faTimes,
   faUserCircle,
@@ -23,6 +25,7 @@ import { User } from 'src/models/user.model';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit, OnDestroy {
+  searchQuery: string = '';
   searchbarOpen: boolean = false;
   menuOpen: boolean = false;
   faTimes = faTimes;
@@ -36,7 +39,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   userSubsciption: Subscription;
   categories$: Observable<Category[]>;
 
-  constructor(private store: Store<AppState>) {
+  constructor(private store: Store<AppState>, private router: Router) {
     this.userSubsciption = this.store
       .select(selectCurrentUserInfo)
       .subscribe((user) => {
@@ -58,6 +61,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   logoutUser() {
     this.store.dispatch(logoutUser());
+  }
+
+  submitQueryForm(form: NgForm) {
+    this.router.navigate(['/products/filter'], {
+      queryParams: { q: form.value.search },
+    });
+    form.resetForm();
   }
 
   ngOnDestroy() {

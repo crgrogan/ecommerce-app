@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import Product from "./models/Product";
 
 export const getToken = (user) => {
   return jwt.sign(
@@ -38,4 +39,17 @@ export const isAdmin = (req, res, next) => {
     return next();
   }
   return res.status(401).send({ msg: "Admin token required" });
+};
+
+// check details of item in order request body vs details in database
+export const verifyItem = async (cartItem) => {
+  const item = await Product.findById(cartItem._id);
+  if (item) {
+    if (item.price === cartItem.price) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  return false;
 };

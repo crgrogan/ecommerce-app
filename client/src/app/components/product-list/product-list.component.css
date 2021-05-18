@@ -10,6 +10,11 @@
   text-align: center;
 }
 
+.search-query-heading {
+  text-align: center;
+  margin-bottom: 1.5em;
+}
+
 .search-filters {
   display: flex;
   flex-wrap: wrap;
@@ -29,8 +34,11 @@ option {
   border-top: 1px solid #575757;
 }
 
+.products-list {
+  padding: 4em 1.5em;
+}
+
 .products {
-  margin: 3em 1.5em;
   display: grid;
   grid-template-columns: repeat(auto-fit, 20rem);
   grid-gap: 1em;

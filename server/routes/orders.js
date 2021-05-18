@@ -1,7 +1,7 @@
 import express from "express";
 
 import Order from "../models/Order";
-import { isAuth, isAdmin } from "../utils";
+import { isAuth, isAdmin, verifyItem } from "../utils";
 
 const router = express.Router();
 
@@ -18,6 +18,13 @@ router.post("/", isAuth, async (req, res, next) => {
   try {
     if (cartItems.length === 0) {
       return res.status(400).send({ msg: "Cart is empty" });
+    }
+    // check to see if order items details match details in database
+    for (let item of cartItems) {
+      let priceMatch = await verifyItem(item);
+      if (!priceMatch) {
+        return res.status(400).send({ msg: "Error verifying cart item" });
+      }
     }
     const order = new Order({
       orderItems: cartItems,
