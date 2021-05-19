@@ -10,7 +10,10 @@ import {
   updateUserDetails,
   clearUpdateUser,
 } from 'src/app/store/actions/user.actions';
-import { selectUserOrdersList } from 'src/app/store/selectors/order.selector';
+import {
+  selectUserOrdersList,
+  selectUserOrdersListLoading,
+} from 'src/app/store/selectors/order.selector';
 import {
   selectCurrentUserInfo,
   selectUpdateUserError,
@@ -35,6 +38,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   fieldSubscription: Subscription;
   updateUserField: string;
   userOrdersList$: Observable<Order[]>;
+  userOrdersListLoading$: Observable<boolean>;
   name: string = '';
   email: string = '';
   password: string = '';
@@ -42,6 +46,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   constructor(private store: Store<AppState>, private router: Router) {
     this.userOrdersList$ = this.store.select(selectUserOrdersList);
+    this.userOrdersListLoading$ = this.store.select(
+      selectUserOrdersListLoading
+    );
     this.userSubscription = this.store
       .select(selectCurrentUserInfo)
       .subscribe((userInfo) => {

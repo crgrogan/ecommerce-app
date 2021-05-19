@@ -28,14 +28,21 @@ import {
   selectUpdateFiltersMsg,
   selectUpdateFiltersError,
 } from 'src/app/store/selectors/filters.selectors';
-import { selectOrdersList } from 'src/app/store/selectors/order.selector';
+import {
+  selectOrdersList,
+  selectOrdersListLoading,
+} from 'src/app/store/selectors/order.selector';
 import {
   selectNewProductErr,
   selectNewProductMsg,
   selectProductsList,
   selectNewProductLoading,
+  selectProductsListLoading,
 } from 'src/app/store/selectors/products.selectors';
-import { selectUsersList } from 'src/app/store/selectors/user.selectors';
+import {
+  selectUsersList,
+  selectUsersListLoading,
+} from 'src/app/store/selectors/user.selectors';
 import { Category } from 'src/models/category.model';
 import { Order } from 'src/models/order.model';
 import { Product } from 'src/models/product.model';
@@ -64,10 +71,11 @@ export class ManagementComponent implements OnInit, OnDestroy {
   filterBrands: string = '';
   filterColours: string = '';
   formIsEmpty: boolean = false;
-  loading$: Observable<boolean>;
-  error$: Observable<string>;
-  saveMsg$: Observable<string>;
+  newProductLoading$: Observable<boolean>;
+  newProductError$: Observable<string>;
+  newProductSaveMsg$: Observable<string>;
   products$: Observable<Product[]>;
+  productsLoading$: Observable<boolean>;
   categories$: Observable<Category[]>;
   brands$: Observable<string[]>;
   colours$: Observable<string[]>;
@@ -75,13 +83,16 @@ export class ManagementComponent implements OnInit, OnDestroy {
   filtersSaveError$: Observable<string>;
   filtersSaveMsg$: Observable<string>;
   users$: Observable<User[]>;
+  usersLoading$: Observable<boolean>;
   orders$: Observable<Order[]>;
+  ordersLoading$: Observable<boolean>;
 
   constructor(private store: Store<AppState>, private router: Router) {
     this.products$ = this.store.select(selectProductsList);
-    this.loading$ = this.store.select(selectNewProductLoading);
-    this.saveMsg$ = this.store.select(selectNewProductMsg);
-    this.error$ = this.store.select(selectNewProductErr);
+    this.productsLoading$ = this.store.select(selectProductsListLoading);
+    this.newProductLoading$ = this.store.select(selectNewProductLoading);
+    this.newProductSaveMsg$ = this.store.select(selectNewProductMsg);
+    this.newProductError$ = this.store.select(selectNewProductErr);
     this.categories$ = this.store.select(selectCategoriesList);
     this.brands$ = this.store.select(selectBrandsList);
     this.colours$ = this.store.select(selectColoursList);
@@ -89,7 +100,9 @@ export class ManagementComponent implements OnInit, OnDestroy {
     this.filtersSaveMsg$ = this.store.select(selectUpdateFiltersMsg);
     this.filtersSaveError$ = this.store.select(selectUpdateFiltersError);
     this.users$ = this.store.select(selectUsersList);
+    this.usersLoading$ = this.store.select(selectUsersListLoading);
     this.orders$ = this.store.select(selectOrdersList);
+    this.ordersLoading$ = this.store.select(selectOrdersListLoading);
   }
 
   ngOnInit(): void {

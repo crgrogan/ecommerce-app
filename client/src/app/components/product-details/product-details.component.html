@@ -1,47 +1,55 @@
-<div class="selected-product-container" *ngIf="product$ | async as product">
-  <div class="selected-product-image">
-    <img src="{{ product.img }}" alt="" />
-  </div>
-  <div class="selected-product-details">
-    <h2 class="selected-product-name">{{ product.name }}</h2>
-    <div class="selected-product-brand mb-25">by {{ product.brand }}</div>
-    <div class="selected-product-rating mb-25">
-      {{ product.rating }} stars ({{ product.numReviews }} reviews)
+<app-loading-spinner
+  *ngIf="productLoading$ | async; else loaded"
+></app-loading-spinner>
+<ng-template #loaded>
+  <div class="selected-product-container" *ngIf="product$ | async as product">
+    <div class="selected-product-image">
+      <img src="{{ product.img }}" alt="" />
     </div>
-    <div class="selected-product-price mb-25">€{{ product.price }}</div>
-    <div class="selected-product-colour mb-25">
-      <span>Colour: </span>{{ product.colour }}
-    </div>
-    <label for="selected-product-qty" class="selected-product-qty-label mb-25">
-      Quantity
-    </label>
-    <select
-      [ngModel]="selectedValue"
-      (ngModelChange)="onSelectedChange($event)"
-      name="selected-product-qty"
-      id="selected-product-qty"
-      class="mb-25"
-    >
-      <option
-        *ngFor="
-          let item of createOptionsArray(product.countInStock);
-          let index = index
-        "
+    <div class="selected-product-details">
+      <h2 class="selected-product-name">{{ product.name }}</h2>
+      <div class="selected-product-brand mb-25">by {{ product.brand }}</div>
+      <div class="selected-product-rating mb-25">
+        {{ product.rating }} stars ({{ product.numReviews }} reviews)
+      </div>
+      <div class="selected-product-price mb-25">€{{ product.price }}</div>
+      <div class="selected-product-colour mb-25">
+        <span>Colour: </span>{{ product.colour }}
+      </div>
+      <label
+        for="selected-product-qty"
+        class="selected-product-qty-label mb-25"
       >
-        {{ index + 1 }}
-      </option>
-    </select>
-    <button
-      [routerLink]="['/cart', id]"
-      [queryParams]="{ qty: selectedValue }"
-      [state]="{ prevPage: true }"
-      class="add-to-basket mb-25"
-    >
-      Add to Basket
-    </button>
+        Quantity
+      </label>
+      <select
+        [ngModel]="selectedValue"
+        (ngModelChange)="onSelectedChange($event)"
+        name="selected-product-qty"
+        id="selected-product-qty"
+        class="mb-25"
+      >
+        <option
+          *ngFor="
+            let item of createOptionsArray(product.countInStock);
+            let index = index
+          "
+        >
+          {{ index + 1 }}
+        </option>
+      </select>
+      <button
+        [routerLink]="['/cart', id]"
+        [queryParams]="{ qty: selectedValue }"
+        [state]="{ prevPage: true }"
+        class="add-to-basket mb-25"
+      >
+        Add to Basket
+      </button>
+    </div>
+    <div class="selected-product-description">
+      <h3>Product Description</h3>
+      <p>{{ product.description }}</p>
+    </div>
   </div>
-  <div class="selected-product-description">
-    <h3>Product Description</h3>
-    <p>{{ product.description }}</p>
-  </div>
-</div>
+</ng-template>

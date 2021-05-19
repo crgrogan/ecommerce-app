@@ -48,10 +48,18 @@
     </select>
   </form>
 </section>
-<section class="products-list">
-  <ul class="products" *ngIf="products$ | async as products">
-    <li *ngFor="let product of products">
-      <app-product-card [data]="product"></app-product-card>
-    </li>
-  </ul>
-</section>
+<app-loading-spinner
+  *ngIf="productsLoading$ | async; else loaded"
+></app-loading-spinner>
+<ng-template #loaded>
+  <section class="products-list" *ngIf="products$ | async as products">
+    <div class="empty-products-list" *ngIf="products.length === 0">
+      No products match your search
+    </div>
+    <ul class="products" *ngIf="products.length > 0">
+      <li *ngFor="let product of products">
+        <app-product-card [data]="product"></app-product-card>
+      </li>
+    </ul>
+  </section>
+</ng-template>

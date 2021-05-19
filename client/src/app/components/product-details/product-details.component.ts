@@ -4,7 +4,10 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { Product } from 'src/models/product.model';
 import { getProduct } from 'src/app/store/actions/products.actions';
-import { selectSelectedProduct } from 'src/app/store/selectors/products.selectors';
+import {
+  selectSelectedProduct,
+  selectSelectedProductLoading,
+} from 'src/app/store/selectors/products.selectors';
 import { AppState } from 'src/app/app.state';
 
 @Component({
@@ -15,10 +18,12 @@ import { AppState } from 'src/app/app.state';
 export class ProductDetailsComponent implements OnInit {
   id: string;
   product$: Observable<Product>;
+  productLoading$: Observable<boolean>;
   selectedValue: number = 1;
 
   constructor(private route: ActivatedRoute, private store: Store<AppState>) {
     this.product$ = this.store.select(selectSelectedProduct);
+    this.productLoading$ = this.store.select(selectSelectedProductLoading);
   }
 
   ngOnInit(): void {

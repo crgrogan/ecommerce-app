@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { getFilters } from './store/actions/filters.actions';
+import { selectFiltersLoading } from './store/selectors/filters.selectors';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +10,11 @@ import { getFilters } from './store/actions/filters.actions';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  constructor(private store: Store) {}
+  filtersLoading$: Observable<boolean>;
+
+  constructor(private store: Store) {
+    this.filtersLoading$ = this.store.select(selectFiltersLoading);
+  }
 
   ngOnInit(): void {
     this.store.dispatch(getFilters());

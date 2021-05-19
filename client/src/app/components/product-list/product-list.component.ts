@@ -6,7 +6,10 @@ import { Store } from '@ngrx/store';
 import { getProducts } from 'src/app/store/actions/products.actions';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Filter } from 'src/models/filter.model';
-import { selectProductsList } from 'src/app/store/selectors/products.selectors';
+import {
+  selectProductsList,
+  selectProductsListLoading,
+} from 'src/app/store/selectors/products.selectors';
 import {
   selectBrandsList,
   selectCategoriesList,
@@ -22,6 +25,7 @@ import { AppState } from 'src/app/app.state';
 export class ProductListComponent implements OnInit, OnDestroy {
   searchQuery: string = '';
   products$: Observable<Product[]>;
+  productsLoading$: Observable<boolean>;
   categories$: Observable<Category[]>;
   brands$: Observable<String[]>;
   colours$: Observable<String[]>;
@@ -38,6 +42,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     private router: Router
   ) {
     this.products$ = this.store.select(selectProductsList);
+    this.productsLoading$ = this.store.select(selectProductsListLoading);
     this.categories$ = this.store.select(selectCategoriesList);
     this.brands$ = this.store.select(selectBrandsList);
     this.colours$ = this.store.select(selectColoursList);
@@ -48,7 +53,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this.queryParamsSubscription = this.route.queryParams.subscribe(
       (params) => {
         this.searchQuery = params.q;
-        // this.params = params;
         // set initial value of filters based on query string
         this.setSelectedValues(params);
         // get products based on filters in query string

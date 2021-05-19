@@ -1,460 +1,479 @@
-<div class="management-container">
-  <!-- Product Form -->
-  <div *ngIf="productModalOpen" class="form-container">
-    <form #productForm="ngForm" (ngSubmit)="submitProductForm(productForm)">
-      <ul class="form">
-        <li>
-          <h2>{{ _id ? "Edit Product" : "Create Product" }}</h2>
-          <button class="close-modal-btn" (click)="closeProductModal()">
-            <fa-icon [icon]="faTimes"></fa-icon>
-          </button>
-        </li>
-        <li>
-          <div *ngIf="loading$ | async as loading" class="form-msg-loading">
-            Loading...
-          </div>
-          <div *ngIf="error$ | async as error" class="form-msg-error">
-            {{ error }}
-          </div>
-          <div *ngIf="saveMsg$ | async as saveMsg" class="form-msg-success">
-            {{ saveMsg }}
-          </div>
-        </li>
-        <li>
-          <input
-            type="text"
-            name="name"
-            id="name"
-            [class.has-error]="nameControl.invalid && nameControl.touched"
-            [class.has-success]="nameControl.valid && nameControl.touched"
-            placeholder="Name"
-            [(ngModel)]="name"
-            required
-            #nameControl="ngModel"
-          />
-          <span
-            class="input-error-msg"
-            *ngIf="nameControl.invalid && nameControl.touched"
-            >Item name is required</span
-          >
-        </li>
-        <li>
-          <input
-            type="text"
-            name="brand"
-            id="brand"
-            [class.has-error]="brandControl.invalid && brandControl.touched"
-            [class.has-success]="brandControl.valid && brandControl.touched"
-            placeholder="Brand"
-            [(ngModel)]="brand"
-            required
-            #brandControl="ngModel"
-          />
-          <span
-            class="input-error-msg"
-            *ngIf="brandControl.invalid && brandControl.touched"
-            >Item brand is required</span
-          >
-        </li>
-        <li>
-          <input
-            type="text"
-            name="colour"
-            id="colour"
-            [class.has-error]="colourControl.invalid && colourControl.touched"
-            [class.has-success]="colourControl.valid && colourControl.touched"
-            placeholder="Colour"
-            [(ngModel)]="colour"
-            required
-            #colourControl="ngModel"
-          />
-          <span
-            class="input-error-msg"
-            *ngIf="colourControl.invalid && colourControl.touched"
-            >Item colour is required</span
-          >
-        </li>
-        <li>
-          <input
-            type="text"
-            name="price"
-            id="price"
-            [class.has-error]="priceControl.invalid && priceControl.touched"
-            [class.has-success]="priceControl.valid && priceControl.touched"
-            placeholder="Price"
-            [(ngModel)]="price"
-            required
-            #priceControl="ngModel"
-          />
-          <span
-            class="input-error-msg"
-            *ngIf="priceControl.invalid && priceControl.touched"
-            >Item price is required</span
-          >
-        </li>
-        <li>
-          <input
-            type="text"
-            name="img"
-            id="img"
-            [class.has-error]="imgControl.invalid && imgControl.touched"
-            [class.has-success]="imgControl.valid && imgControl.touched"
-            placeholder="Image URL"
-            [(ngModel)]="img"
-            required
-            #imgControl="ngModel"
-          />
-          <span
-            class="input-error-msg"
-            *ngIf="imgControl.invalid && imgControl.touched"
-            >Image URL is required</span
-          >
-        </li>
-        <li>
-          <input
-            type="text"
-            name="category"
-            id="category"
-            [class.has-error]="
-              categoryControl.invalid && categoryControl.touched
-            "
-            [class.has-success]="
-              categoryControl.valid && categoryControl.touched
-            "
-            placeholder="Category"
-            [(ngModel)]="category"
-            required
-            #categoryControl="ngModel"
-          />
-          <span
-            class="input-error-msg"
-            *ngIf="categoryControl.invalid && categoryControl.touched"
-            >Category is required</span
-          >
-        </li>
-        <li>
-          <input
-            type="text"
-            name="description"
-            id="description"
-            [class.has-error]="
-              descriptionControl.invalid && descriptionControl.touched
-            "
-            [class.has-success]="
-              descriptionControl.valid && descriptionControl.touched
-            "
-            placeholder="Description"
-            [(ngModel)]="description"
-            required
-            #descriptionControl="ngModel"
-          />
-          <span
-            class="input-error-msg"
-            *ngIf="descriptionControl.invalid && descriptionControl.touched"
-            >Item description is required</span
-          >
-        </li>
-        <li>
-          <input
-            type="text"
-            name="countInStock"
-            id="countInStock"
-            [class.has-error]="
-              countInStockControl.invalid && countInStockControl.touched
-            "
-            [class.has-success]="
-              countInStockControl.valid && countInStockControl.touched
-            "
-            placeholder="Number of item in stock"
-            [(ngModel)]="countInStock"
-            required
-            #countInStockControl="ngModel"
-          />
-          <span
-            class="input-error-msg"
-            *ngIf="countInStockControl.invalid && countInStockControl.touched"
-            >Number of item in stock is required</span
-          >
-        </li>
-        <li>
-          <button
-            [disabled]="productForm.invalid"
-            type="submit"
-            class="submit-form-btn"
-          >
-            {{ _id ? "Update" : "Create" }}
-          </button>
-          <button class="cancel-modal-btn" (click)="closeProductModal()">
-            Cancel
-          </button>
-        </li>
-      </ul>
-    </form>
-  </div>
-  <!-- Filters Form -->
-  <div *ngIf="filtersModalOpen">
-    <div class="form-container">
-      <form
-        #filtersForm="ngForm"
-        appCategoryValid
-        (ngSubmit)="submitFiltersForm(filtersForm)"
-      >
+<app-loading-spinner
+  *ngIf="
+    (productsLoading$ | async) ||
+      (ordersLoading$ | async) ||
+      (usersLoading$ | async);
+    else loaded
+  "
+></app-loading-spinner>
+<ng-template #loaded>
+  <div class="management-container">
+    <!-- Product Form -->
+    <div *ngIf="productModalOpen" class="form-container">
+      <form #productForm="ngForm" (ngSubmit)="submitProductForm(productForm)">
         <ul class="form">
           <li>
-            <h2>Update Filters</h2>
-            <button class="close-modal-btn" (click)="closeFiltersModal()">
+            <h2>{{ _id ? "Edit Product" : "Create Product" }}</h2>
+            <button class="close-modal-btn" (click)="closeProductModal()">
               <fa-icon [icon]="faTimes"></fa-icon>
             </button>
           </li>
           <li>
             <div
-              *ngIf="filtersSaveLoading$ | async as filtersSaveLoading"
+              *ngIf="newProductLoading$ | async as loading"
               class="form-msg-loading"
             >
               Loading...
             </div>
             <div
-              *ngIf="filtersSaveError$ | async as filtersSaveError"
+              *ngIf="newProductError$ | async as error"
               class="form-msg-error"
             >
-              {{ filtersSaveError }}
+              {{ error }}
             </div>
             <div
-              *ngIf="filtersSaveMsg$ | async as filtersSaveMsg"
+              *ngIf="newProductSaveMsg$ | async as saveMsg"
               class="form-msg-success"
             >
-              {{ filtersSaveMsg }}
+              {{ saveMsg }}
             </div>
           </li>
           <li>
-            <label for="filterCategoriesName">Categories</label>
-          </li>
-          <li>
             <input
               type="text"
-              name="filterCategoriesName"
-              id="filterCategoriesName"
-              placeholder="Name of category to be added"
-              [(ngModel)]="filterCategoriesName"
-              #filterCategoriesNameControl="ngModel"
-            />
-          </li>
-          <li>
-            <input
-              type="text"
-              name="filterCategoriesImg"
-              id="filterCategoriesImg"
-              [class.has-error]="filtersForm.errors?.validationError"
-              placeholder="Category image URL"
-              [(ngModel)]="filterCategoriesImg"
-              #filterCategoriesImgControl="ngModel"
+              name="name"
+              id="name"
+              [class.has-error]="nameControl.invalid && nameControl.touched"
+              [class.has-success]="nameControl.valid && nameControl.touched"
+              placeholder="Name"
+              [(ngModel)]="name"
+              required
+              #nameControl="ngModel"
             />
             <span
               class="input-error-msg"
-              *ngIf="filtersForm.errors?.validationError"
-              >Category Image URL must be provided</span
+              *ngIf="nameControl.invalid && nameControl.touched"
+              >Item name is required</span
             >
           </li>
           <li>
-            <label for="filterBrands">Brands</label>
+            <input
+              type="text"
+              name="brand"
+              id="brand"
+              [class.has-error]="brandControl.invalid && brandControl.touched"
+              [class.has-success]="brandControl.valid && brandControl.touched"
+              placeholder="Brand"
+              [(ngModel)]="brand"
+              required
+              #brandControl="ngModel"
+            />
+            <span
+              class="input-error-msg"
+              *ngIf="brandControl.invalid && brandControl.touched"
+              >Item brand is required</span
+            >
           </li>
           <li>
             <input
               type="text"
-              name="filterBrands"
-              id="filterBrands"
-              placeholder="Brand to be added"
-              [(ngModel)]="filterBrands"
+              name="colour"
+              id="colour"
+              [class.has-error]="colourControl.invalid && colourControl.touched"
+              [class.has-success]="colourControl.valid && colourControl.touched"
+              placeholder="Colour"
+              [(ngModel)]="colour"
+              required
+              #colourControl="ngModel"
             />
-          </li>
-          <li>
-            <label for="filterColours">Colours</label>
+            <span
+              class="input-error-msg"
+              *ngIf="colourControl.invalid && colourControl.touched"
+              >Item colour is required</span
+            >
           </li>
           <li>
             <input
               type="text"
-              name="filterColours"
-              id="filterColours"
-              placeholder="Colour to be added"
-              [(ngModel)]="filterColours"
+              name="price"
+              id="price"
+              [class.has-error]="priceControl.invalid && priceControl.touched"
+              [class.has-success]="priceControl.valid && priceControl.touched"
+              placeholder="Price"
+              [(ngModel)]="price"
+              required
+              #priceControl="ngModel"
             />
+            <span
+              class="input-error-msg"
+              *ngIf="priceControl.invalid && priceControl.touched"
+              >Item price is required</span
+            >
+          </li>
+          <li>
+            <input
+              type="text"
+              name="img"
+              id="img"
+              [class.has-error]="imgControl.invalid && imgControl.touched"
+              [class.has-success]="imgControl.valid && imgControl.touched"
+              placeholder="Image URL"
+              [(ngModel)]="img"
+              required
+              #imgControl="ngModel"
+            />
+            <span
+              class="input-error-msg"
+              *ngIf="imgControl.invalid && imgControl.touched"
+              >Image URL is required</span
+            >
+          </li>
+          <li>
+            <input
+              type="text"
+              name="category"
+              id="category"
+              [class.has-error]="
+                categoryControl.invalid && categoryControl.touched
+              "
+              [class.has-success]="
+                categoryControl.valid && categoryControl.touched
+              "
+              placeholder="Category"
+              [(ngModel)]="category"
+              required
+              #categoryControl="ngModel"
+            />
+            <span
+              class="input-error-msg"
+              *ngIf="categoryControl.invalid && categoryControl.touched"
+              >Category is required</span
+            >
+          </li>
+          <li>
+            <input
+              type="text"
+              name="description"
+              id="description"
+              [class.has-error]="
+                descriptionControl.invalid && descriptionControl.touched
+              "
+              [class.has-success]="
+                descriptionControl.valid && descriptionControl.touched
+              "
+              placeholder="Description"
+              [(ngModel)]="description"
+              required
+              #descriptionControl="ngModel"
+            />
+            <span
+              class="input-error-msg"
+              *ngIf="descriptionControl.invalid && descriptionControl.touched"
+              >Item description is required</span
+            >
+          </li>
+          <li>
+            <input
+              type="text"
+              name="countInStock"
+              id="countInStock"
+              [class.has-error]="
+                countInStockControl.invalid && countInStockControl.touched
+              "
+              [class.has-success]="
+                countInStockControl.valid && countInStockControl.touched
+              "
+              placeholder="Number of item in stock"
+              [(ngModel)]="countInStock"
+              required
+              #countInStockControl="ngModel"
+            />
+            <span
+              class="input-error-msg"
+              *ngIf="countInStockControl.invalid && countInStockControl.touched"
+              >Number of item in stock is required</span
+            >
           </li>
           <li>
             <button
-              [disabled]="filtersForm.errors?.validationError"
+              [disabled]="productForm.invalid"
               type="submit"
               class="submit-form-btn"
             >
-              Add Filters
+              {{ _id ? "Update" : "Create" }}
             </button>
-            <button class="cancel-modal-btn" (click)="closeFiltersModal()">
+            <button class="cancel-modal-btn" (click)="closeProductModal()">
               Cancel
             </button>
           </li>
         </ul>
       </form>
     </div>
-    <div
-      class="filters-table-container"
-      *ngIf="{
-        categories: categories$ | async,
-        brands: brands$ | async,
-        colours: colours$ | async
-      } as data"
-    >
-      <table class="filters-table">
-        <thead>
-          <tr>
-            <th colspan="2">Categories</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let category of data?.categories">
-            <td>
-              {{ category.name }}
-            </td>
-            <td class="delete-filters-container">
-              <button (click)="deleteFilter(category._id, 'categories')">
-                Delete
+    <!-- Filters Form -->
+    <div *ngIf="filtersModalOpen">
+      <div class="form-container">
+        <form
+          #filtersForm="ngForm"
+          appCategoryValid
+          (ngSubmit)="submitFiltersForm(filtersForm)"
+        >
+          <ul class="form">
+            <li>
+              <h2>Update Filters</h2>
+              <button class="close-modal-btn" (click)="closeFiltersModal()">
+                <fa-icon [icon]="faTimes"></fa-icon>
               </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <table class="filters-table">
-        <thead>
-          <tr>
-            <th colspan="2">Brands</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let brand of data?.brands">
-            <td>
-              {{ brand.name }}
-            </td>
-            <td class="delete-filters-container">
-              <button (click)="deleteFilter(brand._id, 'brands')">
-                Delete
+            </li>
+            <li>
+              <div
+                *ngIf="filtersSaveLoading$ | async as filtersSaveLoading"
+                class="form-msg-loading"
+              >
+                Loading...
+              </div>
+              <div
+                *ngIf="filtersSaveError$ | async as filtersSaveError"
+                class="form-msg-error"
+              >
+                {{ filtersSaveError }}
+              </div>
+              <div
+                *ngIf="filtersSaveMsg$ | async as filtersSaveMsg"
+                class="form-msg-success"
+              >
+                {{ filtersSaveMsg }}
+              </div>
+            </li>
+            <li>
+              <label for="filterCategoriesName">Categories</label>
+            </li>
+            <li>
+              <input
+                type="text"
+                name="filterCategoriesName"
+                id="filterCategoriesName"
+                placeholder="Name of category to be added"
+                [(ngModel)]="filterCategoriesName"
+                #filterCategoriesNameControl="ngModel"
+              />
+            </li>
+            <li>
+              <input
+                type="text"
+                name="filterCategoriesImg"
+                id="filterCategoriesImg"
+                [class.has-error]="filtersForm.errors?.validationError"
+                placeholder="Category image URL"
+                [(ngModel)]="filterCategoriesImg"
+                #filterCategoriesImgControl="ngModel"
+              />
+              <span
+                class="input-error-msg"
+                *ngIf="filtersForm.errors?.validationError"
+                >Category Image URL must be provided</span
+              >
+            </li>
+            <li>
+              <label for="filterBrands">Brands</label>
+            </li>
+            <li>
+              <input
+                type="text"
+                name="filterBrands"
+                id="filterBrands"
+                placeholder="Brand to be added"
+                [(ngModel)]="filterBrands"
+              />
+            </li>
+            <li>
+              <label for="filterColours">Colours</label>
+            </li>
+            <li>
+              <input
+                type="text"
+                name="filterColours"
+                id="filterColours"
+                placeholder="Colour to be added"
+                [(ngModel)]="filterColours"
+              />
+            </li>
+            <li>
+              <button
+                [disabled]="filtersForm.errors?.validationError"
+                type="submit"
+                class="submit-form-btn"
+              >
+                Add Filters
               </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <table class="filters-table">
-        <thead>
-          <tr>
-            <th colspan="2">Colours</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let colour of data?.colours">
-            <td>
-              {{ colour.name }}
-            </td>
-            <td class="delete-filters-container">
-              <button (click)="deleteFilter(colour._id, 'colours')">
-                Delete
+              <button class="cancel-modal-btn" (click)="closeFiltersModal()">
+                Cancel
               </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+            </li>
+          </ul>
+        </form>
+      </div>
+      <div
+        class="filters-table-container"
+        *ngIf="{
+          categories: categories$ | async,
+          brands: brands$ | async,
+          colours: colours$ | async
+        } as data"
+      >
+        <table class="filters-table">
+          <thead>
+            <tr>
+              <th colspan="2">Categories</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let category of data?.categories">
+              <td>
+                {{ category.name }}
+              </td>
+              <td class="delete-filters-container">
+                <button (click)="deleteFilter(category._id, 'categories')">
+                  Delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <table class="filters-table">
+          <thead>
+            <tr>
+              <th colspan="2">Brands</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let brand of data?.brands">
+              <td>
+                {{ brand.name }}
+              </td>
+              <td class="delete-filters-container">
+                <button (click)="deleteFilter(brand._id, 'brands')">
+                  Delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <table class="filters-table">
+          <thead>
+            <tr>
+              <th colspan="2">Colours</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let colour of data?.colours">
+              <td>
+                {{ colour.name }}
+              </td>
+              <td class="delete-filters-container">
+                <button (click)="deleteFilter(colour._id, 'colours')">
+                  Delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- Management Home Screen -->
+    <div *ngIf="!productModalOpen && !filtersModalOpen">
+      <h1>Management</h1>
+      <section class="management-section">
+        <h2>Product Manager</h2>
+        <button
+          (click)="openProductModal()"
+          class="open-modal"
+          id="open-product-modal"
+        >
+          Create Product
+        </button>
+        <button (click)="openFiltersModal()" class="open-modal">
+          Update Filters
+        </button>
+        <table class="management-table products-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Price (€)</th>
+              <th>Category</th>
+              <th>Brand</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="products$ | async as products">
+            <tr *ngFor="let product of products">
+              <td>{{ product._id }}</td>
+              <td>{{ product.name }}</td>
+              <td>{{ product.price }}</td>
+              <td>{{ product.category }}</td>
+              <td>{{ product.brand }}</td>
+              <td>
+                <button class="edit-btn" (click)="openProductModal(product)">
+                  Edit
+                </button>
+                <button (click)="deleteProduct(product._id)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <section class="management-section">
+        <h2>Users</h2>
+        <table class="management-table users-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Administrator</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="users$ | async as users">
+            <tr *ngFor="let user of users">
+              <td>{{ user._id }}</td>
+              <td>{{ user.name }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.isAdmin ? "Yes" : "No" }}</td>
+              <td>
+                <button (click)="deleteUser(user._id)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <section class="management-section">
+        <h2>Orders</h2>
+        <table class="management-table orders-table">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Date</th>
+              <th>User ID</th>
+              <th>Total (€)</th>
+              <th>Paid</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="orders$ | async as orders">
+            <tr *ngFor="let order of orders">
+              <td>{{ order._id }}</td>
+              <td>{{ order.createdAt | date: medium }}</td>
+              <td>{{ order.user }}</td>
+              <td>{{ order.totalPrice }}</td>
+              <td>{{ order.isPaid ? "Yes" : "No" }}</td>
+              <td>
+                <button (click)="viewOrderDetails(order._id)">View</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
     </div>
   </div>
-  <!-- Management Home Screen -->
-  <div *ngIf="!productModalOpen && !filtersModalOpen">
-    <h1>Management</h1>
-    <section class="management-section">
-      <h2>Product Manager</h2>
-      <button
-        (click)="openProductModal()"
-        class="open-modal"
-        id="open-product-modal"
-      >
-        Create Product
-      </button>
-      <button (click)="openFiltersModal()" class="open-modal">
-        Update Filters
-      </button>
-      <table class="management-table products-table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Price (€)</th>
-            <th>Category</th>
-            <th>Brand</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody *ngIf="products$ | async as products">
-          <tr *ngFor="let product of products">
-            <td>{{ product._id }}</td>
-            <td>{{ product.name }}</td>
-            <td>{{ product.price }}</td>
-            <td>{{ product.category }}</td>
-            <td>{{ product.brand }}</td>
-            <td>
-              <button class="edit-btn" (click)="openProductModal(product)">
-                Edit
-              </button>
-              <button (click)="deleteProduct(product._id)">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-    <section class="management-section">
-      <h2>Users</h2>
-      <table class="management-table users-table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Administrator</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody *ngIf="users$ | async as users">
-          <tr *ngFor="let user of users">
-            <td>{{ user._id }}</td>
-            <td>{{ user.name }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ user.isAdmin ? "Yes" : "No" }}</td>
-            <td>
-              <button (click)="deleteUser(user._id)">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-    <section class="management-section">
-      <h2>Orders</h2>
-      <table class="management-table orders-table">
-        <thead>
-          <tr>
-            <th>Order ID</th>
-            <th>Date</th>
-            <th>User ID</th>
-            <th>Total (€)</th>
-            <th>Paid</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody *ngIf="orders$ | async as orders">
-          <tr *ngFor="let order of orders">
-            <td>{{ order._id }}</td>
-            <td>{{ order.createdAt | date: medium }}</td>
-            <td>{{ order.user }}</td>
-            <td>{{ order.totalPrice }}</td>
-            <td>{{ order.isPaid ? "Yes" : "No" }}</td>
-            <td>
-              <button (click)="viewOrderDetails(order._id)">View</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-  </div>
-</div>
+</ng-template>

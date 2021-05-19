@@ -13,7 +13,9 @@ import {
 } from 'src/app/store/actions/order.actions';
 import {
   selectOrderDetailsInfo,
+  selectOrderDetailsLoading,
   selectOrderPaidStatusSuccess,
+  selectOrderPaidStatusLoading,
 } from 'src/app/store/selectors/order.selector';
 import { Order } from 'src/models/order.model';
 
@@ -24,16 +26,16 @@ import { Order } from 'src/models/order.model';
 })
 export class OrderDetailsComponent implements OnInit, OnDestroy {
   orderId: string;
-  /* orderInfo$: Observable<Order>; */
   orderInfoSubscription: Subscription;
   orderInfo: Order;
+  orderInfoLoading$: Observable<boolean>;
   orderPaidSuccess$: Observable<boolean>;
+  orderPaidLoading$: Observable<boolean>;
   public payPalConfig?: IPayPalConfig;
 
   constructor(private store: Store<AppState>, private route: ActivatedRoute) {
     // get order id from url
     this.orderId = this.route.snapshot.paramMap.get('id');
-    /* this.orderInfo$ = this.store.select(selectOrderDetailsInfo); */
     this.orderInfoSubscription = this.store
       .select(selectOrderDetailsInfo)
       .subscribe((order) => {
@@ -42,6 +44,8 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
         }
       });
     this.orderPaidSuccess$ = this.store.select(selectOrderPaidStatusSuccess);
+    this.orderPaidLoading$ = this.store.select(selectOrderPaidStatusLoading);
+    this.orderInfoLoading$ = this.store.select(selectOrderDetailsLoading);
   }
 
   ngOnInit(): void {

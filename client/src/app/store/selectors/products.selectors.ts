@@ -14,12 +14,22 @@ export const selectProductsList = createSelector(
   (state: ProductsState) => state.productsList
 );
 
+export const selectProductsListLoading = createSelector(
+  selectProducts,
+  (state: ProductsState) => state.isLoading
+);
+
 // selected product
 export const selectProduct = (state: AppState) => state.product;
 
 export const selectSelectedProduct = createSelector(
   selectProduct,
   (state: ProductState) => state.selectedProduct
+);
+
+export const selectSelectedProductLoading = createSelector(
+  selectProduct,
+  (state: ProductState) => state.isLoading
 );
 
 // created/updated product

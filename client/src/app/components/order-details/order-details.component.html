@@ -1,86 +1,93 @@
-<div class="order-container" *ngIf="orderInfo">
-  <div class="order-info">
-    <div>
-      <h3>Order Number</h3>
-      <p>{{ orderInfo._id }}</p>
-    </div>
+<app-loading-spinner
+  *ngIf="orderPaidLoading$ | async; else loaded"
+></app-loading-spinner>
+<ng-template #loaded>
+  <div class="order-container" *ngIf="orderInfo">
+    <div class="order-info">
+      <div>
+        <h3>Order Number</h3>
+        <p>{{ orderInfo._id }}</p>
+      </div>
 
-    <div>
-      <h3>Shipping Details</h3>
-      <div *ngIf="orderInfo.shippingAddress">
-        <div><strong>Name:</strong> {{ orderInfo.shippingAddress.name }}</div>
-        <div>
-          <strong>Address:</strong> {{ orderInfo.shippingAddress.address }},
-          {{ orderInfo.shippingAddress.city }},
-          {{ orderInfo.shippingAddress.county }},
-          {{ orderInfo.shippingAddress.postalCode }},
-          {{ orderInfo.shippingAddress.country }},
+      <div>
+        <h3>Shipping Details</h3>
+        <div *ngIf="orderInfo.shippingAddress">
+          <div><strong>Name:</strong> {{ orderInfo.shippingAddress.name }}</div>
+          <div>
+            <strong>Address:</strong> {{ orderInfo.shippingAddress.address }},
+            {{ orderInfo.shippingAddress.city }},
+            {{ orderInfo.shippingAddress.county }},
+            {{ orderInfo.shippingAddress.postalCode }},
+            {{ orderInfo.shippingAddress.country }},
+          </div>
         </div>
       </div>
-    </div>
-    <div>
-      <h3>Payment Method</h3>
-      <div *ngIf="orderInfo.paymentMethod">
-        <strong>Chosen:</strong> {{ orderInfo.paymentMethod }}
+      <div>
+        <h3>Payment Method</h3>
+        <div *ngIf="orderInfo.paymentMethod">
+          <strong>Chosen:</strong> {{ orderInfo.paymentMethod }}
+        </div>
+        <div>
+          <strong>Paid:</strong>
+          {{
+            !orderInfo.isPaid
+              ? "No"
+              : (orderInfo.paymentDetails.paidAt | date: "medium")
+          }}
+        </div>
       </div>
       <div>
-        <strong>Paid:</strong>
-        {{
-          !orderInfo.isPaid
-            ? "No"
-            : (orderInfo.paymentDetails.paidAt | date: "medium")
-        }}
+        <ul>
+          <li>
+            <h3>Order Details</h3>
+          </li>
+          <li *ngFor="let item of orderInfo.orderItems" class="order-details">
+            <div class="order-item-image">
+              <img src="{{ item.img }}" alt="product" />
+            </div>
+            <div class="order-item-details">
+              <div class="order-item-name">
+                <span>{{ item.name }}</span>
+              </div>
+              <div class="order-item-brand">
+                <span>{{ item.brand }}</span>
+              </div>
+              <div class="order-item-price">€{{ item.price }}</div>
+              <div>
+                <span class="order-item-qty"> Qty:</span> {{ item.qty }}
+              </div>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
-    <div>
-      <ul>
-        <li>
-          <h3>Order Details</h3>
+    <div class="order-action">
+      <ul *ngIf="orderInfo.orderItems">
+        <li class="order-action-header">
+          <h3>Order Summary</h3>
         </li>
-        <li *ngFor="let item of orderInfo.orderItems" class="order-details">
-          <div class="order-item-image">
-            <img src="{{ item.img }}" alt="product" />
-          </div>
-          <div class="order-item-details">
-            <div class="order-item-name">
-              <span>{{ item.name }}</span>
-            </div>
-            <div class="order-item-brand">
-              <span>{{ item.brand }}</span>
-            </div>
-            <div class="order-item-price">€{{ item.price }}</div>
-            <div><span class="order-item-qty"> Qty:</span> {{ item.qty }}</div>
-          </div>
+        <li>
+          <div>Subtotal</div>
+          <div>€{{ orderInfo.subtotal.toFixed(2) }}</div>
+        </li>
+        <li>
+          <div>Shipping</div>
+          <div>€{{ orderInfo.shippingCost.toFixed(2) }}</div>
+        </li>
+        <li class="order-total">
+          <div>Order Total</div>
+          <div>€{{ orderInfo.totalPrice.toFixed(2) }}</div>
+        </li>
+        <li *ngIf="!orderInfo.isPaid" id="paypal-container">
+          <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+        </li>
+        <li
+          *ngIf="orderInfo.isPaid && orderPaidSuccess$ | async"
+          id="paypal-container"
+        >
+          <div class="form-msg-success">Order Paid Successfully</div>
         </li>
       </ul>
     </div>
   </div>
-  <div class="order-action">
-    <ul *ngIf="orderInfo.orderItems">
-      <li class="order-action-header">
-        <h3>Order Summary</h3>
-      </li>
-      <li>
-        <div>Subtotal</div>
-        <div>€{{ orderInfo.subtotal.toFixed(2) }}</div>
-      </li>
-      <li>
-        <div>Shipping</div>
-        <div>€{{ orderInfo.shippingCost.toFixed(2) }}</div>
-      </li>
-      <li class="order-total">
-        <div>Order Total</div>
-        <div>€{{ orderInfo.totalPrice.toFixed(2) }}</div>
-      </li>
-      <li *ngIf="!orderInfo.isPaid" id="paypal-container">
-        <ngx-paypal [config]="payPalConfig"></ngx-paypal>
-      </li>
-      <li
-        *ngIf="orderInfo.isPaid && orderPaidSuccess$ | async"
-        id="paypal-container"
-      >
-        <div class="form-msg-success">Order Paid Successfully</div>
-      </li>
-    </ul>
-  </div>
-</div>
+</ng-template>

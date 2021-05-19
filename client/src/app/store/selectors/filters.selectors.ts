@@ -4,6 +4,11 @@ import { FiltersState, UpdateFiltersState } from '../reducers/filters.reducer';
 
 export const selectFilters = (state: AppState) => state.filters;
 
+export const selectFiltersLoading = createSelector(
+  selectFilters,
+  (state: FiltersState) => state.isLoading
+);
+
 export const selectCategoriesList = createSelector(
   selectFilters,
   (state: FiltersState) => state.categoriesList

@@ -47,12 +47,22 @@ export const selectOrderPaidStatusSuccess = createSelector(
   (state: OrderPaidStatusState) => state.success
 );
 
+export const selectOrderPaidStatusLoading = createSelector(
+  selectOrderPaidStatus,
+  (state: OrderPaidStatusState) => state.isLoading
+);
+
 // orders list for specific user
 export const selectUserOrders = (state: AppState) => state.userOrders;
 
 export const selectUserOrdersList = createSelector(
   selectUserOrders,
   (state: UserOrdersState) => state.ordersList
+);
+
+export const selectUserOrdersListLoading = createSelector(
+  selectUserOrders,
+  (state: UserOrdersState) => state.isLoading
 );
 
 // get all orders
