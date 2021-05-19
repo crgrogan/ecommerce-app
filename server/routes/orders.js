@@ -1,4 +1,7 @@
 import express from "express";
+import apicache from "apicache";
+
+let cache = apicache.middleware;
 
 import Order from "../models/Order";
 import { isAuth, isAdmin, verifyItem } from "../utils";
@@ -46,7 +49,7 @@ router.post("/", isAuth, async (req, res, next) => {
 });
 
 // get order details for an existing order
-router.get("/:id", async (req, res, next) => {
+router.get("/:id", cache("30 seconds"), async (req, res, next) => {
   const id = req.params.id;
   try {
     const order = await Order.findById(id);

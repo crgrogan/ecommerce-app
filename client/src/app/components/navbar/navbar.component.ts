@@ -67,6 +67,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.router.navigate(['/products/filter'], {
       queryParams: { q: form.value.search },
     });
+    if (this.searchbarOpen) {
+      this.searchbarOpen = !this.searchbarOpen;
+    }
+
     form.resetForm();
   }
 

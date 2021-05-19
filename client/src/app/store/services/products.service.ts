@@ -10,8 +10,6 @@ export class ProductsService {
 
   // get all products or get filtered list of prducts based on query string
   getAll(queryString: string) {
-    console.log(queryString);
-
     if (queryString) {
       return this.http.get(
         `http://localhost:5000/api/products/filter?${queryString}`

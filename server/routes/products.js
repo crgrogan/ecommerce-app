@@ -1,4 +1,7 @@
 import express from "express";
+import apicache from "apicache";
+
+let cache = apicache.middleware;
 
 import Product from "../models/Product";
 import { isAuth, isAdmin } from "../utils";
@@ -6,7 +9,7 @@ import { isAuth, isAdmin } from "../utils";
 const router = express.Router();
 
 // get all products
-router.get("/", async (req, res, next) => {
+router.get("/", cache("5 minutes"), async (req, res, next) => {
   try {
     const products = await Product.find({});
     res.send(products);
@@ -16,7 +19,7 @@ router.get("/", async (req, res, next) => {
 });
 
 // get products based on filters provided
-router.get("/filter", async (req, res, next) => {
+router.get("/filter", cache("5 minutes"), async (req, res, next) => {
   try {
     const { q, category, colour, brand, sortby } = req.query;
     let filters = {
@@ -46,12 +49,6 @@ router.get("/filter", async (req, res, next) => {
         ? await Product.find({ ...filters }).sort({ price: sortby })
         : await Product.find({ ...filters });
     }
-    /*  const products = q
-      ? await Product.find({ $text: { $search: q }, ...filters })
-      : await Product.find({ ...filters });
-    if (sortby) {
-     products = await products.sort({ price: sortby });
-    } */
     res.send(products);
   } catch (err) {
     next(err);
@@ -99,7 +96,7 @@ router.post("/", isAuth, isAdmin, async (req, res, next) => {
 });
 
 // Get specific product
-router.get("/:id", async (req, res, next) => {
+router.get("/:id", cache("5 minutes"), async (req, res, next) => {
   const id = req.params.id;
   try {
     const currentProduct = await Product.findById(id);

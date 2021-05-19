@@ -1,4 +1,7 @@
 import express from "express";
+import apicache from "apicache";
+
+let cache = apicache.middleware;
 
 import Filter from "../models/Filter";
 import { isAuth, isAdmin } from "../utils";
@@ -6,7 +9,7 @@ import { isAuth, isAdmin } from "../utils";
 const router = express.Router();
 
 // get all filters
-router.get("/", async (req, res, next) => {
+router.get("/", cache("5 minutes"), async (req, res, next) => {
   try {
     const filters = await Filter.find({});
     res.send(filters);
