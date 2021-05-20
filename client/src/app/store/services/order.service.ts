@@ -11,7 +11,7 @@ export class OrderService {
   // create new order on server
   createNewOrder(order: Order) {
     const { userInfo } = JSON.parse(localStorage.getItem('currentUser'));
-    return this.http.post('http://localhost:5000/api/orders', order, {
+    return this.http.post('/api/orders', order, {
       headers: { authorization: `Bearer ${userInfo.token}` },
     });
   }
@@ -19,37 +19,30 @@ export class OrderService {
   // get details of order based on id provided
   getOrderDetails(id: string) {
     const { userInfo } = JSON.parse(localStorage.getItem('currentUser'));
-    return this.http.get(`http://localhost:5000/api/orders/${id}`, {
+    return this.http.get(`/api/orders/${id}`, {
       headers: { authorization: `Bearer ${userInfo.token}` },
     });
   }
 
   payOrder(id: string, paymentDetails) {
     const { userInfo } = JSON.parse(localStorage.getItem('currentUser'));
-    return this.http.put(
-      `http://localhost:5000/api/orders/${id}`,
-      paymentDetails,
-      {
-        headers: { authorization: `Bearer ${userInfo.token}` },
-      }
-    );
+    return this.http.put(`/api/orders/${id}`, paymentDetails, {
+      headers: { authorization: `Bearer ${userInfo.token}` },
+    });
   }
 
   // get all orders for current user
   getUserOrders() {
     const { userInfo } = JSON.parse(localStorage.getItem('currentUser'));
-    return this.http.get(
-      `http://localhost:5000/api/orders/list/${userInfo._id}`,
-      {
-        headers: { authorization: `Bearer ${userInfo.token}` },
-      }
-    );
+    return this.http.get(`/api/orders/list/${userInfo._id}`, {
+      headers: { authorization: `Bearer ${userInfo.token}` },
+    });
   }
 
   // get orders for all users
   getAllOrders() {
     const { userInfo } = JSON.parse(localStorage.getItem('currentUser'));
-    return this.http.get(`http://localhost:5000/api/orders`, {
+    return this.http.get(`/api/orders`, {
       headers: { authorization: `Bearer ${userInfo.token}` },
     });
   }

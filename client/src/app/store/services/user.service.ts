@@ -10,43 +10,35 @@ export class UserService {
 
   getAll() {
     const { userInfo } = JSON.parse(localStorage.getItem('currentUser'));
-    return this.http.get('http://localhost:5000/api/users', {
+    return this.http.get('/api/users', {
       headers: { authorization: `Bearer ${userInfo.token}` },
     });
   }
 
   register(user: { name: string; email: string; password: string }) {
-    return this.http.post('http://localhost:5000/api/users/register', user);
+    return this.http.post('/api/users/register', user);
   }
 
   login(user: { email: string; password: string }) {
-    return this.http.post('http://localhost:5000/api/users/login', user);
+    return this.http.post('/api/users/login', user);
   }
 
   update(userDetails: { name: string; email: string; password: string }) {
     const { userInfo } = JSON.parse(localStorage.getItem('currentUser'));
     if (!userDetails.password) {
-      return this.http.put(
-        `http://localhost:5000/api/users/profile/details`,
-        userDetails,
-        {
-          headers: { authorization: `Bearer ${userInfo.token}` },
-        }
-      );
+      return this.http.put(`/api/users/profile/details`, userDetails, {
+        headers: { authorization: `Bearer ${userInfo.token}` },
+      });
     } else {
-      return this.http.put(
-        `http://localhost:5000/api/users/profile/password`,
-        userDetails,
-        {
-          headers: { authorization: `Bearer ${userInfo.token}` },
-        }
-      );
+      return this.http.put(`/api/users/profile/password`, userDetails, {
+        headers: { authorization: `Bearer ${userInfo.token}` },
+      });
     }
   }
 
   delete(id: string) {
     const { userInfo } = JSON.parse(localStorage.getItem('currentUser'));
-    return this.http.delete(`http://localhost:5000/api/users/${id}`, {
+    return this.http.delete(`/api/users/${id}`, {
       headers: { authorization: `Bearer ${userInfo.token}` },
     });
   }

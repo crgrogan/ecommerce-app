@@ -8,7 +8,7 @@ export class CartService {
   constructor(private http: HttpClient) {}
 
   getProductDetails(productId: string, qty: number) {
-    return this.http.post(`http://localhost:5000/api/products/${productId}`, {
+    return this.http.post(`/api/products/${productId}`, {
       qty,
     });
   }

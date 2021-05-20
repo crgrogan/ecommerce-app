@@ -11,30 +11,24 @@ export class ProductsService {
   // get all products or get filtered list of prducts based on query string
   getAll(queryString: string) {
     if (queryString) {
-      return this.http.get(
-        `http://localhost:5000/api/products/filter?${queryString}`
-      );
+      return this.http.get(`/api/products/filter?${queryString}`);
     } else {
-      return this.http.get('http://localhost:5000/api/products');
+      return this.http.get('/api/products');
     }
   }
 
   getSelected(productId: string) {
-    return this.http.get(`http://localhost:5000/api/products/${productId}`);
+    return this.http.get(`/api/products/${productId}`);
   }
 
   createProduct(product: Product) {
     const { userInfo } = JSON.parse(localStorage.getItem('currentUser'));
     if (product._id) {
-      return this.http.put(
-        `http://localhost:5000/api/products/${product._id}`,
-        product,
-        {
-          headers: { authorization: `Bearer ${userInfo.token}` },
-        }
-      );
+      return this.http.put(`/api/products/${product._id}`, product, {
+        headers: { authorization: `Bearer ${userInfo.token}` },
+      });
     } else {
-      return this.http.post('http://localhost:5000/api/products/', product, {
+      return this.http.post('/api/products/', product, {
         headers: { authorization: `Bearer ${userInfo.token}` },
       });
     }
@@ -42,7 +36,7 @@ export class ProductsService {
 
   deleteProduct(id: string) {
     const { userInfo } = JSON.parse(localStorage.getItem('currentUser'));
-    return this.http.delete(`http://localhost:5000/api/products/${id}`, {
+    return this.http.delete(`/api/products/${id}`, {
       headers: { authorization: `Bearer ${userInfo.token}` },
     });
   }

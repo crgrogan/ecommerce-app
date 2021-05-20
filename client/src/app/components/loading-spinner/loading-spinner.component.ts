@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-loading-spinner',
@@ -7,10 +6,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrls: ['./loading-spinner.component.css'],
 })
 export class LoadingSpinnerComponent implements OnInit {
-  constructor(private spinner: NgxSpinnerService) {}
+  constructor() {}
 
-  ngOnInit(): void {
-    // show spinner on init
-    this.spinner.show();
-  }
+  ngOnInit(): void {}
 }

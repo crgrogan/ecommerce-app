@@ -1,0 +1,41 @@
+.page-not-found-container {
+  text-align: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: linear-gradient(
+    -45deg,
+    rgba(255, 243, 0, 1),
+    rgba(239, 228, 0, 1)
+  );
+}
+
+h1 {
+  font-size: 15rem;
+  margin: 0;
+  padding: 0;
+}
+
+.page-not-found {
+  font-size: 3.5rem;
+  margin: 0.25em;
+}
+
+p {
+  font-size: 1.8rem;
+}
+
+a {
+  color: #0770cf;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+path {
+  fill: transparent;
+  stroke: black;
+  stroke-width: 5;
+}

@@ -9,6 +9,7 @@ import { LoginComponent } from './components/login/login.component';
 import { ManagementComponent } from './components/management/management.component';
 import { OrderDetailsComponent } from './components/order-details/order-details.component';
 import { OrderComponent } from './components/order/order.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { PaymentComponent } from './components/payment/payment.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
@@ -38,6 +39,10 @@ const routes: Routes = [
     path: 'profile',
     component: ProfileComponent,
     canActivate: [AuthGuard],
+  },
+  {
+    path: '**',
+    component: PageNotFoundComponent,
   },
 ];
 

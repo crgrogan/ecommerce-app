@@ -9,7 +9,6 @@ import { FormsModule } from '@angular/forms';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { localStorageSync } from 'ngrx-store-localstorage';
 import { NgxPayPalModule } from 'ngx-paypal';
-import { NgxSpinnerModule } from 'ngx-spinner';
 
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
@@ -45,6 +44,7 @@ import { PaymentComponent } from './components/payment/payment.component';
 import { OrderComponent } from './components/order/order.component';
 import { OrderDetailsComponent } from './components/order-details/order-details.component';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 export function localStorageSyncReducer(
   reducer: ActionReducer<any>
@@ -85,6 +85,7 @@ const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
     OrderComponent,
     OrderDetailsComponent,
     LoadingSpinnerComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -106,7 +107,6 @@ const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
     AppRoutingModule,
     IvyCarouselModule,
     NgxPayPalModule,
-    NgxSpinnerModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

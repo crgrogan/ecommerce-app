@@ -9,7 +9,7 @@ export class FiltersService {
   constructor(private http: HttpClient) {}
 
   getAll() {
-    return this.http.get('http://localhost:5000/api/filters');
+    return this.http.get('/api/filters');
   }
 
   // add new filters to existing list
@@ -17,7 +17,7 @@ export class FiltersService {
     const { userInfo } = JSON.parse(localStorage.getItem('currentUser'));
     const { category, brand, colour } = filters;
     return this.http.post(
-      'http://localhost:5000/api/filters',
+      '/api/filters',
       {
         category,
         brand,
@@ -32,7 +32,7 @@ export class FiltersService {
     const { userInfo } = JSON.parse(localStorage.getItem('currentUser'));
     // use put request as httpClient doesn't allow body to be sent in delete request
     return this.http.put(
-      `http://localhost:5000/api/filters/${id}`,
+      `/api/filters/${id}`,
       { category },
       {
         headers: { authorization: `Bearer ${userInfo.token}` },
