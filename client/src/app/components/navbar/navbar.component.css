@@ -167,7 +167,7 @@ input:active {
   left: 0;
   top: 0;
   background-color: #d3d3d3;
-  width: 50vw;
+  width: 40vw;
   padding-bottom: 1em;
 }
 
@@ -211,6 +211,12 @@ input:active {
   position: absolute;
   right: 1.5em;
   top: 1.5em;
+}
+
+@media screen and (max-width: 991px) {
+  .hamburger-menu {
+    width: 50vw;
+  }
 }
 
 @media screen and (max-width: 576px) {

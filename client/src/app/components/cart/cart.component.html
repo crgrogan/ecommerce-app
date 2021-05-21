@@ -46,10 +46,15 @@
 <div class="cart-actions" *ngIf="cartItems$ | async as cartItems">
   <div class="cart-total-heading"><h2>Total</h2></div>
   <h3>
-    Subtotal ({{ cartItems.length }}
-    {{ cartItems.length > 1 ? "items" : "item" }}): €{{
-      cartItems | getCartTotal
-    }}
+    Subtotal ({{ cartItems | getTotalCartItems }}
+    {{
+      (cartItems | getTotalCartItems) > 1 ||
+      (cartItems | getTotalCartItems) === 0
+        ? "items"
+        : "item"
+    }}): €{{ cartItems | getCartTotal }}
   </h3>
-  <button (click)="checkout()">Checkout</button>
+  <button (click)="checkout()" [disabled]="cartItems.length === 0">
+    Checkout
+  </button>
 </div>

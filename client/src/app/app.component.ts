@@ -17,6 +17,7 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
+    // get all filters
     this.store.dispatch(getFilters());
   }
 }

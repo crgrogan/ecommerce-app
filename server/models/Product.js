@@ -7,12 +7,10 @@ export const productSchema = new Schema({
   brand: { type: String, required: [true, "Item brand is required"] },
   colour: { type: String, required: [true, "Item colour is required"] },
   price: { type: Number, required: [true, "Item price is required"] },
-  rating: { type: Number, default: 0, required: true },
   description: {
     type: String,
     required: [true, "Item description is required"],
   },
-  numReviews: { type: Number, default: 0, required: true },
   countInStock: {
     type: Number,
     default: 0,

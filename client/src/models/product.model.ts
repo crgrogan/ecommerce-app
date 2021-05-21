@@ -6,8 +6,6 @@ export interface Product {
   img: string;
   price: number;
   colour: string;
-  rating?: number;
-  numReviews?: number;
   countInStock: number;
   _id: string;
   qty?: number;

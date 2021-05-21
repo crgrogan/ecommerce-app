@@ -1,5 +1,8 @@
 import jwt from "jsonwebtoken";
-import Product from "./models/Product";
+const nodemailer = require("nodemailer");
+
+import { transporter } from "./server";
+import Product, { productSchema } from "./models/Product";
 
 export const getToken = (user) => {
   return jwt.sign(
@@ -52,4 +55,32 @@ export const verifyItem = async (cartItem) => {
     }
   }
   return false;
+};
+
+// send email to admin if countInStock for item
+// is less than 5
+export const lowStockEmail = async (items) => {
+  // create email details/body
+  const createMail = (product) => {
+    return {
+      from: "<ECOM Stock Management System>", // sender address
+      to: process.env.EMAIL, // receiver email
+      subject: "Low Stock Warning",
+      text: `The following item is running low in stock: 
+    ID: ${product._id}, 
+    Name: ${product.name}, 
+    Brand: ${product.brand},  
+    Colour: ${product.colour},  
+    Number of Item in Stock: ${product.countInStock}`,
+    };
+  };
+
+  // loop through low stock items and send email for each item
+  for (let item of items) {
+    try {
+      await transporter.sendMail(createMail(item));
+    } catch (err) {
+      console.log(err);
+    }
+  }
 };

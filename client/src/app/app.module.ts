@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { IvyCarouselModule } from 'angular-responsive-carousel';
@@ -45,6 +45,7 @@ import { OrderComponent } from './components/order/order.component';
 import { OrderDetailsComponent } from './components/order-details/order-details.component';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { GetTotalCartItemsPipe } from './components/cart/cart-items.pipe';
 
 export function localStorageSyncReducer(
   reducer: ActionReducer<any>
@@ -76,6 +77,7 @@ const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
     ProductDetailsComponent,
     ProfileComponent,
     GetCartTotalPipe,
+    GetTotalCartItemsPipe,
     GetOrderTotalPipe,
     PasswordMatchValidatorDirective,
     FilterCategoryValidatorDirective,
@@ -112,6 +114,5 @@ const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}

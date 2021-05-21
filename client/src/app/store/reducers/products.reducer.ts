@@ -38,8 +38,6 @@ export const productsReducer = createReducer(
     return newState;
   }),
   on(productsLoadedFailed, (state, { error }) => {
-    console.log(error);
-
     return { ...state, productsList: [], isLoading: false, err: error };
   })
 );

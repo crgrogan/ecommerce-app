@@ -49,11 +49,11 @@
 }
 
 .selected-product-qty-label {
-  margin-right: 0.5em;
   font-weight: 700;
 }
 
 #selected-product-qty {
+  margin-left: 0.5em;
   padding: 0.25em 0;
   font-size: 1.6rem;
 }

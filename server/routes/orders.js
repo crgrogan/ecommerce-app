@@ -4,7 +4,8 @@ import apicache from "apicache";
 let cache = apicache.middleware;
 
 import Order from "../models/Order";
-import { isAuth, isAdmin, verifyItem } from "../utils";
+import Product from "../models/Product";
+import { isAuth, isAdmin, verifyItem, lowStockEmail } from "../utils";
 
 const router = express.Router();
 
@@ -70,6 +71,20 @@ router.put("/:id", async (req, res, next) => {
   try {
     const order = await Order.findById(id);
     if (order) {
+      let lowStockItems = [];
+      // reduce countInStock of order items
+      for (let item of order.orderItems) {
+        let product = await Product.findById(item._id);
+        product.countInStock -= item.qty;
+        await product.save();
+        if (product.countInStock < 5) {
+          lowStockItems.push(product);
+        }
+      }
+      if (lowStockItems.length > 0) {
+        lowStockEmail(lowStockItems);
+      }
+      // update order payment info
       order.isPaid = true;
       order.paymentDetails = {
         userId: id,

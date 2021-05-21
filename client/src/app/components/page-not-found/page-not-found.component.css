@@ -34,8 +34,8 @@ a:hover {
   text-decoration: underline;
 }
 
-path {
+.mouth {
   fill: transparent;
-  stroke: black;
+  stroke: #000000;
   stroke-width: 5;
 }
