@@ -58,10 +58,11 @@ export class UserEffects {
   loginUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loginUser),
-      switchMap((action) =>
-        this.userService.login(action).pipe(
+      mergeMap((action) =>
+        this.userService.login(action.payload).pipe(
           map((data) => {
-            this.router.navigate(['/']);
+            const { redirectUrl } = action;
+            this.router.navigateByUrl(redirectUrl || '/');
             return userLoginSuccess({ user: data });
           }),
           catchError((err) => of(userLoginFailed({ error: err.error.msg })))
@@ -75,7 +76,9 @@ export class UserEffects {
       this.actions$.pipe(
         ofType(logoutUser),
         tap(() => {
-          this.router.navigate(['/login']);
+          this.router.navigate(['/login'], {
+            state: { redirect: this.router.url },
+          });
         })
       ),
     { dispatch: false }

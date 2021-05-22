@@ -28,7 +28,9 @@ export class ShippingComponent implements OnInit, OnDestroy {
       .select(selectCurrentUserInfo)
       .subscribe((user) => {
         if (!user) {
-          this.route.navigate(['login']);
+          this.route.navigate(['login'], {
+            state: { redirect: this.route.url },
+          });
         } else {
           this.name = user.name;
         }

@@ -27,10 +27,13 @@ export class LoginComponent implements OnInit, OnDestroy {
   confirmPassword: string = '';
   loading$: Observable<boolean>;
   error$: Observable<string>;
+  redirectUrl: string;
 
   constructor(private store: Store<AppState>, private router: Router) {
     this.error$ = this.store.select(selectCurrentUserError);
     this.loading$ = this.store.select(selectCurrentUserLoading);
+    const { redirect } = window.history.state;
+    this.redirectUrl = redirect;
   }
 
   ngOnInit(): void {
@@ -45,7 +48,9 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   submitForm(form: NgForm) {
     if (form.valid) {
-      this.store.dispatch(loginUser(form.value.email, form.value.password));
+      this.store.dispatch(
+        loginUser(form.value.email, form.value.password, this.redirectUrl)
+      );
     }
     // reset form values and state
     form.resetForm();

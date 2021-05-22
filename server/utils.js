@@ -1,8 +1,7 @@
 import jwt from "jsonwebtoken";
-const nodemailer = require("nodemailer");
 
 import { transporter } from "./server";
-import Product, { productSchema } from "./models/Product";
+import Product from "./models/Product";
 
 export const getToken = (user) => {
   return jwt.sign(

@@ -123,6 +123,10 @@ input:active {
   margin: 0;
 }
 
+.login-link:hover {
+  cursor: pointer;
+}
+
 .profile-dropdown-menu a:hover fa-icon,
 .profile-dropdown-menu a:hover span {
   color: #0770cf;

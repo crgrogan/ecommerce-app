@@ -38,6 +38,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   currentUser: User;
   userSubsciption: Subscription;
   categories$: Observable<Category[]>;
+  redirectUrl: string;
 
   constructor(private store: Store<AppState>, private router: Router) {
     this.userSubsciption = this.store
@@ -57,6 +58,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   toggleSearchbar() {
     this.searchbarOpen = !this.searchbarOpen;
+  }
+
+  redirectToLogin() {
+    this.router.navigate(['login'], {
+      state: { redirect: this.router.url },
+    });
   }
 
   logoutUser() {

@@ -33,8 +33,6 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   createOptionsArray(countInStock: number) {
-    console.log(countInStock);
-
     return new Array(countInStock);
   }
 

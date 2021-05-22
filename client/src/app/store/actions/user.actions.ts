@@ -36,9 +36,12 @@ export const userRegisterFailed = createAction(
 // login users
 export const loginUser = createAction(
   '[USER] Login User',
-  (email, password) => ({
-    email,
-    password,
+  (email, password, redirectUrl) => ({
+    payload: {
+      email,
+      password,
+    },
+    redirectUrl,
   })
 );
 
