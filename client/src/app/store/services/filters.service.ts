@@ -8,8 +8,18 @@ import { filter } from 'rxjs/operators';
 export class FiltersService {
   constructor(private http: HttpClient) {}
 
-  getAll() {
-    return this.http.get('/api/filters');
+  getAll(admin: boolean) {
+    if (admin) {
+      // if request is from admin, set header
+      //  to override cache
+      return this.http.get('/api/filters', {
+        headers: {
+          'Cache-Control': 'no-cache',
+        },
+      });
+    } else {
+      return this.http.get('/api/filters');
+    }
   }
 
   // add new filters to existing list

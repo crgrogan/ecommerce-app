@@ -1,7 +1,9 @@
 import { createAction, props } from '@ngrx/store';
 
 // get all filters
-export const getFilters = createAction('[FILTER] Get Filters');
+export const getFilters = createAction('[FILTER] Get Filters', (admin) => ({
+  admin,
+}));
 
 export const filtersLoadedSuccess = createAction(
   '[FILTERS] Filters Loaded Success',

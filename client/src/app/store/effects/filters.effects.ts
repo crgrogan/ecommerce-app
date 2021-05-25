@@ -22,8 +22,8 @@ export class FiltersEffects {
   loadFilters$ = createEffect(() =>
     this.actions$.pipe(
       ofType(getFilters),
-      mergeMap(() =>
-        this.filtersService.getAll().pipe(
+      mergeMap((action) =>
+        this.filtersService.getAll(action.admin).pipe(
           map((data) => filtersLoadedSuccess({ filters: data[0] })),
           catchError((err) => of(filtersLoadedFailed({ error: err.error.msg })))
         )
@@ -38,7 +38,7 @@ export class FiltersEffects {
         this.filtersService.update(action.filters).pipe(
           switchMap((data) => {
             // if filters are successfully updated, dispatch getFilters to get updated filter list
-            return [filtersUpdatedSuccess({ filters: data }), getFilters()];
+            return [filtersUpdatedSuccess({ filters: data }), getFilters(true)];
           }),
           catchError((err) =>
             of(filtersUpdatedFailed({ error: err.error.msg }))
@@ -56,7 +56,7 @@ export class FiltersEffects {
         this.filtersService.delete(action.id, action.category).pipe(
           switchMap((data) => {
             // if filter is successfully deleted, dispatch getFilters to get updated filter list
-            return [filterDeleteSuccess({ filter: data }), getFilters()];
+            return [filterDeleteSuccess({ filter: data }), getFilters(true)];
           }),
           catchError((err) => of(filterDeleteFailed({ error: err.error.msg })))
         )

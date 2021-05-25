@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -17,7 +17,7 @@ import {
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
 })
-export class RegisterComponent implements OnInit, OnDestroy {
+export class RegisterComponent implements OnDestroy {
   name: string = '';
   email: string = '';
   password: string = '';
@@ -29,8 +29,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.error$ = this.store.select(selectNewUserError);
     this.loading$ = this.store.select(selectNewUserLoading);
   }
-
-  ngOnInit(): void {}
 
   submitForm(form: NgForm) {
     if (form.valid) {

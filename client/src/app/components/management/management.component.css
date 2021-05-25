@@ -35,8 +35,18 @@ td {
   padding: 0.5em;
 }
 
-.edit-btn {
-  margin-right: 0.5em;
+.products-list-actions button {
+  width: 60px;
+}
+
+.edit-product-btn {
+  margin-right: 0.25em;
+  margin-left: 0.25em;
+}
+
+.delete-product-btn {
+  margin-right: 0.25em;
+  margin-left: 0.25em;
 }
 
 .open-modal {

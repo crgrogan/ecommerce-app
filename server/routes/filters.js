@@ -1,7 +1,9 @@
 import express from "express";
 import apicache from "apicache";
 
-let cache = apicache.middleware;
+let cache = apicache.options({
+  respectCacheControl: true, // allow cache to be overridden if necessary
+}).middleware;
 
 import Filter from "../models/Filter";
 import { isAuth, isAdmin } from "../utils";

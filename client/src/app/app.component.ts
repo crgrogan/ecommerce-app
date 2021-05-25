@@ -18,6 +18,6 @@ export class AppComponent {
 
   ngOnInit(): void {
     // get all filters
-    this.store.dispatch(getFilters());
+    this.store.dispatch(getFilters(false));
   }
 }

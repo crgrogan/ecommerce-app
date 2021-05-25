@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
@@ -12,7 +12,7 @@ import { selectCurrentUserInfo } from 'src/app/store/selectors/user.selectors';
   templateUrl: './shipping.component.html',
   styleUrls: ['./shipping.component.css'],
 })
-export class ShippingComponent implements OnInit, OnDestroy {
+export class ShippingComponent implements OnDestroy {
   name: string = '';
   address: string = '';
   city: string = '';
@@ -49,8 +49,6 @@ export class ShippingComponent implements OnInit, OnDestroy {
         }
       });
   }
-
-  ngOnInit(): void {}
 
   submitShippingForm({ name, address, city, county, postalCode, country }) {
     // save shipping address to store

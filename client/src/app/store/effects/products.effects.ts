@@ -25,7 +25,7 @@ export class ProductsEffects {
     this.actions$.pipe(
       ofType(getProducts),
       switchMap((action) =>
-        this.productsService.getAll(action.queryString).pipe(
+        this.productsService.getAll(action.queryString, action.admin).pipe(
           map((data) => productsLoadedSuccess({ products: data })),
           catchError((err) =>
             of(productsLoadedFailed({ error: err.error.msg }))
@@ -56,7 +56,10 @@ export class ProductsEffects {
         this.productsService.createProduct(action.payload).pipe(
           switchMap((data) => {
             // if product is successfully created/updated, dispatch getProducts to get updated product list
-            return [productSaveSuccess({ product: data }), getProducts('')];
+            return [
+              productSaveSuccess({ product: data }),
+              getProducts('', true),
+            ];
           }),
           catchError((err) => of(productSaveFailed({ error: err.error.msg })))
         )
@@ -72,7 +75,10 @@ export class ProductsEffects {
         this.productsService.deleteProduct(action.id).pipe(
           switchMap((data) => {
             // if product is successfully deleted, dispatch getProducts to get updated product list
-            return [productDeleteSuccess({ product: data }), getProducts('')];
+            return [
+              productDeleteSuccess({ product: data }),
+              getProducts('', true),
+            ];
           }),
           catchError((err) => of(productDeleteFailed({ error: err.error.msg })))
         )

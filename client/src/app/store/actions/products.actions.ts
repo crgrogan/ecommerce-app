@@ -4,7 +4,7 @@ import { Product } from 'src/models/product.model';
 // get all products
 export const getProducts = createAction(
   '[PRODUCTS] Get Products',
-  (queryString) => ({ queryString })
+  (queryString, admin) => ({ queryString, admin })
 );
 
 export const productsLoadedSuccess = createAction(

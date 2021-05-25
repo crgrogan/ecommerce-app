@@ -56,7 +56,9 @@ export class ProductListComponent implements OnInit, OnDestroy {
         // set initial value of filters based on query string
         this.setSelectedValues(params);
         // get products based on filters in query string
-        this.store.dispatch(getProducts(this.objectToQueryString(params)));
+        this.store.dispatch(
+          getProducts(this.objectToQueryString(params), false)
+        );
       }
     );
   }

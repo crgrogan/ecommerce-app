@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 export interface CheckoutSteps {
   step1: boolean;
@@ -12,10 +12,6 @@ export interface CheckoutSteps {
   templateUrl: './checkout-steps.component.html',
   styleUrls: ['./checkout-steps.component.css'],
 })
-export class CheckoutStepsComponent implements OnInit {
+export class CheckoutStepsComponent {
   @Input() steps: CheckoutSteps;
-
-  constructor() {}
-
-  ngOnInit(): void {}
 }

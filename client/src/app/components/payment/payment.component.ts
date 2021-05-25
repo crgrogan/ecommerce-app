@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
@@ -11,7 +11,7 @@ import { selectShippingAddress } from 'src/app/store/selectors/cart.selectors';
   templateUrl: './payment.component.html',
   styleUrls: ['./payment.component.css'],
 })
-export class PaymentComponent implements OnInit, OnDestroy {
+export class PaymentComponent implements OnDestroy {
   paymentMethod: string = 'PayPal';
   shippingSubscription: Subscription;
 
@@ -24,8 +24,6 @@ export class PaymentComponent implements OnInit, OnDestroy {
         }
       });
   }
-
-  ngOnInit(): void {}
 
   submitPaymentMethodForm({ paymentMethod }) {
     this.store.dispatch(savePaymentMethod(paymentMethod));

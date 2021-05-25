@@ -412,11 +412,19 @@
               <td>{{ product.price }}</td>
               <td>{{ product.category }}</td>
               <td>{{ product.brand }}</td>
-              <td>
-                <button class="edit-btn" (click)="openProductModal(product)">
+              <td class="products-list-actions">
+                <button
+                  class="edit-product-btn"
+                  (click)="openProductModal(product)"
+                >
                   Edit
                 </button>
-                <button (click)="deleteProduct(product._id)">Delete</button>
+                <button
+                  class="delete-product-btn"
+                  (click)="deleteProduct(product._id)"
+                >
+                  Delete
+                </button>
               </td>
             </tr>
           </tbody>

@@ -89,7 +89,7 @@ const initialNewProductState: NewProductState = {
 export const newProductReducer = createReducer(
   initialNewProductState,
   on(saveProduct, (state) => {
-    return { ...state, isLoading: true, err: null };
+    return { ...state, isLoading: true, err: null, success: false, msg: null };
   }),
   on(productSaveSuccess, (state, { product }) => {
     const newState = {
@@ -105,7 +105,13 @@ export const newProductReducer = createReducer(
     return initialNewProductState;
   }),
   on(productSaveFailed, (state, { error }) => {
-    return { ...state, product: null, isLoading: false, err: error };
+    return {
+      ...state,
+      product: null,
+      isLoading: false,
+      err: error,
+      success: false,
+    };
   })
 );
 

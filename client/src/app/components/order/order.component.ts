@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from 'src/app/app.state';
@@ -23,7 +23,7 @@ import { GetOrderTotalPipe } from './order-total.pipe';
   styleUrls: ['./order.component.css'],
   providers: [GetCartTotalPipe, GetOrderTotalPipe],
 })
-export class OrderComponent implements OnInit {
+export class OrderComponent {
   shippingAddress$: Observable<ShippingAddress>;
   paymentMethod$: Observable<string>;
   cartItems$: Observable<{}>;
@@ -42,8 +42,6 @@ export class OrderComponent implements OnInit {
     this.error$ = this.store.select(selectNewOrderError);
     this.loading$ = this.store.select(selectNewOrderLoading);
   }
-
-  ngOnInit(): void {}
 
   submitOrder(
     cartItems: Product[],

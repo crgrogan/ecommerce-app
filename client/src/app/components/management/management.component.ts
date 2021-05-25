@@ -107,7 +107,7 @@ export class ManagementComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // get all products
-    this.store.dispatch(getProducts(''));
+    this.store.dispatch(getProducts('', true));
     // get all users
     this.store.dispatch(getUsers());
     // get all orders

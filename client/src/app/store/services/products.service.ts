@@ -8,12 +8,29 @@ import { Product } from 'src/models/product.model';
 export class ProductsService {
   constructor(private http: HttpClient) {}
 
-  // get all products or get filtered list of prducts based on query string
-  getAll(queryString: string) {
-    if (queryString) {
-      return this.http.get(`/api/products/filter?${queryString}`);
+  // get all products or get filtered list of products based on query string
+  getAll(queryString: string, admin: boolean) {
+    // if request is from admin, set header to override cache
+    if (admin) {
+      if (queryString) {
+        return this.http.get(`/api/products/filter?${queryString}`, {
+          headers: {
+            'Cache-Control': 'no-cache',
+          },
+        });
+      } else {
+        return this.http.get('/api/products', {
+          headers: {
+            'Cache-Control': 'no-cache',
+          },
+        });
+      }
     } else {
-      return this.http.get('/api/products');
+      if (queryString) {
+        return this.http.get(`/api/products/filter?${queryString}`);
+      } else {
+        return this.http.get('/api/products');
+      }
     }
   }
 
@@ -24,10 +41,12 @@ export class ProductsService {
   createProduct(product: Product) {
     const { userInfo } = JSON.parse(localStorage.getItem('currentUser'));
     if (product._id) {
+      // edit product
       return this.http.put(`/api/products/${product._id}`, product, {
         headers: { authorization: `Bearer ${userInfo.token}` },
       });
     } else {
+      // new product
       return this.http.post('/api/products/', product, {
         headers: { authorization: `Bearer ${userInfo.token}` },
       });
