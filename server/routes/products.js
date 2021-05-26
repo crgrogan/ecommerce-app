@@ -94,7 +94,7 @@ router.post("/", isAuth, isAdmin, async (req, res, next) => {
 });
 
 // Get specific product
-router.get("/:id", cache("2 minutes"), async (req, res, next) => {
+router.get("/:id", cache("5 minutes"), async (req, res, next) => {
   const id = req.params.id;
   try {
     const currentProduct = await Product.findById(id);

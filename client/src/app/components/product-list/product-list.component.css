@@ -47,6 +47,7 @@ option {
   display: grid;
   grid-template-columns: repeat(auto-fit, 20rem);
   grid-gap: 1em;
+  align-items: flex-start;
   justify-content: center;
   padding: initial;
   list-style-type: none;

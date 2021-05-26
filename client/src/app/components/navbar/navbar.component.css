@@ -86,13 +86,17 @@ input:active {
   color: var(--secondary-font-color);
 }
 
-.header-links a {
-  margin-left: 2em;
+.ml-1 {
+  margin-left: 1em;
 }
 
-.header-links a:hover {
+/* .header-links a {
+  margin-left: 2em;
+} */
+
+/* .header-links a:hover {
   color: var(--secondary-bg-color);
-}
+} */
 
 .open-searchbar {
   display: none;

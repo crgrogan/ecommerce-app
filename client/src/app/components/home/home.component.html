@@ -1,6 +1,9 @@
 <section class="categories" *ngIf="categories$ | async as categories">
   <carousel [width]="width" [height]="299" *ngIf="categories.length > 0">
-    <div class="carousel-cell" *ngFor="let category of categories">
+    <div
+      class="carousel-cell"
+      *ngFor="let category of categories | sortOptionsAlphabetically"
+    >
       <app-category-card [category]="category"></app-category-card>
     </div>
   </carousel>

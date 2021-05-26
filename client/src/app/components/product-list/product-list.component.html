@@ -10,8 +10,8 @@
       [(ngModel)]="sortBySelected"
     >
       <option value="">Sort By</option>
-      <option value="-1">Price - Low to High</option>
-      <option value="1">Price - High to Low</option>
+      <option value="1">Price - Low to High</option>
+      <option value="-1">Price - High to Low</option>
     </select>
     <select
       (change)="submitForm(searchFilterForm.value)"
@@ -20,7 +20,10 @@
       [(ngModel)]="categorySelected"
     >
       <option value="">Product Category</option>
-      <option *ngFor="let category of categories" [value]="category.name">
+      <option
+        *ngFor="let category of categories | sortOptionsAlphabetically"
+        [value]="category.name"
+      >
         {{ category.name }}
       </option>
     </select>
@@ -31,7 +34,10 @@
       [(ngModel)]="brandSelected"
     >
       <option value="">Brand</option>
-      <option *ngFor="let brand of brands" [value]="brand.name">
+      <option
+        *ngFor="let brand of brands | sortOptionsAlphabetically"
+        [value]="brand.name"
+      >
         {{ brand.name }}
       </option>
     </select>
@@ -42,7 +48,10 @@
       [(ngModel)]="colourSelected"
     >
       <option value="">Colour</option>
-      <option *ngFor="let colour of colours" [value]="colour.name">
+      <option
+        *ngFor="let colour of colours | sortOptionsAlphabetically"
+        [value]="colour.name"
+      >
         {{ colour.name }}
       </option>
     </select>

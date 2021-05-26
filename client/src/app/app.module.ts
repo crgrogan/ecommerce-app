@@ -19,6 +19,9 @@ import { GetCartTotalPipe } from './components/cart/cart-total.pipe';
 import { reducers } from './store';
 import { UserEffects } from './store/effects/user.effects';
 import { GetOrderTotalPipe } from './components/order/order-total.pipe';
+import { GetTotalCartItemsPipe } from './components/cart/cart-items.pipe';
+import { SortOptionsAlphabeticallyPipe } from './shared/sort-options.pipe';
+
 import { OrderEffects } from './store/effects/order.effects';
 import { PasswordMatchValidatorDirective } from './shared/password-match.directive';
 import { FilterCategoryValidatorDirective } from './shared/filter-category.directive';
@@ -45,7 +48,6 @@ import { OrderComponent } from './components/order/order.component';
 import { OrderDetailsComponent } from './components/order-details/order-details.component';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-import { GetTotalCartItemsPipe } from './components/cart/cart-items.pipe';
 
 export function localStorageSyncReducer(
   reducer: ActionReducer<any>
@@ -79,6 +81,7 @@ const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
     GetCartTotalPipe,
     GetTotalCartItemsPipe,
     GetOrderTotalPipe,
+    SortOptionsAlphabeticallyPipe,
     PasswordMatchValidatorDirective,
     FilterCategoryValidatorDirective,
     ShippingComponent,

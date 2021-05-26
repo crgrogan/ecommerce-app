@@ -327,7 +327,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let category of data?.categories">
+            <tr
+              *ngFor="
+                let category of data?.categories | sortOptionsAlphabetically
+              "
+            >
               <td>
                 {{ category.name }}
               </td>
@@ -346,7 +350,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let brand of data?.brands">
+            <tr *ngFor="let brand of data?.brands | sortOptionsAlphabetically">
               <td>
                 {{ brand.name }}
               </td>
@@ -365,7 +369,9 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let colour of data?.colours">
+            <tr
+              *ngFor="let colour of data?.colours | sortOptionsAlphabetically"
+            >
               <td>
                 {{ colour.name }}
               </td>
@@ -394,93 +400,99 @@
         <button (click)="openFiltersModal()" class="open-modal">
           Update Filters
         </button>
-        <table class="management-table products-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Price (€)</th>
-              <th>Category</th>
-              <th>Brand</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody *ngIf="products$ | async as products">
-            <tr *ngFor="let product of products">
-              <td>{{ product._id }}</td>
-              <td>{{ product.name }}</td>
-              <td>{{ product.price }}</td>
-              <td>{{ product.category }}</td>
-              <td>{{ product.brand }}</td>
-              <td class="products-list-actions">
-                <button
-                  class="edit-product-btn"
-                  (click)="openProductModal(product)"
-                >
-                  Edit
-                </button>
-                <button
-                  class="delete-product-btn"
-                  (click)="deleteProduct(product._id)"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="table-container">
+          <table class="management-table products-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Price (€)</th>
+                <th>Category</th>
+                <th>Brand</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="products$ | async as products">
+              <tr *ngFor="let product of products">
+                <td>{{ product._id }}</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.price.toFixed(2) }}</td>
+                <td>{{ product.category }}</td>
+                <td>{{ product.brand }}</td>
+                <td class="products-list-actions">
+                  <button
+                    class="edit-product-btn"
+                    (click)="openProductModal(product)"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    class="delete-product-btn"
+                    (click)="deleteProduct(product._id)"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </section>
       <section class="management-section">
         <h2>Users</h2>
-        <table class="management-table users-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Administrator</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody *ngIf="users$ | async as users">
-            <tr *ngFor="let user of users">
-              <td>{{ user._id }}</td>
-              <td>{{ user.name }}</td>
-              <td>{{ user.email }}</td>
-              <td>{{ user.isAdmin ? "Yes" : "No" }}</td>
-              <td>
-                <button (click)="deleteUser(user._id)">Delete</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="table-container">
+          <table class="management-table users-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Administrator</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="users$ | async as users">
+              <tr *ngFor="let user of users">
+                <td>{{ user._id }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.isAdmin ? "Yes" : "No" }}</td>
+                <td>
+                  <button (click)="deleteUser(user._id)">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </section>
       <section class="management-section">
         <h2>Orders</h2>
-        <table class="management-table orders-table">
-          <thead>
-            <tr>
-              <th>Order ID</th>
-              <th>Date</th>
-              <th>User ID</th>
-              <th>Total (€)</th>
-              <th>Paid</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody *ngIf="orders$ | async as orders">
-            <tr *ngFor="let order of orders">
-              <td>{{ order._id }}</td>
-              <td>{{ order.createdAt | date: medium }}</td>
-              <td>{{ order.user }}</td>
-              <td>{{ order.totalPrice }}</td>
-              <td>{{ order.isPaid ? "Yes" : "No" }}</td>
-              <td>
-                <button (click)="viewOrderDetails(order._id)">View</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="table-container">
+          <table class="management-table orders-table">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Date</th>
+                <th>User ID</th>
+                <th>Total (€)</th>
+                <th>Paid</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="orders$ | async as orders">
+              <tr *ngFor="let order of orders">
+                <td>{{ order._id }}</td>
+                <td>{{ order.createdAt | date: medium }}</td>
+                <td>{{ order.user }}</td>
+                <td>{{ order.totalPrice.toFixed(2) }}</td>
+                <td>{{ order.isPaid ? "Yes" : "No" }}</td>
+                <td>
+                  <button (click)="viewOrderDetails(order._id)">View</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </section>
     </div>
   </div>

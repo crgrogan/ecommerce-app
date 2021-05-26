@@ -2,8 +2,17 @@
   padding: 2.5em;
 }
 
+.management-container h1 {
+  margin-bottom: 1em;
+}
+
 .management-section {
   margin-bottom: 3em;
+}
+
+.table-container {
+  overflow-y: auto;
+  max-height: 600px;
 }
 
 .management-table {
@@ -21,13 +30,19 @@ td {
   text-align: center;
 }
 
-thead {
+th {
   background-color: #203040;
   color: #fdfbfb;
 }
 
 tr:nth-child(2n) {
   background: #dbdbdb;
+}
+
+th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
 }
 
 th,

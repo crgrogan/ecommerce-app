@@ -30,17 +30,12 @@
     <span class="open-searchbar">
       <fa-icon [icon]="faSearch" (click)="toggleSearchbar()"></fa-icon>
     </span>
-    <div class="dropdown">
-      <!--   <a
-        [routerLink]="currentUser ? null : '/login'"
-        [state]="{ data: { redirect: redirectUrl } }"
-      > -->
+    <div class="dropdown ml-1">
       <fa-icon
         class="login-link"
         [icon]="faUserCircle"
         (click)="!currentUser && redirectToLogin()"
       ></fa-icon>
-      <!--  </a> -->
       <ul *ngIf="currentUser" class="profile-dropdown-menu">
         <li id="user-details-container">
           <span>Hi {{ currentUser.name.split(" ")[0] }}</span
@@ -58,7 +53,7 @@
         </li>
       </ul>
     </div>
-    <a routerLink="/cart">
+    <a routerLink="/cart" class="ml-1">
       <fa-icon [icon]="faShoppingBasket"></fa-icon>
     </a>
   </div>
@@ -67,7 +62,10 @@
       <fa-icon [icon]="faTimes" (click)="toggleMenu()"></fa-icon>
     </div>
     <ul *ngIf="categories$ | async as categories">
-      <li *ngFor="let category of categories" (click)="toggleMenu()">
+      <li
+        *ngFor="let category of categories | sortOptionsAlphabetically"
+        (click)="toggleMenu()"
+      >
         <a
           [routerLink]="['/products/filter']"
           [queryParams]="{ category: category.name.toLowerCase() }"

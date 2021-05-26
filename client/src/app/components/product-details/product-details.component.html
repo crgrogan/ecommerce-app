@@ -9,7 +9,9 @@
     <div class="selected-product-details">
       <h2 class="selected-product-name">{{ product.name }}</h2>
       <div class="selected-product-brand mb-25">by {{ product.brand }}</div>
-      <div class="selected-product-price mb-25">€{{ product.price }}</div>
+      <div class="selected-product-price mb-25">
+        €{{ product.price.toFixed(2) }}
+      </div>
       <div class="selected-product-colour mb-25">
         <span>Colour: </span>{{ product.colour }}
       </div>
