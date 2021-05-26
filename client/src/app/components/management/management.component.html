@@ -151,8 +151,7 @@
             >
           </li>
           <li>
-            <input
-              type="text"
+            <textarea
               name="description"
               id="description"
               [class.has-error]="
@@ -165,7 +164,7 @@
               [(ngModel)]="description"
               required
               #descriptionControl="ngModel"
-            />
+            ></textarea>
             <span
               class="input-error-msg"
               *ngIf="descriptionControl.invalid && descriptionControl.touched"

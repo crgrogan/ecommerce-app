@@ -11,7 +11,6 @@ import { AuthService } from './auth.service';
 export class AuthGuard implements CanActivate {
   constructor(public auth: AuthService, public store: Store) {}
   canActivate(): boolean {
-    console.log('auth guard');
     if (!this.auth.isAuthenticated()) {
       // logout user in order to clear current
       // user details and redirect to login page
