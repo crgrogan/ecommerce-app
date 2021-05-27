@@ -3,9 +3,9 @@ import apicache from "apicache";
 
 let cache = apicache.middleware;
 
-import Order from "../models/Order";
-import Product from "../models/Product";
-import { isAuth, isAdmin, verifyItem, lowStockEmail } from "../utils";
+import Order from "../models/Order.js";
+import Product from "../models/Product.js";
+import { isAuth, isAdmin, verifyItem, lowStockEmail } from "../utils.js";
 
 const router = express.Router();
 

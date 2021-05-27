@@ -5,8 +5,8 @@ let cache = apicache.options({
   respectCacheControl: true, // allow cache to be overridden if necessary
 }).middleware;
 
-import Product from "../models/Product";
-import { isAuth, isAdmin } from "../utils";
+import Product from "../models/Product.js";
+import { isAuth, isAdmin } from "../utils.js";
 
 const router = express.Router();
 

@@ -5,8 +5,8 @@ let cache = apicache.options({
   respectCacheControl: true, // allow cache to be overridden if necessary
 }).middleware;
 
-import Filter from "../models/Filter";
-import { isAuth, isAdmin } from "../utils";
+import Filter from "../models/Filter.js";
+import { isAuth, isAdmin } from "../utils.js";
 
 const router = express.Router();
 

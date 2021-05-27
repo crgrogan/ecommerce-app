@@ -6,10 +6,10 @@ const cors = require("cors");
 const nodemailer = require("nodemailer");
 
 const errorController = require("./controllers/errorController");
-import userRoutes from "./routes/users";
-import productRoutes from "./routes/products";
-import filterRoutes from "./routes/filters";
-import orderRoutes from "./routes/orders";
+import userRoutes from "./routes/users.js";
+import productRoutes from "./routes/products.js";
+import filterRoutes from "./routes/filters.js";
+import orderRoutes from "./routes/orders.js";
 
 dotenv.config();
 
