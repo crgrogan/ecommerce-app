@@ -27,7 +27,7 @@ Log in as a customer or administrator.
 - Browse products and add them to your cart
 - Checkout with PayPal
 
-| ![filter-products-screenshot](https://user-images.githubusercontent.com/20817675/119683120-4f6fb180-be3b-11eb-8705-b1d891c9d2c0.png) | ![profile-screenshot](https://user-images.githubusercontent.com/20817675/119686993-bfcc0200-be3e-11eb-8c25-bc35a91490b1.png) |
+| ![filter-products-screenshot](https://user-images.githubusercontent.com/20817675/119688655-138b1b00-be40-11eb-9c50-3da64e3c0360.png) | ![profile-screenshot](https://user-images.githubusercontent.com/20817675/119686993-bfcc0200-be3e-11eb-8c25-bc35a91490b1.png) |
 | ------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------- |
 
 ### Admin

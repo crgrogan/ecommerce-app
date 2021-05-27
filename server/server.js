@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import path from "path";
 const cors = require("cors");
 const nodemailer = require("nodemailer");
 
@@ -53,6 +54,14 @@ app.use("/api/users", userRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/filters", filterRoutes);
 app.use("/api/orders", orderRoutes);
+
+// serve static assets if in production
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "/client/build")));
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "/client/build/index.html"));
+  });
+}
 
 // error handling middleware
 app.use(errorController);
