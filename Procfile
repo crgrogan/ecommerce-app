@@ -1,1 +1,1 @@
-web: node -r esm server/server.js
+web: node --experimental-modules server/server.js
