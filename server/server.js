@@ -13,6 +13,8 @@ import orderRoutes from "./routes/orders.js";
 
 dotenv.config();
 
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
+
 const mongodbUrl = process.env.MONGODB_URL;
 
 // set up nodemailer
