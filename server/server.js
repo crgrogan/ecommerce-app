@@ -2,10 +2,10 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import path from "path";
-const cors = require("cors");
-const nodemailer = require("nodemailer");
+import cors from "cors";
+import nodemailer from "nodemailer";
 
-const errorController = require("./controllers/errorController");
+import errorController from "./controllers/errorController.js";
 import userRoutes from "./routes/users.js";
 import productRoutes from "./routes/products.js";
 import filterRoutes from "./routes/filters.js";

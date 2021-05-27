@@ -1,6 +1,6 @@
-import { Schema, model } from "mongoose";
+import mongoose from "mongoose";
 
-export const productSchema = new Schema({
+export const productSchema = new mongoose.Schema({
   img: { type: String, required: [true, "Image URL is required"] },
   category: { type: String, required: [true, "Item category is required"] },
   name: { type: String, required: [true, "Item name is required"] },
@@ -28,4 +28,4 @@ productSchema.pre("save", function (next) {
   next();
 });
 
-export default model("Product", productSchema);
+export default mongoose.model("Product", productSchema);

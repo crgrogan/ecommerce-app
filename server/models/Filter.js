@@ -1,6 +1,6 @@
-import { Schema, model } from "mongoose";
+import mongoose from "mongoose";
 
-const filterSchema = new Schema({
+const filterSchema = new mongoose.Schema({
   categories: [
     {
       img: { type: String },
@@ -19,4 +19,4 @@ const filterSchema = new Schema({
   ],
 });
 
-export default model("Filter", filterSchema);
+export default mongoose.model("Filter", filterSchema);

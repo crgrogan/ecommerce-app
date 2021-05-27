@@ -21,7 +21,7 @@ const handleValidationError = (err, res) => {
 };
 
 // error controller function
-module.exports = (err, req, res, next) => {
+export default (err, req, res, next) => {
   try {
     if (err.name === "ValidationError")
       return (err = handleValidationError(err, res));
