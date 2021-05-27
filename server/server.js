@@ -13,7 +13,7 @@ import orderRoutes from "./routes/orders.js";
 
 dotenv.config();
 
-const __dirname = path.dirname(new URL(import.meta.url).pathname);
+const __dirname = path.resolve();
 
 const mongodbUrl = process.env.MONGODB_URL;
 
@@ -59,9 +59,9 @@ app.use("/api/orders", orderRoutes);
 
 // serve static assets if in production
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "/client/build")));
+  app.use(express.static(path.join(__dirname, "/client/dist")));
   app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "/client/build/index.html"));
+    res.sendFile(path.join(__dirname, "/client/dist/index.html"));
   });
 }
 
