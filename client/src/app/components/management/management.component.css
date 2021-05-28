@@ -180,7 +180,7 @@ td {
     white-space: nowrap;
   }
 
-  /* Label the management */
+  /* Label the table rows */
   .products-table td:nth-of-type(1):before {
     content: "ID";
     font-weight: 700;

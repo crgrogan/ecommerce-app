@@ -38,7 +38,7 @@ header fa-icon {
 }
 
 .search-container {
-  flex: 1;
+  flex: 1.5;
   box-sizing: border-box;
 }
 
@@ -102,7 +102,7 @@ input:active {
 .profile-dropdown-menu {
   display: none;
   position: absolute;
-  min-width: 225px;
+  min-width: 210px;
   left: 10%; /* Position menu under button */
   transform: translateX(-55%);
   color: var(--primary-font-color);

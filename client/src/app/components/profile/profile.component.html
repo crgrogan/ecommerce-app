@@ -86,116 +86,6 @@
           </button>
         </div>
       </form>
-      <section class="change-password">
-        <h2>Change Password</h2>
-        <form
-          #changePasswordForm="ngForm"
-          appPasswordMatch
-          class="user-details-form"
-          (ngSubmit)="submitPasswordForm(changePasswordForm)"
-        >
-          <div class="form-messages" *ngIf="updateUserField === 'password'">
-            <div
-              class="form-msg-error"
-              *ngIf="updateUserError$ | async as error"
-            >
-              {{ error }}
-            </div>
-            <div class="form-msg-loading" *ngIf="updateUserLoading$ | async">
-              Loading...
-            </div>
-            <div
-              class="form-msg-success"
-              *ngIf="updateUserSuccess$ | async as successMsg"
-            >
-              {{ successMsg }}
-            </div>
-          </div>
-          <div>
-            <label for="password">Password</label>
-            <input
-              id="password"
-              type="password"
-              [class.has-error]="
-                passwordControl.invalid && passwordControl.touched
-              "
-              [class.has-success]="passwordControl.valid"
-              placeholder="Enter Password"
-              name="password"
-              [(ngModel)]="password"
-              #passwordControl="ngModel"
-              required
-              minlength="4"
-            />
-            <span
-              class="input-error-msg"
-              *ngIf="
-                passwordControl.value?.length === 0 && passwordControl.touched
-              "
-              >Password is required</span
-            >
-            <span
-              class="input-error-msg"
-              *ngIf="
-                passwordControl.value?.length > 0 &&
-                passwordControl.errors?.minlength
-              "
-              >Password must be at least 4 characters long</span
-            >
-          </div>
-          <div>
-            <label for="confirmPassword">Confirm Password</label>
-            <input
-              id="confirmPassword"
-              type="password"
-              [class.has-error]="
-                (confirmPasswordControl.invalid &&
-                  confirmPasswordControl.touched) ||
-                changePasswordForm.errors?.matchError
-              "
-              [class.has-success]="
-                confirmPasswordControl.touched &&
-                confirmPasswordControl.valid &&
-                !changePasswordForm.errors?.matchError
-              "
-              name="confirmPassword"
-              [(ngModel)]="confirmPassword"
-              placeholder="Confirm Password"
-              #confirmPasswordControl="ngModel"
-              required
-            />
-            <span
-              class="input-error-msg"
-              *ngIf="
-                confirmPasswordControl.invalid && confirmPasswordControl.touched
-              "
-              >Please confirm password</span
-            >
-            <span
-              *ngIf="
-                confirmPasswordControl.value?.length > 0 &&
-                changePasswordForm.errors?.matchError &&
-                confirmPasswordControl.touched
-              "
-              class="input-error-msg"
-            >
-              Passwords must match
-            </span>
-          </div>
-          <div>
-            <button
-              type="submit"
-              [disabled]="
-                changePasswordForm.invalid ||
-                changePasswordForm.errors?.matchError
-              "
-              class="submit-form-btn"
-            >
-              Update
-            </button>
-          </div>
-        </form>
-      </section>
     </section>
     <section class="order-history">
       <h2>Order History</h2>
@@ -228,6 +118,113 @@
           </tr>
         </tbody>
       </table>
+    </section>
+    <section class="change-password">
+      <h2>Change Password</h2>
+      <form
+        #changePasswordForm="ngForm"
+        appPasswordMatch
+        class="user-details-form"
+        (ngSubmit)="submitPasswordForm(changePasswordForm)"
+      >
+        <div class="form-messages" *ngIf="updateUserField === 'password'">
+          <div class="form-msg-error" *ngIf="updateUserError$ | async as error">
+            {{ error }}
+          </div>
+          <div class="form-msg-loading" *ngIf="updateUserLoading$ | async">
+            Loading...
+          </div>
+          <div
+            class="form-msg-success"
+            *ngIf="updateUserSuccess$ | async as successMsg"
+          >
+            {{ successMsg }}
+          </div>
+        </div>
+        <div>
+          <label for="password">Password</label>
+          <input
+            id="password"
+            type="password"
+            [class.has-error]="
+              passwordControl.invalid && passwordControl.touched
+            "
+            [class.has-success]="passwordControl.valid"
+            placeholder="Enter Password"
+            name="password"
+            [(ngModel)]="password"
+            #passwordControl="ngModel"
+            required
+            minlength="4"
+          />
+          <span
+            class="input-error-msg"
+            *ngIf="
+              passwordControl.value?.length === 0 && passwordControl.touched
+            "
+            >Password is required</span
+          >
+          <span
+            class="input-error-msg"
+            *ngIf="
+              passwordControl.value?.length > 0 &&
+              passwordControl.errors?.minlength
+            "
+            >Password must be at least 4 characters long</span
+          >
+        </div>
+        <div>
+          <label for="confirmPassword">Confirm Password</label>
+          <input
+            id="confirmPassword"
+            type="password"
+            [class.has-error]="
+              (confirmPasswordControl.invalid &&
+                confirmPasswordControl.touched) ||
+              changePasswordForm.errors?.matchError
+            "
+            [class.has-success]="
+              confirmPasswordControl.touched &&
+              confirmPasswordControl.valid &&
+              !changePasswordForm.errors?.matchError
+            "
+            name="confirmPassword"
+            [(ngModel)]="confirmPassword"
+            placeholder="Confirm Password"
+            #confirmPasswordControl="ngModel"
+            required
+          />
+          <span
+            class="input-error-msg"
+            *ngIf="
+              confirmPasswordControl.invalid && confirmPasswordControl.touched
+            "
+            >Please confirm password</span
+          >
+          <span
+            *ngIf="
+              confirmPasswordControl.value?.length > 0 &&
+              changePasswordForm.errors?.matchError &&
+              confirmPasswordControl.touched
+            "
+            class="input-error-msg"
+          >
+            Passwords must match
+          </span>
+        </div>
+        <div>
+          <button
+            type="submit"
+            [disabled]="
+              changePasswordForm.invalid ||
+              changePasswordForm.errors?.matchError
+            "
+            class="submit-form-btn"
+          >
+            Update
+          </button>
+        </div>
+      </form>
     </section>
     <section class="user-actions">
       <button
