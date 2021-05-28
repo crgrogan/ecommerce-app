@@ -120,7 +120,7 @@
 
 .submit-order-btn {
   cursor: pointer;
-  background-color: #ffce00;
+  background-color: var(--submit-form-btn-color);
   border: 1.5px #808080 solid;
   border-radius: 5px;
   width: 50%;

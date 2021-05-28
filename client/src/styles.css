@@ -1,10 +1,11 @@
 :root {
-  --primary-bg-color: rgb(36, 36, 36);
+  --primary-bg-color: #242424;
   --secondary-bg-color: #ffffff;
   --primary-font-color: #000000;
   --secondary-font-color: #ffffff;
   --validation-error-color: #dc3545;
   --validation-success-color: #28a745;
+  --submit-form-btn-color: #ffce00;
 }
 
 html {
@@ -129,7 +130,7 @@ textarea {
 
 .submit-form-btn {
   cursor: pointer;
-  background-color: rgb(255, 206, 0);
+  background-color: var(--submit-form-btn-color);
   border: 1.5px #808080 solid;
   border-radius: 5px;
   width: 100%;

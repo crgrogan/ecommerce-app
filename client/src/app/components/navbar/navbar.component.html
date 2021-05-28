@@ -30,11 +30,17 @@
     <span class="open-searchbar">
       <fa-icon [icon]="faSearch" (click)="toggleSearchbar()"></fa-icon>
     </span>
-    <div class="dropdown ml-1">
+    <div
+      [ngClass]="
+        dropdownOpen ? 'dropdown ml-1 dropdown-active' : 'dropdown ml-1'
+      "
+      (mouseenter)="!isTouchDevice && toggleDropdown()"
+      (mouseleave)="!isTouchDevice && toggleDropdown()"
+    >
       <fa-icon
         class="login-link"
         [icon]="faUserCircle"
-        (click)="!currentUser && redirectToLogin()"
+        (click)="!currentUser ? redirectToLogin() : toggleDropdown()"
       ></fa-icon>
       <ul *ngIf="currentUser" class="profile-dropdown-menu">
         <li id="user-details-container">
@@ -42,12 +48,15 @@
           ><span (click)="logoutUser()" id="sign-out-link">Sign Out</span>
         </li>
         <li>
-          <a routerLink="/profile"
+          <a routerLink="/profile" (click)="isTouchDevice && toggleDropdown()"
             ><fa-icon [icon]="faUser"></fa-icon><span>My Profile</span></a
           >
         </li>
         <li *ngIf="currentUser.isAdmin">
-          <a routerLink="/management">
+          <a
+            routerLink="/management"
+            (click)="isTouchDevice && toggleDropdown()"
+          >
             <fa-icon [icon]="faWrench"></fa-icon><span>Management</span></a
           >
         </li>

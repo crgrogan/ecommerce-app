@@ -134,7 +134,7 @@ input:active {
   margin-right: 10px;
 }
 
-.dropdown:hover .profile-dropdown-menu {
+.dropdown-active .profile-dropdown-menu {
   display: block;
 }
 

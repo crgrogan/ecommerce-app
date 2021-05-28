@@ -65,12 +65,13 @@ td {
 }
 
 .open-modal {
-  background-color: #ffce00;
+  background-color: var(--submit-form-btn-color);
   border: 1.5px #808080 solid;
   border-radius: 5px;
   text-align: center;
   font-weight: bold;
   padding: 0.75em;
+  width: 125px;
   margin-bottom: 3em;
 }
 
@@ -139,7 +140,7 @@ td {
 }
 
 @media only screen and (max-width: 768px) {
-  /* Force table to not be like tables anymore */
+  /* Force table to not be like table anymore */
   .management-table,
   .management-table thead,
   .management-table tbody,
@@ -147,6 +148,11 @@ td {
   .management-table td,
   .management-table tr {
     display: block;
+  }
+
+  .table-container {
+    border-top: 1px solid #203040;
+    border-bottom: 1px solid #203040;
   }
 
   /* Hide table headers (but not display: none;, for accessibility) */

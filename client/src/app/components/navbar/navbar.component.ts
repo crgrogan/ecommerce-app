@@ -39,6 +39,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   userSubsciption: Subscription;
   categories$: Observable<Category[]>;
   redirectUrl: string;
+  dropdownOpen: boolean = false;
+  isTouchDevice: boolean;
 
   constructor(private store: Store<AppState>, private router: Router) {
     this.userSubsciption = this.store
@@ -49,7 +51,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.categories$ = this.store.select(selectCategoriesList);
   }
 
-  ngOnInit(): void {}
+  ngOnInit() {
+    this.isTouchDevice = this.isTouchScreendevice() ? true : false;
+  }
 
   // toggle hamburger menu
   toggleMenu() {
@@ -60,6 +64,21 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.searchbarOpen = !this.searchbarOpen;
   }
 
+  toggleDropdown() {
+    console.log('toggle');
+
+    this.dropdownOpen = !this.dropdownOpen;
+  }
+
+  // check if device is a touchscreen
+  isTouchScreendevice() {
+    return (
+      'ontouchstart' in window ||
+      navigator.maxTouchPoints > 0 ||
+      navigator.msMaxTouchPoints > 0
+    );
+  }
+
   redirectToLogin() {
     this.router.navigate(['login'], {
       state: { redirect: this.router.url },
@@ -67,6 +86,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   logoutUser() {
+    this.isTouchDevice && this.toggleDropdown();
     this.store.dispatch(logoutUser());
   }
 
