@@ -10,6 +10,10 @@ carousel {
   z-index: 97;
 }
 
+.carousel-cell {
+  height: 100%;
+}
+
 .featured-category {
   height: 600px;
   margin: 3em 0;

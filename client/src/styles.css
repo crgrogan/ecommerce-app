@@ -112,6 +112,7 @@ textarea {
   border-radius: 5px;
   margin-bottom: 0.75em;
   outline-color: #b6d4fe;
+  font-size: 1.4rem;
 }
 
 .form li:first-child {
