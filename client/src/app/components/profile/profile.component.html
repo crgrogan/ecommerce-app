@@ -105,7 +105,7 @@
         <tbody>
           <tr *ngFor="let order of orders">
             <td>{{ order._id }}</td>
-            <td>{{ order.createdAt | date: medium}}</td>
+            <td>{{ order.createdAt | date: medium }}</td>
             <td>€{{ order.totalPrice.toFixed(2) }}</td>
             <td>
               {{ order.isPaid ? "Yes" : "No" }}
@@ -118,6 +118,7 @@
           </tr>
         </tbody>
       </table>
+      <ng-template #noPreviousOrders>Nothing to display</ng-template>
     </section>
     <section class="change-password">
       <h2>Change Password</h2>

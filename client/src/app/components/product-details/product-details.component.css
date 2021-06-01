@@ -3,7 +3,7 @@
   display: grid;
   row-gap: 2%;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 0.75fr;
   grid-template-areas:
     "selected-product-image selected-product-details"
     "selected-product-image selected-product-details"
@@ -78,7 +78,7 @@
     padding: 0;
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 0.75fr 0.75fr;
     grid-template-areas:
       "selected-product-image"
       "selected-product-details"

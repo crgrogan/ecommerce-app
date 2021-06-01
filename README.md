@@ -15,6 +15,10 @@ An Angular e-commerce app that allows you to browse and purchase products.
 - MongoDB
 - PayPal Rest API
 
+## Project Status
+
+The app is currently deployed on Netlify. [Visit](https://ecom-store-21.herokuapp.com)
+
 ## Features
 
 Log in as a customer or administrator.
@@ -53,6 +57,10 @@ To Run Test Suite:
 To Start Server:
 
 `npm start`
+
+To Visit App:
+
+`https://ecom-store-21.herokuapp.com`
 
 ## License
 

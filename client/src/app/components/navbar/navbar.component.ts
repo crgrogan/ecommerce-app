@@ -65,8 +65,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   toggleDropdown() {
-    console.log('toggle');
-
     this.dropdownOpen = !this.dropdownOpen;
   }
 
